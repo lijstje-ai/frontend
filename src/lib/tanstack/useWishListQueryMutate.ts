@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { addByUrl, addWishListItem, createWishlist, deleteWishListItem, getWishlist, searchBolProducts, sendEmail, updateBoughtBy } from '../api';
+import { addByUrl, addWishListItem, createWishlist, deleteWishListItem, getWishlist, searchBolProducts, sendEmail, updateBoughtBy, updateWishlistInfo } from '../api';
 import { useMutation, useQueryClient } from '@tanstack/react-query';
 import { Recommendation } from '@/types/wishlist.type';
 import { WishlistFormValues } from '@/app/schemas/wishlist.schema';
@@ -84,6 +84,19 @@ export const useSendEmail = () => {
     },
     onError: (error) => {
       console.error('Email sending error:', error);
+    },
+  });
+};
+
+export const useUpdateWishlistInfo = (wishlistId: string) => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: (data: Partial<WishlistFormValues>) =>
+      updateWishlistInfo(wishlistId, data),
+    onSuccess: () => {
+      queryClient.invalidateQueries({
+        queryKey: ['wishlist', wishlistId],
+      });
     },
   });
 };

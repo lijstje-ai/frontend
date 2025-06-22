@@ -32,6 +32,11 @@ export const updateBoughtBy = (
 export const deleteWishListItem = (wishlistId: string, itemId: string) =>
   axios.delete(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/${wishlistId}/items/${itemId}`);
 
+export const updateWishlistInfo = (
+  wishlistId: string,
+  data: Partial<WishlistFormValues>,
+) => axios.patch(`${process.env.NEXT_PUBLIC_API_URL}/wishlist/${wishlistId}/info`, data);
+
 export const searchBolProducts = async (query: string) => {
   if (!query) return [];
   const { data } = await axios.get<Recommendation[]>(`${process.env.NEXT_PUBLIC_API_URL}/bol/search`, {
@@ -61,12 +66,24 @@ export const sendEmail = async ({ to, shareLink }: { to: string; shareLink: stri
     });
 
     if (response.data.success) {
-      return 'Email sent successfully!';
+      return 'Verzonden! Check ook je spambox.';
     } else {
       throw new Error(response.data.message || 'Failed to send email');
     }
   } catch (error) {
     console.error('Error sending email:', error);
     throw error;
+  }
+};
+
+export const getProductPreviewByUrl = async (url: string) => {
+  if (!url) return null;
+  try {
+    const { data } = await axios.get(`${process.env.NEXT_PUBLIC_API_URL}/bol/preview-by-url`, {
+      params: { url },
+    });
+    return data;
+  } catch (e) {
+    return null;
   }
 };

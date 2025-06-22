@@ -59,33 +59,24 @@ export default function WishlistPublicViewPage() {
   return (
     <main className="space-y-6 max-w-3xl mx-auto px-4">
   <div>
-    <h1 className="text-2xl font-bold">Wishlist {wishlist.name}</h1>
-    <p className="text-muted-foreground text-sm">
-      Gedeelde weergave — markeer cadeaus als gekocht
+    <h1 className="text-2xl font-bold text-center">{wishlist.name}</h1>
+    <p className="text-muted-foreground text-sm text-center">
+      Bekijk en markeer cadeaus als gekocht
     </p>
   </div>
 
   <ul className="space-y-4">
     {wishlist.wish_list.map((product) => (
-      <Card key={product.id} className="p-4 flex items-center gap-4">
+      <Card key={product.id} className="p-4 flex flex-col items-center gap-2">
         <Image src={product.image} alt={product.title} width={100} height={100} />
-
-        <div className="flex-1 space-y-2">
-          <p className="text-sm font-medium leading-tight">{product.title}</p>
-          <div className="flex items-center justify-between flex-wrap gap-4">
-            <a
-              href={product.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-xs text-blue-600 hover:underline"
-            >
-              bol.com
-            </a>
-            <span className="text-xs text-muted-foreground">€{product.price}</span>
-          </div>
+        <div className="flex-1 w-full flex flex-col items-center">
+          <p className="text-sm font-medium leading-tight text-center w-full">{product.title}</p>
         </div>
-
-        <div className="min-w-[130px] text-center">
+        <div className="flex w-full items-center justify-between mt-2">
+          <span className="text-xs text-muted-foreground ml-2">&nbsp;</span>
+          <span className="text-base font-bold text-red-600 mr-2">€{product.price}</span>
+        </div>
+        <div className="w-full flex justify-center mt-2">
           {product.bought_by ? (
             <span className="text-xs text-muted-foreground whitespace-nowrap">
               Gekocht door {product.bought_by}
@@ -94,8 +85,7 @@ export default function WishlistPublicViewPage() {
             <Dialog>
               <DialogTrigger asChild>
                 <Button
-                  size="sm"
-                  className="text-xs w-full"
+                  className="w-[120px] h-10 bg-black text-white text-base rounded-md"
                   onClick={() =>
                     setSelectedProduct({
                       id: product.id,
@@ -104,15 +94,13 @@ export default function WishlistPublicViewPage() {
                     })
                   }
                 >
-                  Koop
+                  Bekijk
                 </Button>
               </DialogTrigger>
-
               <DialogContent>
                 <DialogHeader>
                   <DialogTitle>{selectedProduct?.title}</DialogTitle>
                 </DialogHeader>
-
                 <div className="space-y-4">
                   <a
                     href={selectedProduct?.link}
@@ -163,8 +151,9 @@ export default function WishlistPublicViewPage() {
         onClick={handleConfirm}
         type="submit"
         disabled={isMarking || !buyerName.trim()}
+        loading={isMarking}
       >
-        {isMarking ? 'Verzenden...' : 'Verzenden'}
+        Verzenden
       </Button>
     </DialogContent>
   </Dialog>

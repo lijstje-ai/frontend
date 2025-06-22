@@ -8,6 +8,7 @@ import { useSearchBolProductsQuery } from '@/lib/tanstack/useWishListQueryMutate
 import { useDebounce } from '@/hooks/debounce';
 import Image from 'next/image';
 import { Recommendation } from '@/types/wishlist.type';
+import { Ring } from 'ldrs/react';
 
 interface Props {
   onAdd: (product: Recommendation) => void;
@@ -41,7 +42,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
 
   return (
     <div ref={wrapperRef} className="relative w-full max-w-md">
-      <Label htmlFor="search">Search in online stores</Label>
+      <Label htmlFor="search">Bijv. Lego hijskraan</Label>
       <Input
         id="search"
         placeholder="Example: Lego crane"
@@ -53,7 +54,9 @@ export const BolProductSearch = ({ onAdd }: Props) => {
       {isDropdownOpen && (
         <ul className="absolute top-full left-0 w-full mt-2 bg-white shadow z-50 border rounded-md overflow-hidden max-h-96 overflow-y-auto">
           {isFetching ? (
-            <li className="p-4 text-center text-sm text-gray-500">Loading...</li>
+            <li className="p-4 text-center text-sm text-gray-500 flex justify-center items-center">
+              <Ring size={18} stroke={5} speed={2} color="currentColor" />
+            </li>
           ) : data && data.length > 0 ? (
             data.map((product) => (
               <li key={product.link} className="flex items-center gap-2 p-2 border-b last:border-none">
@@ -70,7 +73,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                     setSearch('');
                   }}
                 >
-                  Add
+                  +
                 </Button>
               </li>
             ))
