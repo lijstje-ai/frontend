@@ -83,7 +83,7 @@ export const getProductPreviewByUrl = async (url: string) => {
       params: { url },
     });
     return data;
-  } catch (e) {
+  } catch {
     return null;
   }
 };

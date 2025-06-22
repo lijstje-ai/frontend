@@ -1,19 +1,11 @@
 'use client';
 import {
-  FacebookShareButton,
   FacebookMessengerShareButton,
   WhatsappShareButton,
-  PinterestShareButton,
-  TwitterShareButton,
   TelegramShareButton,
-  RedditShareButton,
-  FacebookIcon,
   FacebookMessengerIcon,
   WhatsappIcon,
-  PinterestIcon,
-  TwitterIcon,
   TelegramIcon,
-  RedditIcon,
 } from 'react-share';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
@@ -34,16 +26,12 @@ import {
 } from '@/components/ui/dialog';
 import { ChevronDown, ChevronUp } from 'lucide-react';
 import { BolProductSearch } from '@/components/ui/searchBol';
-import { useCleanShareUrl } from '@/hooks/share';
 import { toast } from 'react-toastify';
 import { getProductPreviewByUrl } from '@/lib/api';
 
 export default function EditWishlistPage() {
   const params = useParams();
-  const shareUrl = useCleanShareUrl();
   const id = params?.id as string;
-  const [buyerEmail, setBuyerEmail] = useState('');
-  const [buyerEmailError, setBuyerEmailError] = useState('');
   const [isMarkOpen, setIsMarkOpen] = useState(false);
   const [isExpanded, setIsExpanded] = useState(true);
   const [buyerName, setBuyerName] = useState('');
@@ -518,6 +506,9 @@ export default function EditWishlistPage() {
             Versturen
           </Button>
         </div>
+        {backupEmailError && (
+          <p className="text-sm text-red-500">{backupEmailError}</p>
+        )}
       </div>
     </section>
   </section>
