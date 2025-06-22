@@ -58,7 +58,6 @@ export default function EditWishlistInfoPage() {
         aiSupport: wl.ai_support,
       });
 
-      // гарантируем, что контролируемый Select получит актуальное значение
       setValue("gender", genderNormalized);
     }
   }, [data, reset, setValue]);

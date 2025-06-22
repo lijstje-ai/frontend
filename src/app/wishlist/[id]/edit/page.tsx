@@ -81,7 +81,7 @@ export default function EditWishlistPage() {
     }
   };
 
-  // Автопревью по URL
+  //
   useEffect(() => {
     if (!isValidUrl(url)) {
       setPreview(null);
@@ -262,7 +262,7 @@ export default function EditWishlistPage() {
                   size="icon"
                   className="mt-1 rounded-full bg-black text-white w-10 h-10 flex items-center justify-center text-2xl hover:bg-neutral-800"
                   style={{ minWidth: 40, minHeight: 40 }}
-                  aria-label="Добавить"
+                  aria-label="Add"
                 >
                   +
                 </Button>
@@ -321,7 +321,7 @@ export default function EditWishlistPage() {
               loading={isPending}
               size="icon"
               className="mt-1 rounded-full bg-black text-white w-10 h-10 flex items-center justify-center text-2xl hover:bg-neutral-800"
-              aria-label="Toevoegen"
+              aria-label="Add"
             >
               +
             </Button>
@@ -365,7 +365,7 @@ export default function EditWishlistPage() {
                   variant="ghost"
                   className="border border-red-500 text-red-500 rounded-full p-0 flex w-8 h-8 justify-center items-center hover:bg-red-500 hover:text-white transition-colors"
                   onClick={() => deleteItem(item.id)}
-                  aria-label="Удалить"
+                  aria-label="Delete"
                 >
                   <Trash2 size={18} />
                 </Button>
@@ -550,7 +550,6 @@ export default function EditWishlistPage() {
     </DialogContent>
   </Dialog>
 
-  {/* Навигация между шагами */}
   <div className="flex items-center justify-between mt-8 w-full">
     <a href={`/wishlist/${id}/edit-data`} className="text-blue-600 hover:underline">&lt; Gegevens aanpassen</a>
     <a href={`/wishlist/${id}`} className="text-blue-600 hover:underline">Naar verlanglijstje &gt;</a>

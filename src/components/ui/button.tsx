@@ -58,7 +58,6 @@ function Button({
       disabled={loading || props.disabled}
       {...props}
     >
-      {/* Если кнопка иконка, во время загрузки скрываем children и показываем спиннер по центру */}
       {size === 'icon' ? (
         loading ? (
           <Ring size={18} stroke={5} speed={2} color="#fff" />
