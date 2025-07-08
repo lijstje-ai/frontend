@@ -7,7 +7,6 @@ import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { WishlistFormValues, wishlistSchema } from "./schemas/wishlist.schema";
-import { useRouter } from "next/navigation";
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
 import { useCreateWishlistMutation } from "@/lib/tanstack/useWishListQueryMutate";
@@ -22,7 +21,6 @@ import {
 import { Check } from "lucide-react";
 
 export default function CreateWishlistPage() {
-  const router = useRouter();
   const [customGender, setCustomGender] = useState("");
   const [showCustomGenderInput, setShowCustomGenderInput] = useState(false);
   const { mutate, isPending } = useCreateWishlistMutation();

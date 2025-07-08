@@ -62,7 +62,6 @@ export default function EditWishlistPage() {
 
   const [backupEmail, setBackupEmail] = useState("");
   const [backupEmailError, setBackupEmailError] = useState("");
-  const [shareEmail, setShareEmail] = useState("");
 
   const editLink =
     typeof window !== "undefined"
