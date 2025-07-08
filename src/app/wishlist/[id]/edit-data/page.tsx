@@ -6,11 +6,17 @@ import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
-import { WishlistFormValues, wishlistSchema } from "@/app/schemas/wishlist.schema";
+import {
+  WishlistFormValues,
+  wishlistSchema,
+} from "@/app/schemas/wishlist.schema";
 import { useRouter, useParams } from "next/navigation";
 import { Ring2 } from "ldrs/react";
 import "ldrs/react/Ring2.css";
-import { useUpdateWishlistInfo, useWishlistQuery } from "@/lib/tanstack/useWishListQueryMutate";
+import {
+  useUpdateWishlistInfo,
+  useWishlistQuery,
+} from "@/lib/tanstack/useWishListQueryMutate";
 import { useEffect } from "react";
 import {
   Select,
@@ -71,24 +77,34 @@ export default function EditWishlistInfoPage() {
   };
 
   if (isLoading) return <div className="p-4">Laden...</div>;
-  if (!data?.wishlist) return <div className="p-4 text-red-500">Wishlist not found</div>;
+  if (!data?.wishlist)
+    return <div className="p-4 text-red-500">Wishlist not found</div>;
 
   return (
     <main className="pb-16">
-      <h1 className="text-xl font-semibold mb-6 text-center">Gegevens aanpassen</h1>
-      <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-6 pb-10">
+      <h1 className="mb-6 text-center text-xl font-semibold">
+        Gegevens aanpassen
+      </h1>
+      <form
+        onSubmit={handleSubmit(onSubmit)}
+        className="flex flex-col gap-6 pb-10"
+      >
         <div className="relative">
           <Label htmlFor="name">Naam verlanglijstje</Label>
           <Input id="name" {...register("name")} />
-          <p className="absolute bottom-[-1.25rem] left-0 text-sm text-red-500 h-5">
+          <p className="absolute bottom-[-1.25rem] left-0 h-5 text-sm text-red-500">
             {errors.name?.message ?? ""}
           </p>
         </div>
 
         <div className="relative">
           <Label htmlFor="age">Leeftijd</Label>
-          <Input id="age" type="number" {...register("age", { valueAsNumber: true })} />
-          <p className="absolute bottom-[-1.25rem] left-0 text-sm text-red-500 h-5">
+          <Input
+            id="age"
+            type="number"
+            {...register("age", { valueAsNumber: true })}
+          />
+          <p className="absolute bottom-[-1.25rem] left-0 h-5 text-sm text-red-500">
             {errors.age?.message ?? ""}
           </p>
         </div>
@@ -99,7 +115,11 @@ export default function EditWishlistInfoPage() {
             name="gender"
             control={control}
             render={({ field }) => (
-              <Select key={field.value ?? 'empty'} onValueChange={field.onChange} value={field.value}>
+              <Select
+                key={field.value ?? "empty"}
+                onValueChange={field.onChange}
+                value={field.value}
+              >
                 <SelectTrigger className="w-full">
                   <SelectValue placeholder="Selecteer" />
                 </SelectTrigger>
@@ -110,7 +130,7 @@ export default function EditWishlistInfoPage() {
               </Select>
             )}
           />
-          <p className="absolute bottom-[-1.25rem] left-0 text-sm text-red-500 h-5">
+          <p className="absolute bottom-[-1.25rem] left-0 h-5 text-sm text-red-500">
             {errors.gender?.message ?? ""}
           </p>
         </div>
@@ -118,15 +138,19 @@ export default function EditWishlistInfoPage() {
         <div className="relative">
           <Label htmlFor="interests">Interesses</Label>
           <Input id="interests" {...register("interests")} />
-          <p className="absolute bottom-[-1.25rem] left-0 text-sm text-red-500 h-5">
+          <p className="absolute bottom-[-1.25rem] left-0 h-5 text-sm text-red-500">
             {errors.interests?.message ?? ""}
           </p>
         </div>
 
         <div className="relative">
           <Label htmlFor="maxPrice">Maximale prijs (€)</Label>
-          <Input id="maxPrice" type="number" {...register("maxPrice", { valueAsNumber: true })} />
-          <p className="absolute bottom-[-1.25rem] left-0 text-sm text-red-500 h-5">
+          <Input
+            id="maxPrice"
+            type="number"
+            {...register("maxPrice", { valueAsNumber: true })}
+          />
+          <p className="absolute bottom-[-1.25rem] left-0 h-5 text-sm text-red-500">
             {errors.maxPrice?.message ?? ""}
           </p>
         </div>
@@ -137,20 +161,36 @@ export default function EditWishlistInfoPage() {
             AI-ondersteuning?
           </Label>
         </div>
-        <Button type="submit" className="mt-4 w-full" disabled={isPending} loading={isPending}>
+        <Button
+          type="submit"
+          className="mt-4 w-full"
+          disabled={isPending}
+          loading={isPending}
+        >
           {isPending ? (
-            <div className="flex items-center justify-center w-full gap-2">
+            <div className="flex w-full items-center justify-center gap-2">
               Opslaan
-              <Ring2 size="20" stroke="3" strokeLength="0.25" bgOpacity="0.1" speed="0.8" color="white" />
+              <Ring2
+                size="20"
+                stroke="3"
+                strokeLength="0.25"
+                bgOpacity="0.1"
+                speed="0.8"
+                color="white"
+              />
             </div>
           ) : (
             "Opslaan"
           )}
         </Button>
-        <Button variant="link" type="button" onClick={() => router.push(`/wishlist/${id}/edit`)}>
+        <Button
+          variant="link"
+          type="button"
+          onClick={() => router.push(`/wishlist/${id}/edit`)}
+        >
           Terug
         </Button>
       </form>
     </main>
   );
-} 
+}

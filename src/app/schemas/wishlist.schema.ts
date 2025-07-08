@@ -1,16 +1,16 @@
-import { z } from 'zod';
+import { z } from "zod";
 
 export const wishlistSchema = z.object({
-  name: z.string().min(1, "Required"),
+  name: z.string().min(1, "Verplicht veld"),
   age: z
-    .number({ invalid_type_error: "Age must be a number" })
-    .min(0, "Too young")
-    .max(120, "Too old"),
-  gender: z.string().min(1, "Required"),
-  interests: z.string().min(1, "Required"),
+    .number({ invalid_type_error: "Leeftijd moet een getal zijn" })
+    .min(0, "Te jong")
+    .max(120, "Te oud"),
+  gender: z.string().min(1, "Verplicht veld"),
+  interests: z.string().min(1, "Verplicht veld"),
   maxPrice: z
-    .number({ invalid_type_error: "Max price must be a number" })
-    .positive("Must be positive")
+    .number({ invalid_type_error: "De maximumprijs moet een getal zijn" })
+    .positive("Moet positief zijn")
     .optional(),
   aiSupport: z.boolean(),
 });

@@ -16,16 +16,20 @@ export const metadata: Metadata = {
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
-export default function RootLayout({ children }: { children: React.ReactNode }) {
+export default function RootLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <html lang="en">
       <body
         className={cn(
           GeistSans.className,
-          "min-h-screen bg-background text-foreground antialiased"
+          "bg-background text-foreground min-h-screen antialiased",
         )}
       >
-        <div className="max-w-[480px] mx-auto px-4 py-6 flex flex-col gap-6">
+        <div className="mx-auto flex max-w-[480px] flex-col gap-6 px-4 py-6">
           <AppProviders>{children}</AppProviders>
         </div>
       </body>

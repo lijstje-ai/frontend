@@ -1,8 +1,18 @@
-import { useQuery } from '@tanstack/react-query';
-import { addByUrl, addWishListItem, createWishlist, deleteWishListItem, getWishlist, searchBolProducts, sendEmail, updateBoughtBy, updateWishlistInfo } from '../api';
-import { useMutation, useQueryClient } from '@tanstack/react-query';
-import { Recommendation } from '@/types/wishlist.type';
-import { WishlistFormValues } from '@/app/schemas/wishlist.schema';
+import { useQuery } from "@tanstack/react-query";
+import {
+  addByUrl,
+  addWishListItem,
+  createWishlist,
+  deleteWishListItem,
+  getWishlist,
+  searchBolProducts,
+  sendEmail,
+  updateBoughtBy,
+  updateWishlistInfo,
+} from "../api";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Recommendation } from "@/types/wishlist.type";
+import { WishlistFormValues } from "@/app/schemas/wishlist.schema";
 
 export const useCreateWishlistMutation = () => {
   return useMutation({
@@ -12,7 +22,7 @@ export const useCreateWishlistMutation = () => {
 
 export const useWishlistQuery = (id: string) => {
   return useQuery({
-    queryKey: ['wishlist', id],
+    queryKey: ["wishlist", id],
     queryFn: () => getWishlist(id),
     enabled: !!id,
   });
@@ -24,7 +34,7 @@ export const useAddWishListItem = (wishlistId: string) => {
     mutationFn: (item: Recommendation) => addWishListItem(wishlistId, item),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['wishlist', wishlistId],
+        queryKey: ["wishlist", wishlistId],
       });
     },
   });
@@ -37,7 +47,7 @@ export const useUpdateBoughtBy = (wishlistId: string) => {
       updateBoughtBy(wishlistId, payload.itemId, payload.buyer),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['wishlist', wishlistId],
+        queryKey: ["wishlist", wishlistId],
       });
     },
   });
@@ -49,7 +59,7 @@ export const useDeleteWishListItem = (wishlistId: string) => {
     mutationFn: (itemId: string) => deleteWishListItem(wishlistId, itemId),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['wishlist', wishlistId],
+        queryKey: ["wishlist", wishlistId],
       });
     },
   });
@@ -57,7 +67,7 @@ export const useDeleteWishListItem = (wishlistId: string) => {
 
 export const useSearchBolProductsQuery = (query: string) => {
   return useQuery({
-    queryKey: ['bol-products', query],
+    queryKey: ["bol-products", query],
     queryFn: () => searchBolProducts(query),
     enabled: !!query,
   });
@@ -70,7 +80,7 @@ export const useAddByUrlMutation = () => {
     mutationFn: addByUrl,
     onSuccess: (_, variables) => {
       queryClient.invalidateQueries({
-        queryKey: ['wishlist', variables.wishlistId],
+        queryKey: ["wishlist", variables.wishlistId],
       });
     },
   });
@@ -80,10 +90,10 @@ export const useSendEmail = () => {
   return useMutation({
     mutationFn: sendEmail,
     onSuccess: (data) => {
-      console.log('Email sent:', data);
+      console.log("Email sent:", data);
     },
     onError: (error) => {
-      console.error('Email sending error:', error);
+      console.error("Email sending error:", error);
     },
   });
 };
@@ -95,7 +105,7 @@ export const useUpdateWishlistInfo = (wishlistId: string) => {
       updateWishlistInfo(wishlistId, data),
     onSuccess: () => {
       queryClient.invalidateQueries({
-        queryKey: ['wishlist', wishlistId],
+        queryKey: ["wishlist", wishlistId],
       });
     },
   });
