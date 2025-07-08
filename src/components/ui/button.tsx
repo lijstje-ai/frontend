@@ -11,7 +11,7 @@ const buttonVariants = cva(
     variants: {
       variant: {
         default:
-          "bg-primary text-primary-foreground shadow-xs hover:bg-primary/90",
+          "bg-[#dd524c] text-primary-foreground shadow-xs hover:bg-[#dd534c]/90",
         destructive:
           "bg-destructive text-white shadow-xs hover:bg-destructive/90 focus-visible:ring-destructive/20 dark:focus-visible:ring-destructive/40 dark:bg-destructive/60",
         outline:
@@ -60,7 +60,7 @@ function Button({
     >
       {size === "icon" ? (
         loading ? (
-          <Ring size={18} stroke={5} speed={2} color="#fff" />
+          <Ring size={18} stroke={2.5} speed={2} color="#fff" />
         ) : (
           children
         )
@@ -69,7 +69,7 @@ function Button({
           {children}
           {loading && (
             <span className="ml-2 flex items-center">
-              <Ring size={18} stroke={5} speed={2} color="#fff" />
+              <Ring size={18} stroke={2.5} speed={2} color="#fff" />
             </span>
           )}
         </>

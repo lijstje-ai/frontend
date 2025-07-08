@@ -11,8 +11,8 @@ import {
   wishlistSchema,
 } from "@/app/schemas/wishlist.schema";
 import { useRouter, useParams } from "next/navigation";
-import { Ring2 } from "ldrs/react";
-import "ldrs/react/Ring2.css";
+import { Ring } from "ldrs/react";
+import "ldrs/react/Ring.css";
 import {
   useUpdateWishlistInfo,
   useWishlistQuery,
@@ -170,14 +170,7 @@ export default function EditWishlistInfoPage() {
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">
               Opslaan
-              <Ring2
-                size="20"
-                stroke="3"
-                strokeLength="0.25"
-                bgOpacity="0.1"
-                speed="0.8"
-                color="white"
-              />
+              <Ring size="20" stroke="2.6" speed="2" color="white" />
             </div>
           ) : (
             "Opslaan"

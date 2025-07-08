@@ -45,10 +45,10 @@ export const BolProductSearch = ({ onAdd }: Props) => {
 
   return (
     <div ref={wrapperRef} className="relative w-full max-w-md">
-      <Label htmlFor="search">Bijv. Lego hijskraan</Label>
+      <Label htmlFor="search">Zoek in webshops</Label>
       <Input
         id="search"
-        placeholder="Example: Lego crane"
+        placeholder="Bijv. Lego hijskraan"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
         className="w-full"
@@ -58,7 +58,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
         <ul className="absolute top-full left-0 z-50 mt-2 max-h-96 w-full overflow-hidden overflow-y-auto rounded-md border bg-white shadow">
           {isFetching ? (
             <li className="flex items-center justify-center p-4 text-center text-sm text-gray-500">
-              <Ring size={18} stroke={5} speed={2} color="currentColor" />
+              <Ring size={20} stroke={2.5} speed={2} color="currentColor" />
             </li>
           ) : data && data.length > 0 ? (
             data.map((product) => (

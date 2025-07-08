@@ -9,7 +9,7 @@ import { Label } from "@/components/ui/label";
 import { WishlistFormValues, wishlistSchema } from "./schemas/wishlist.schema";
 import { useRouter } from "next/navigation";
 import { Ring } from "ldrs/react";
-import "ldrs/react/Ring2.css";
+import "ldrs/react/Ring.css";
 import { useCreateWishlistMutation } from "@/lib/tanstack/useWishListQueryMutate";
 import { useState } from "react";
 import {
@@ -44,7 +44,8 @@ export default function CreateWishlistPage() {
 
     mutate(data, {
       onSuccess: ({ id }) => {
-        router.push(`/wishlist/${id}/edit`);
+        console.log('redirect', id)
+        // router.push(`/wishlist/${id}/edit`);
       },
       onError: (error) => {
         console.error("Error creating wishlist:", error);
@@ -170,30 +171,20 @@ export default function CreateWishlistPage() {
           type="submit"
           className="mt-4 w-full"
           disabled={isPending}
-          loading={isPending}
         >
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">
               Bezig met maken
               <Ring
                 size="20"
-                stroke="3"
-                bgOpacity="0.1"
-                speed="0.8"
+                stroke="2.6"
+                speed="2"
                 color="white"
               />
             </div>
           ) : (
             "Aanmaken"
           )}
-
-          <Ring
-            size="20"
-            stroke="3"
-            bgOpacity="0.1"
-            speed="0.8"
-            color="white"
-          />
         </Button>
       </form>
     </main>

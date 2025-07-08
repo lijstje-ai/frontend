@@ -12,6 +12,7 @@ import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
 import { Card } from "@/components/ui/card";
 import { useParams } from "next/navigation";
+import Link from "next/link";
 import {
   useAddByUrlMutation,
   useAddWishListItem,
@@ -62,7 +63,6 @@ export default function EditWishlistPage() {
   const [backupEmail, setBackupEmail] = useState("");
   const [backupEmailError, setBackupEmailError] = useState("");
   const [shareEmail, setShareEmail] = useState("");
-  const [shareEmailError, setShareEmailError] = useState("");
 
   const editLink =
     typeof window !== "undefined"
@@ -175,29 +175,6 @@ export default function EditWishlistPage() {
     }
   };
 
-  const handleShareEmailSubmit = async () => {
-    if (!shareEmail || !isValidEmail(shareEmail)) {
-      setShareEmailError("Voer een geldig e-mailadres in");
-      return;
-    }
-    try {
-      sendEmail(
-        { to: shareEmail, shareLink: shareLink },
-        {
-          onSuccess: (data) => {
-            toast.success(data);
-          },
-          onError: (error) => {
-            toast.success(error.message || "");
-          },
-        },
-      );
-      setShareEmail("");
-    } catch (error) {
-      console.log("Fout bij het verzenden van de e-mail:", error);
-    }
-  };
-
   if (isLoading) return <div className="p-4">Laden...</div>;
   if (!data)
     return (
@@ -236,11 +213,7 @@ export default function EditWishlistPage() {
           variant="outline"
           className="flex w-full items-center justify-between"
         >
-          <span>
-            {isExpanded
-              ? "Toon minder Aanbevelingen"
-              : "Toon meer Aanbevelingen"}
-          </span>
+          <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
           {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
         </Button>
 
@@ -391,6 +364,10 @@ export default function EditWishlistPage() {
                   >
                     {item.title}
                   </a>
+
+                  <span className="text-sm font-bold select-none mt-4">
+                    €{item.price?.toFixed(2).replace(".00", "")}
+                  </span>
                 </div>
                 <div className="ml-2 flex min-w-[90px] flex-col items-end justify-center gap-1">
                   {!item.bought_by && (
@@ -403,9 +380,7 @@ export default function EditWishlistPage() {
                       <Trash2 size={18} />
                     </Button>
                   )}
-                  <span className="text-lg font-bold text-red-600 select-none">
-                    €{item.price?.toFixed(2).replace(".00", "")}
-                  </span>
+
                   {item.bought_by ? (
                     <Button
                       size="sm"
@@ -419,8 +394,9 @@ export default function EditWishlistPage() {
                     <Dialog>
                       <DialogTrigger asChild>
                         <Button
-                          className="mt-1 flex h-10 w-[90px] items-center justify-center bg-black text-base text-white hover:bg-neutral-800"
+                          className="mt-1 flex w-[90px] items-center justify-center text-base text-white"
                           aria-label="Bekijk"
+                          size="sm"
                         >
                           Bekijk
                         </Button>
@@ -460,14 +436,14 @@ export default function EditWishlistPage() {
                                   <DialogTitle>Markeer als gekocht</DialogTitle>
                                 </DialogHeader>
                                 <p className="text-muted-foreground text-sm">
-                                  Laat de eigenaar van de verlanglijst weten dat
-                                  je dit cadeau hebt gekocht.
+                                  Laat iedereen weten dat je dit cadeau hebt
+                                  gekocht.
                                 </p>
                                 <div className="mt-4 space-y-2">
-                                  <Label htmlFor="buyer">Je naam</Label>
+                                  <Label htmlFor="buyer">Jouw naam</Label>
                                   <Input
                                     id="buyer"
-                                    placeholder="Claire"
+                                    placeholder=""
                                     value={buyerName}
                                     onChange={(e) =>
                                       setBuyerName(e.target.value)
@@ -509,14 +485,14 @@ export default function EditWishlistPage() {
             <DialogHeader>
               <DialogTitle>Deel je verlanglijstje</DialogTitle>
             </DialogHeader>
-            <div className="flex flex-row items-center justify-center gap-4 pt-4">
+            <div className="flex flex-row items-center gap-4 pt-4">
               <WhatsappShareButton url={shareLink}>
                 <WhatsappIcon round size={48} />
               </WhatsappShareButton>
               <TelegramShareButton url={shareLink}>
                 <TelegramIcon round size={48} />
               </TelegramShareButton>
-              <FacebookMessengerShareButton url={shareLink} appId="YOUR_APP_ID">
+              <FacebookMessengerShareButton url={shareLink} appId="">
                 <FacebookMessengerIcon round size={48} />
               </FacebookMessengerShareButton>
               <a
@@ -552,29 +528,6 @@ export default function EditWishlistPage() {
               >
                 Kopieer link
               </Button>
-            </div>
-            <div className="mt-4">
-              <Label htmlFor="share-email">Deel via E-mail</Label>
-              <div className="mt-1 flex gap-2">
-                <Input
-                  id="share-email"
-                  placeholder="voorbeeld@voorbeeld.com"
-                  value={shareEmail}
-                  onChange={(e) => setShareEmail(e.target.value)}
-                  className="w-full"
-                />
-                <Button
-                  type="button"
-                  onClick={handleShareEmailSubmit}
-                  disabled={isLoadingEmail}
-                  loading={isLoadingEmail}
-                >
-                  Verstuur E-mail
-                </Button>
-              </div>
-              {shareEmailError && (
-                <p className="text-sm text-red-500">{shareEmailError}</p>
-              )}
             </div>
           </DialogContent>
         </Dialog>
@@ -617,15 +570,14 @@ export default function EditWishlistPage() {
           </DialogHeader>
 
           <p className="text-muted-foreground text-sm">
-            Laat de eigenaar van de verlanglijst weten dat je dit cadeau hebt
-            gekocht.
+            Laat iedereen weten dat je dit cadeau hebt gekocht.
           </p>
 
           <div className="mt-4 space-y-2">
-            <Label htmlFor="buyer">Je naam</Label>
+            <Label htmlFor="buyer">Jouw naam</Label>
             <Input
               id="buyer"
-              placeholder="Claire"
+              placeholder=""
               value={buyerName}
               onChange={(e) => setBuyerName(e.target.value)}
             />
@@ -637,15 +589,19 @@ export default function EditWishlistPage() {
       </Dialog>
 
       <div className="mt-8 flex w-full items-center justify-between">
-        <a
+        <Link
           href={`/wishlist/${id}/edit-data`}
           className="text-blue-600 hover:underline"
         >
           &lt; Gegevens aanpassen
-        </a>
-        <a href={`/wishlist/${id}`} className="text-blue-600 hover:underline">
+        </Link>
+        <Link
+          href={`/wishlist/${id}`}
+          className="text-blue-600 hover:underline"
+          target="_blank"
+        >
           Naar verlanglijstje &gt;
-        </a>
+        </Link>
       </div>
     </main>
   );

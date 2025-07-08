@@ -89,22 +89,21 @@ export default function WishlistPublicViewPage() {
                 {product.title}
               </p>
             </div>
-            <div className="mt-2 flex w-full items-center justify-between">
-              <span className="text-muted-foreground ml-2 text-xs">&nbsp;</span>
-              <span className="mr-2 text-base font-bold text-red-600">
+            <div className="mt-2 w-full text-center">
+              <span className="mr-2 text-sm font-bold">
                 €{product.price}
               </span>
             </div>
             <div className="mt-2 flex w-full justify-center">
               {product.bought_by ? (
-                <span className="text-muted-foreground text-xs whitespace-nowrap">
+                <span className="text-xs whitespace-nowrap text-green-700">
                   Gekocht door {product.bought_by}
                 </span>
               ) : (
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      className="h-10 w-[120px] rounded-md bg-black text-base text-white"
+                      className="h-10 w-[120px] rounded-md text-base text-white"
                       onClick={() =>
                         setSelectedProduct({
                           id: product.id,
@@ -154,14 +153,13 @@ export default function WishlistPublicViewPage() {
           </DialogHeader>
 
           <p className="text-muted-foreground mb-4 text-sm">
-            Laat de eigenaar van de verlanglijst weten dat je dit cadeau hebt
-            gekocht.
+            Laat iedereen weten dat je dit cadeau hebt gekocht.
           </p>
 
-          <Label htmlFor="buyer">Je naam</Label>
+          <Label htmlFor="buyer">Jouw naam</Label>
           <Input
             id="buyer"
-            placeholder="Claire"
+            placeholder=""
             value={buyerName}
             onChange={(e) => setBuyerName(e.target.value)}
           />

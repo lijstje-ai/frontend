@@ -13,10 +13,16 @@ import {
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Recommendation } from "@/types/wishlist.type";
 import { WishlistFormValues } from "@/app/schemas/wishlist.schema";
+import { useRouter } from "next/navigation";
 
 export const useCreateWishlistMutation = () => {
+  const router = useRouter();
+
   return useMutation({
     mutationFn: (data: WishlistFormValues) => createWishlist(data),
+    onSuccess: ({ id }) => {
+      router.push(`/wishlist/${id}/edit`);
+    },
   });
 };
 
