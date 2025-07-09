@@ -54,12 +54,14 @@ export const updateWishlistInfo = (
 
 export const searchBolProducts = async (query: string) => {
   if (!query) return [];
+
   const { data } = await axios.get<Recommendation[]>(
     `${process.env.NEXT_PUBLIC_API_URL}/bol/search`,
     {
       params: { q: query },
     },
   );
+
   return data;
 };
 

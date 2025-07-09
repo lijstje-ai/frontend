@@ -79,6 +79,8 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                     € {product.price.toFixed(2)}
                   </p>
                 </div>
+
+                {/* <div>{product.rating}</div> */}
                 <Button
                   size="sm"
                   onClick={() => {

@@ -18,6 +18,7 @@ import {
   useWishlistQuery,
 } from "@/lib/tanstack/useWishListQueryMutate";
 import Image from "next/image";
+import { RatingStars } from "@/components/rating";
 
 export default function WishlistPublicViewPage() {
   const params = useParams();
@@ -89,10 +90,11 @@ export default function WishlistPublicViewPage() {
                 {product.title}
               </p>
             </div>
+
+            {product.rating && <RatingStars rating={product.rating} />}
+
             <div className="mt-2 w-full text-center">
-              <span className="mr-2 text-sm font-bold">
-                €{product.price}
-              </span>
+              <span className="mr-2 text-sm font-bold">€{product.price}</span>
             </div>
             <div className="mt-2 flex w-full justify-center">
               {product.bought_by ? (

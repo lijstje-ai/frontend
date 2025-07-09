@@ -1,9 +1,7 @@
 "use client";
 import {
-  FacebookMessengerShareButton,
   WhatsappShareButton,
   TelegramShareButton,
-  FacebookMessengerIcon,
   WhatsappIcon,
   TelegramIcon,
 } from "react-share";
@@ -18,7 +16,7 @@ import {
   useAddWishListItem,
   useDeleteWishListItem,
   useSendEmail,
-  useUpdateBoughtBy,
+  // useUpdateBoughtBy,
   useWishlistQuery,
 } from "@/lib/tanstack/useWishListQueryMutate";
 import Image from "next/image";
@@ -36,6 +34,7 @@ import { ChevronDown, ChevronUp } from "lucide-react";
 import { BolProductSearch } from "@/components/ui/searchBol";
 import { toast } from "react-toastify";
 import { getProductPreviewByUrl } from "@/lib/api";
+import { RatingStars } from "@/components/rating";
 
 export default function EditWishlistPage() {
   const params = useParams();
@@ -45,14 +44,13 @@ export default function EditWishlistPage() {
   const [buyerName, setBuyerName] = useState("");
   const [url, setUrl] = useState("");
   const [error, setError] = useState("");
-  const [chosenItemId, setChosenItemId] = useState<string | null>(null);
 
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [preview, setPreview] = useState<Recommendation | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
 
   const { mutate } = useAddWishListItem(id);
-  const { mutate: markAsBought, isPending: isBuying } = useUpdateBoughtBy(id);
+  // const { mutate: markAsBought } = useUpdateBoughtBy(id);
   const { mutate: deleteItem } = useDeleteWishListItem(id);
   const { mutate: addByUrl, isPending } = useAddByUrlMutation();
 
@@ -121,23 +119,23 @@ export default function EditWishlistPage() {
     );
   };
 
-  const handleMarkAsBought = () => {
-    setIsMarkOpen(true);
-    setBuyerName("");
+  // const handleMarkAsBought = () => {
+  //   setIsMarkOpen(true);
+  //   setBuyerName("");
 
-    markAsBought(
-      {
-        itemId: chosenItemId!,
-        buyer: buyerName,
-      },
-      {
-        onSettled: () => {
-          setIsMarkOpen(false);
-          setLoadingItemId(null);
-        },
-      },
-    );
-  };
+  //   markAsBought(
+  //     {
+  //       itemId: chosenItemId!,
+  //       buyer: buyerName,
+  //     },
+  //     {
+  //       onSettled: () => {
+  //         setIsMarkOpen(false);
+  //         setLoadingItemId(null);
+  //       },
+  //     },
+  //   );
+  // };
 
   const handleAdd = (item: Recommendation) => {
     setLoadingItemId(item.id);
@@ -192,10 +190,7 @@ export default function EditWishlistPage() {
   );
   const isValidRecommendations = recommendations.length > 0;
 
-  console.log(
-    "Filtered Recommendations for AI Section:",
-    filteredRecommendationsForAISection,
-  );
+  console.log("Filtered Recommendations for AI Section:", data);
 
   if (!wishlist)
     return <div className="p-4 text-red-500">Wishlist not found</div>;
@@ -354,117 +349,46 @@ export default function EditWishlistPage() {
                   height={64}
                   className="h-16 w-16 flex-shrink-0 rounded object-cover"
                 />
-                <div className="flex min-w-0 flex-1 flex-col justify-center">
-                  <a
-                    href={item.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="line-clamp-2 block text-sm leading-tight font-semibold text-blue-600 hover:text-blue-800 hover:underline"
+                <div className="flex flex-col gap-2">
+                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                    <a
+                      href={item.link}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="line-clamp-2 block text-sm leading-tight font-semibold text-blue-600 hover:text-blue-800 hover:underline"
+                    >
+                      {item.title}
+                    </a>
+
+                    {item.rating && <RatingStars rating={item.rating} />}
+
+                    <span className="text-sm font-bold select-none">
+                      €{item.price?.toFixed(2).replace(".00", "")}
+                    </span>
+                  </div>
+                  <div className="">
+                    {item.bought_by ? (
+                      <p className="text-xs text-green-700 italic">
+                        Gekocht door {item.bought_by}
+                      </p>
+                    ) : (
+                      <p className="text-xs text-red-600 italic">
+                        Germarkeerd als gekocht door{" "}
+                      </p>
+                    )}
+                  </div>
+                </div>
+
+                {!item.bought_by && (
+                  <Button
+                    variant="ghost"
+                    className="flex h-8 w-8 items-center justify-center rounded-full border border-red-500 p-0 text-red-500 transition-colors hover:bg-red-500 hover:text-white"
+                    onClick={() => deleteItem(item.id)}
+                    aria-label="Delete"
                   >
-                    {item.title}
-                  </a>
-
-                  <span className="text-sm font-bold select-none mt-4">
-                    €{item.price?.toFixed(2).replace(".00", "")}
-                  </span>
-                </div>
-                <div className="ml-2 flex min-w-[90px] flex-col items-end justify-center gap-1">
-                  {!item.bought_by && (
-                    <Button
-                      variant="ghost"
-                      className="flex h-8 w-8 items-center justify-center rounded-full border border-red-500 p-0 text-red-500 transition-colors hover:bg-red-500 hover:text-white"
-                      onClick={() => deleteItem(item.id)}
-                      aria-label="Delete"
-                    >
-                      <Trash2 size={18} />
-                    </Button>
-                  )}
-
-                  {item.bought_by ? (
-                    <Button
-                      size="sm"
-                      variant="secondary"
-                      disabled
-                      className="mt-1 w-[90px] rounded-full text-xs"
-                    >
-                      Gekocht door {item.bought_by}
-                    </Button>
-                  ) : (
-                    <Dialog>
-                      <DialogTrigger asChild>
-                        <Button
-                          className="mt-1 flex w-[90px] items-center justify-center text-base text-white"
-                          aria-label="Bekijk"
-                          size="sm"
-                        >
-                          Bekijk
-                        </Button>
-                      </DialogTrigger>
-                      <DialogContent>
-                        <DialogHeader>
-                          <DialogTitle>{item.title}</DialogTitle>
-                        </DialogHeader>
-                        <div className="space-y-4">
-                          <a
-                            href={item.link}
-                            target="_blank"
-                            rel="noopener noreferrer"
-                            className="block"
-                          >
-                            <Button className="w-full">Koop op bol.com</Button>
-                          </a>
-                          <Dialog>
-                            <DialogTrigger asChild>
-                              <Button
-                                variant="outline"
-                                className="w-full"
-                                onClick={() => {
-                                  setChosenItemId(item.id);
-                                  setIsMarkOpen(true);
-                                }}
-                              >
-                                Markeer als gekocht
-                              </Button>
-                            </DialogTrigger>
-                            <Dialog
-                              open={isMarkOpen}
-                              onOpenChange={setIsMarkOpen}
-                            >
-                              <DialogContent>
-                                <DialogHeader>
-                                  <DialogTitle>Markeer als gekocht</DialogTitle>
-                                </DialogHeader>
-                                <p className="text-muted-foreground text-sm">
-                                  Laat iedereen weten dat je dit cadeau hebt
-                                  gekocht.
-                                </p>
-                                <div className="mt-4 space-y-2">
-                                  <Label htmlFor="buyer">Jouw naam</Label>
-                                  <Input
-                                    id="buyer"
-                                    placeholder=""
-                                    value={buyerName}
-                                    onChange={(e) =>
-                                      setBuyerName(e.target.value)
-                                    }
-                                  />
-                                  <Button
-                                    className="mt-2 w-full"
-                                    onClick={handleMarkAsBought}
-                                    disabled={isBuying || !buyerName}
-                                    loading={isBuying}
-                                  >
-                                    Verzenden
-                                  </Button>
-                                </div>
-                              </DialogContent>
-                            </Dialog>
-                          </Dialog>
-                        </div>
-                      </DialogContent>
-                    </Dialog>
-                  )}
-                </div>
+                    <Trash2 size={18} />
+                  </Button>
+                )}
               </Card>
             ))
           ) : (
@@ -478,7 +402,7 @@ export default function EditWishlistPage() {
       <section className="space-y-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="w-full">Deel verlanglijst</Button>
+            <Button className="w-full">Deel verlanglijstje</Button>
           </DialogTrigger>
           <DialogContent className="max-w-sm">
             <DialogHeader>
@@ -491,9 +415,6 @@ export default function EditWishlistPage() {
               <TelegramShareButton url={shareLink}>
                 <TelegramIcon round size={48} />
               </TelegramShareButton>
-              <FacebookMessengerShareButton url={shareLink} appId="">
-                <FacebookMessengerIcon round size={48} />
-              </FacebookMessengerShareButton>
               <a
                 href={`mailto:?subject=Wishlist&body=${encodeURIComponent(shareLink)}`}
                 target="_blank"
@@ -580,7 +501,7 @@ export default function EditWishlistPage() {
               value={buyerName}
               onChange={(e) => setBuyerName(e.target.value)}
             />
-            <Button className="mt-2 w-full" onClick={handleMarkAsBought}>
+            <Button className="mt-2 w-full">
               Verzenden
             </Button>
           </div>
