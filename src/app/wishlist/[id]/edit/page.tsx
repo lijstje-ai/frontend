@@ -22,7 +22,7 @@ import {
 import Image from "next/image";
 import { Recommendation } from "@/types/wishlist.type";
 import { useState, useEffect } from "react";
-import { Trash2 } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -186,7 +186,10 @@ export default function EditWishlistPage() {
 
   const filteredRecommendationsForAISection = recommendations.filter(
     (item) =>
-      !wishListItemsIds.includes(item.id) && item.wishlist_id === wishlist.id,
+      !wishListItemsIds.includes(item.id) &&
+      item.wishlist_id === wishlist.id &&
+      item.rating &&
+      item.rating > 0,
   );
   const isValidRecommendations = recommendations.length > 0;
 
@@ -217,12 +220,11 @@ export default function EditWishlistPage() {
           }`}
         >
           {isExpanded && isValidRecommendations ? (
-            <div className="space-y-1">
+            <div className="space-y-2">
               {filteredRecommendationsForAISection.slice(0, 10).map((item) => (
                 <Card
                   key={item.id}
-                  className="flex flex-row items-center gap-3 p-3"
-                  style={{ minHeight: 80 }}
+                  className="flex min-h-20 flex-row items-center gap-3 p-3"
                 >
                   <Image
                     src={item.image}
@@ -231,7 +233,7 @@ export default function EditWishlistPage() {
                     height={64}
                     className="h-16 w-16 flex-shrink-0 rounded object-cover"
                   />
-                  <div className="flex min-w-0 flex-1 flex-col justify-center">
+                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                     <a
                       href={item.link}
                       target="_blank"
@@ -240,27 +242,34 @@ export default function EditWishlistPage() {
                     >
                       {item.title}
                     </a>
-                  </div>
-                  <div className="ml-2 flex min-w-[70px] flex-col items-center justify-center">
-                    <span className="text-lg font-bold text-red-600 select-none">
+
+                    {typeof item.rating === "number" && item.rating > 0 && (
+                      <RatingStars rating={item.rating} />
+                    )}
+
+                    <span className="text-sm font-bold select-none">
                       €{item.price.toFixed(2).replace(".00", "")}
                     </span>
+                  </div>
+                  <div className="ml-2 flex min-w-[70px] flex-col items-center justify-center">
                     <Button
                       onClick={() => handleAdd(item)}
                       disabled={loadingItemId === item.id}
                       loading={loadingItemId === item.id}
-                      size="icon"
-                      className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-black text-2xl text-white hover:bg-neutral-800"
-                      style={{ minWidth: 40, minHeight: 40 }}
+                      className="mt-1 flex h-10 w-10 items-center justify-center rounded-full text-white"
                       aria-label="Add"
                     >
-                      +
+                      <Plus className="size-6" strokeWidth={2.5} />
                     </Button>
                   </div>
                 </Card>
               ))}
             </div>
           ) : null}
+
+          {filteredRecommendationsForAISection.length === 0 && (
+            <p className="text-center text-sm text-gray-700">Geen suggesties</p>
+          )}
         </div>
       </section>
 
@@ -501,9 +510,7 @@ export default function EditWishlistPage() {
               value={buyerName}
               onChange={(e) => setBuyerName(e.target.value)}
             />
-            <Button className="mt-2 w-full">
-              Verzenden
-            </Button>
+            <Button className="mt-2 w-full">Verzenden</Button>
           </div>
         </DialogContent>
       </Dialog>

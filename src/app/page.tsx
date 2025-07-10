@@ -32,17 +32,12 @@ export default function CreateWishlistPage() {
     setValue,
   } = useForm<WishlistFormValues>({
     resolver: zodResolver(wishlistSchema),
-    defaultValues: {
-      aiSupport: true,
-    },
   });
 
   const onSubmit = (data: WishlistFormValues) => {
-    console.log("Form submitted with data:", data);
-
     mutate(data, {
       onSuccess: ({ id }) => {
-        console.log('redirect', id)
+        console.log("redirect", id);
         // router.push(`/wishlist/${id}/edit`);
       },
       onError: (error) => {
@@ -160,25 +155,29 @@ export default function CreateWishlistPage() {
         </div>
 
         <div className="flex items-center space-x-2">
-          <Checkbox id="aiSupport" {...register("aiSupport")} />
-          <Label htmlFor="aiSupport" className="mb-0">
-            AI-ondersteuning?
-          </Label>
+          <Controller
+            name="aiSupport"
+            control={control}
+            defaultValue={false}
+            render={({ field }) => (
+              <div className="flex items-center space-x-2">
+                <Checkbox
+                  id="aiSupport"
+                  checked={field.value}
+                  onCheckedChange={(val) => field.onChange(!!val)}
+                />
+                <Label htmlFor="aiSupport" className="mb-0">
+                  AI-ondersteuning?
+                </Label>
+              </div>
+            )}
+          />
         </div>
-        <Button
-          type="submit"
-          className="mt-4 w-full"
-          disabled={isPending}
-        >
+        <Button type="submit" className="mt-4 w-full" disabled={isPending}>
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">
               Bezig met maken
-              <Ring
-                size="20"
-                stroke="2.6"
-                speed="2"
-                color="white"
-              />
+              <Ring size="20" stroke="2.6" speed="2" color="white" />
             </div>
           ) : (
             "Aanmaken"
