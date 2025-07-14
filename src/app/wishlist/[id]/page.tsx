@@ -10,8 +10,6 @@ import {
   DialogTrigger,
 } from "@/components/ui/dialog";
 import { Button } from "@/components/ui/button";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
 import { Card } from "@/components/ui/card";
 import {
   useUpdateBoughtBy,
@@ -25,7 +23,6 @@ export default function WishlistPublicViewPage() {
   const wishlistId = typeof params?.id === "string" ? params.id : "";
 
   const [isMarkOpen, setIsMarkOpen] = useState(false);
-  const [buyerName, setBuyerName] = useState("");
   const [selectedProduct, setSelectedProduct] = useState<{
     id: string;
     title: string;
@@ -37,17 +34,16 @@ export default function WishlistPublicViewPage() {
     useUpdateBoughtBy(wishlistId);
 
   const handleConfirm = () => {
-    if (!selectedProduct?.id || !buyerName.trim()) return;
+    if (!selectedProduct?.id) return;
 
     markAsBought(
       {
         itemId: selectedProduct?.id,
-        buyer: buyerName.trim(),
+        buyer: "-",
       },
       {
         onSuccess: () => {
           setIsMarkOpen(false);
-          setBuyerName("");
           setSelectedProduct(null);
         },
       },
@@ -158,19 +154,11 @@ export default function WishlistPublicViewPage() {
             Laat iedereen weten dat je dit cadeau hebt gekocht.
           </p>
 
-          <Label htmlFor="buyer">Jouw naam</Label>
-          <Input
-            id="buyer"
-            placeholder=""
-            value={buyerName}
-            onChange={(e) => setBuyerName(e.target.value)}
-          />
-
           <Button
             className="mt-4 w-full"
             onClick={handleConfirm}
             type="submit"
-            disabled={isMarking || !buyerName.trim()}
+            disabled={isMarking}
             loading={isMarking}
           >
             Verzenden

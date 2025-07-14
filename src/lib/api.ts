@@ -81,6 +81,17 @@ export const addByUrl = async ({ url, wishlistId }: AddByUrlPayload) => {
   }
 };
 
+export const updateGeneratedList = async (wishlistId: string) => {
+  try {
+    await axios.patch(
+      `${process.env.NEXT_PUBLIC_API_URL}/wishlist/update-generated-list/${wishlistId}`,
+    );
+  } catch (e) {
+    console.error("Error adding product by URL:", e);
+    throw e;
+  }
+};
+
 export const sendEmail = async ({
   to,
   shareLink,

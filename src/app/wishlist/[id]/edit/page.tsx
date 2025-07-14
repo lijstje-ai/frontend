@@ -33,8 +33,11 @@ import {
 import { ChevronDown, ChevronUp } from "lucide-react";
 import { BolProductSearch } from "@/components/ui/searchBol";
 import { toast } from "react-toastify";
-import { getProductPreviewByUrl } from "@/lib/api";
+import { getProductPreviewByUrl, updateGeneratedList } from "@/lib/api";
 import { RatingStars } from "@/components/rating";
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+import { Ring } from "ldrs/react";
+import "ldrs/react/Ring.css";
 
 export default function EditWishlistPage() {
   const params = useParams();
@@ -78,6 +81,17 @@ export default function EditWishlistPage() {
       return false;
     }
   };
+
+  const queryClient = useQueryClient();
+
+  const { mutate: updateGeneratedListMutation, isPending: isUpdatePending } =
+    useMutation({
+      mutationFn: (id: string) => updateGeneratedList(id),
+      onSuccess: () => {
+        queryClient.invalidateQueries();
+      },
+      onError: () => {},
+    });
 
   //
   useEffect(() => {
@@ -172,6 +186,10 @@ export default function EditWishlistPage() {
     }
   };
 
+  const handleUseAttempt = () => {
+    updateGeneratedListMutation(wishlist.id);
+  };
+
   if (isLoading) return <div className="p-4">Laden...</div>;
   if (!data)
     return (
@@ -255,11 +273,14 @@ export default function EditWishlistPage() {
                     <Button
                       onClick={() => handleAdd(item)}
                       disabled={loadingItemId === item.id}
-                      loading={loadingItemId === item.id}
                       className="mt-1 flex h-10 w-10 items-center justify-center rounded-full text-white"
                       aria-label="Add"
                     >
-                      <Plus className="size-6" strokeWidth={2.5} />
+                      {loadingItemId === item.id ? (
+                        <Ring size={18} stroke={2.5} speed={2} color="#fff" />
+                      ) : (
+                        <Plus className="size-6" strokeWidth={2.5} />
+                      )}
                     </Button>
                   </div>
                 </Card>
@@ -271,6 +292,15 @@ export default function EditWishlistPage() {
             <p className="text-center text-sm text-gray-700">Geen suggesties</p>
           )}
         </div>
+
+        <Button
+          className="w-full"
+          onClick={handleUseAttempt}
+          disabled={wishlist.generate_attempts < 1 || isUpdatePending}
+          loading={isUpdatePending}
+        >
+          Ververs aanbevelingen ({wishlist.generate_attempts} / 5)
+        </Button>
       </section>
 
       <section className="space-y-4">
@@ -348,17 +378,17 @@ export default function EditWishlistPage() {
             wishlist.wish_list.map((item) => (
               <Card
                 key={item.id}
-                className="relative flex flex-row items-center gap-3 p-3 pr-6"
+                className="relative flex flex-row items-center justify-between gap-3 p-3 pr-6"
                 style={{ minHeight: 80 }}
               >
-                <Image
-                  src={item.image}
-                  alt={item.title}
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 flex-shrink-0 rounded object-cover"
-                />
-                <div className="flex flex-col gap-2">
+                <div className="flex gap-2">
+                  <Image
+                    src={item.image}
+                    alt={item.title}
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                  />
                   <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                     <a
                       href={item.link}
@@ -374,17 +404,18 @@ export default function EditWishlistPage() {
                     <span className="text-sm font-bold select-none">
                       €{item.price?.toFixed(2).replace(".00", "")}
                     </span>
-                  </div>
-                  <div className="">
-                    {item.bought_by ? (
-                      <p className="text-xs text-green-700 italic">
-                        Gekocht door {item.bought_by}
-                      </p>
-                    ) : (
-                      <p className="text-xs text-red-600 italic">
-                        Germarkeerd als gekocht door{" "}
-                      </p>
-                    )}
+
+                    <div className="">
+                      {item.bought_by ? (
+                        <p className="text-xs text-green-700 italic">
+                          Gekocht door {item.bought_by}
+                        </p>
+                      ) : (
+                        <p className="text-xs text-red-600 italic">
+                          Germarkeerd als gekocht door{" "}
+                        </p>
+                      )}
+                    </div>
                   </div>
                 </div>
 

@@ -20,6 +20,7 @@ export interface Wishlist {
   ai_support: boolean;
   created_at: string;
   wish_list: Recommendation[] | [];
+  generate_attempts: number;
 }
 
 export interface WishlistResponse {
