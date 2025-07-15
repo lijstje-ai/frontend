@@ -6,7 +6,7 @@ export const wishlistSchema = z.object({
     .number({ invalid_type_error: "Leeftijd moet een getal zijn" })
     .min(0, "Te jong")
     .max(120, "Te oud"),
-  gender: z.string().min(1, "Verplicht veld"),
+  gender: z.string({ required_error: "Verplicht veld" }).min(1, "Verplicht veld"),
   interests: z.string().min(1, "Verplicht veld"),
   maxPrice: z
     .number({ invalid_type_error: "De maximumprijs moet een getal zijn" })

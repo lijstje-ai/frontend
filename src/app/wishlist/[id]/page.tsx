@@ -145,14 +145,10 @@ export default function WishlistPublicViewPage() {
       </ul>
 
       <Dialog open={isMarkOpen} onOpenChange={setIsMarkOpen}>
-        <DialogContent>
+        <DialogContent className="w-[400px]">
           <DialogHeader>
             <DialogTitle>Markeer als gekocht</DialogTitle>
           </DialogHeader>
-
-          <p className="text-muted-foreground mb-4 text-sm">
-            Laat iedereen weten dat je dit cadeau hebt gekocht.
-          </p>
 
           <Button
             className="mt-4 w-full"

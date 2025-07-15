@@ -14,6 +14,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Recommendation } from "@/types/wishlist.type";
 import { WishlistFormValues } from "@/app/schemas/wishlist.schema";
 import { useRouter } from "next/navigation";
+import { toast } from "react-toastify";
 
 export const useCreateWishlistMutation = () => {
   const router = useRouter();
@@ -42,6 +43,8 @@ export const useAddWishListItem = (wishlistId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", wishlistId],
       });
+
+      toast.success("Succesvol toegevoegd");
     },
   });
 };

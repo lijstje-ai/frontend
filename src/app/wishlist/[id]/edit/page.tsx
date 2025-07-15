@@ -22,7 +22,7 @@ import {
 import Image from "next/image";
 import { Recommendation } from "@/types/wishlist.type";
 import { useState, useEffect } from "react";
-import { Plus, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -299,7 +299,7 @@ export default function EditWishlistPage() {
           disabled={wishlist.generate_attempts < 1 || isUpdatePending}
           loading={isUpdatePending}
         >
-          Ververs aanbevelingen ({wishlist.generate_attempts} / 5)
+          Ververs aanbevelingen ({wishlist.generate_attempts}/5)
         </Button>
       </section>
 
@@ -308,19 +308,21 @@ export default function EditWishlistPage() {
 
         <div className="space-y-2">
           <Label htmlFor="url">Voeg productlink (URL) handmatig toe</Label>
-          <div className="flex gap-2">
+          <div className="flex items-center gap-2">
             <Input
               id="url"
               placeholder="Bijv. https://www.bol.com/..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
+              className="py-5"
             />
             <Button
               type="button"
               onClick={handleSubmit}
               disabled={isPending}
               loading={isPending}
+              variant="outline"
             >
               Toevoegen
             </Button>
@@ -505,13 +507,14 @@ export default function EditWishlistPage() {
                 placeholder="voorbeeld@voorbeeld.com"
                 value={backupEmail}
                 onChange={(e) => setBackupEmail(e.target.value)}
-                className="w-full"
+                className="w-full py-5"
               />
               <Button
                 type="button"
                 onClick={handleBackupEmailSubmit}
                 disabled={isLoadingEmail}
                 loading={isLoadingEmail}
+                variant="outline"
               >
                 Versturen
               </Button>
@@ -546,19 +549,28 @@ export default function EditWishlistPage() {
         </DialogContent>
       </Dialog>
 
-      <div className="mt-8 flex w-full items-center justify-between">
-        <Link
-          href={`/wishlist/${id}/edit-data`}
-          className="text-blue-600 hover:underline"
-        >
-          &lt; Gegevens aanpassen
+      <div className="mt-3 flex w-full items-center justify-between">
+        <Link href={`/wishlist/${id}/edit-data`}>
+          <Button
+            variant="ghost"
+            className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+          >
+            <ChevronLeft size={18} />
+            Gegevens aanpassen
+          </Button>
         </Link>
         <Link
           href={`/wishlist/${id}`}
-          className="text-blue-600 hover:underline"
+          className="flex items-center gap-2 text-sm text-blue-600"
           target="_blank"
         >
-          Naar verlanglijstje &gt;
+          <Button
+            variant="ghost"
+            className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+          >
+            Naar verlanglijstje
+            <ChevronRight size={18} />
+          </Button>
         </Link>
       </div>
     </main>

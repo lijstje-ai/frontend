@@ -165,7 +165,6 @@ export default function EditWishlistInfoPage() {
           type="submit"
           className="mt-4 w-full"
           disabled={isPending}
-          loading={isPending}
         >
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">

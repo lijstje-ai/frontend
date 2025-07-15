@@ -9,6 +9,7 @@ import { useDebounce } from "@/hooks/debounce";
 import Image from "next/image";
 import { Recommendation } from "@/types/wishlist.type";
 import { Ring } from "ldrs/react";
+import { Plus } from "lucide-react";
 
 interface Props {
   onAdd: (product: Recommendation) => void;
@@ -51,7 +52,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
         placeholder="Bijv. Lego hijskraan"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full"
+        className="w-full py-5"
       />
 
       {isDropdownOpen && (
@@ -80,16 +81,14 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                   </p>
                 </div>
 
-                {/* <div>{product.rating}</div> */}
                 <Button
                   size="sm"
                   onClick={() => {
                     onAdd(product);
-                    setIsDropdownOpen(false);
-                    setSearch("");
                   }}
+                  className="flex h-8 w-8 items-center justify-center rounded-full"
                 >
-                  +
+                  <Plus size={19} />
                 </Button>
               </li>
             ))
