@@ -65,7 +65,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
             data.map((product) => (
               <li
                 key={product.link}
-                className="flex items-center gap-2 border-b p-2 last:border-none"
+                className="flex items-center gap-3 border-b p-2 last:border-none"
               >
                 <Image
                   src={product.image}
@@ -75,8 +75,14 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                   className="h-12 w-12 object-cover"
                 />
                 <div className="flex-1">
-                  <p className="text-sm font-medium">{product.title}</p>
-                  <p className="text-xs text-gray-500">
+                  <a
+                    target="_blank"
+                    href={product.link}
+                    className="text-sm leading-4 block text-blue-600 hover:text-blue-500"
+                  >
+                    {product.title}
+                  </a>
+                  <p className="text-sm mt-2 font-semibold text-gray-500">
                     € {product.price.toFixed(2)}
                   </p>
                 </div>
