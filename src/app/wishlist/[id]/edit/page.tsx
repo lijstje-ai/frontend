@@ -22,7 +22,7 @@ import {
 import Image from "next/image";
 import { Recommendation } from "@/types/wishlist.type";
 import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
+import { Check, ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
 import {
   Dialog,
   DialogContent,
@@ -383,7 +383,7 @@ export default function EditWishlistPage() {
                 className="relative flex flex-row items-center justify-between gap-3 p-3 pr-6"
                 style={{ minHeight: 80 }}
               >
-                <div className="flex gap-2">
+                <div className="flex items-center gap-3">
                   <Image
                     src={item.image}
                     alt={item.title}
@@ -408,27 +408,31 @@ export default function EditWishlistPage() {
                     </span>
 
                     <div className="">
-                      {item.bought_by ? (
-                        <p className="text-xs text-green-700 italic">
-                          Gekocht door {item.bought_by}
+                      {item.bought_by !== "" ? (
+                        <p className="text-xs text-green-600 italic">
+                          Gemarkeerd als gekocht
                         </p>
                       ) : (
                         <p className="text-xs text-red-600 italic">
-                          Germarkeerd als gekocht door{" "}
+                          Nog niet gemarkeerd als gekocht Gemarkeerd als gekocht
                         </p>
                       )}
                     </div>
                   </div>
                 </div>
 
-                {!item.bought_by && (
+                {item.bought_by !== "" ? (
+                  <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-400 text-white">
+                    <Check size={22} strokeWidth={2.5} />
+                  </div>
+                ) : (
                   <Button
                     variant="ghost"
-                    className="flex h-8 w-8 items-center justify-center rounded-full border border-red-500 p-0 text-red-500 transition-colors hover:bg-red-500 hover:text-white"
+                    className="flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-red-500 p-0 text-red-500 transition-colors hover:bg-zinc-100 hover:text-red-500"
                     onClick={() => deleteItem(item.id)}
                     aria-label="Delete"
                   >
-                    <Trash2 size={18} />
+                    <Trash2 size={18} strokeWidth={2.5} />
                   </Button>
                 )}
               </Card>
@@ -458,7 +462,7 @@ export default function EditWishlistPage() {
                 <TelegramIcon round size={48} />
               </TelegramShareButton>
               <a
-                href={`mailto:?subject=Wishlist&body=${encodeURIComponent(shareLink)}`}
+                href={`mailto:?subject=${encodeURIComponent(wishlist.name)}&body=${encodeURIComponent(shareLink)}`}
                 target="_blank"
                 rel="noopener noreferrer"
               >

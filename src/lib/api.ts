@@ -38,10 +38,18 @@ export const updateBoughtBy = (
     },
   );
 
-export const deleteWishListItem = (wishlistId: string, itemId: string) =>
-  axios.delete(
-    `${process.env.NEXT_PUBLIC_API_URL}/wishlist/${wishlistId}/items/${itemId}`,
-  );
+export const deleteWishListItem = async (
+  wishlistId: string,
+  itemId: string,
+) => {
+  try {
+    await axios.delete(
+      `${process.env.NEXT_PUBLIC_API_URL}/wishlist/${wishlistId}/items/${itemId}`,
+    );
+  } catch (error) {
+    console.log(error, "deleting error");
+  }
+};
 
 export const updateWishlistInfo = (
   wishlistId: string,

@@ -64,6 +64,7 @@ export const useUpdateBoughtBy = (wishlistId: string) => {
 
 export const useDeleteWishListItem = (wishlistId: string) => {
   const queryClient = useQueryClient();
+  
   return useMutation({
     mutationFn: (itemId: string) => deleteWishListItem(wishlistId, itemId),
     onSuccess: () => {

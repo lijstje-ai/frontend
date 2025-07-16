@@ -59,6 +59,9 @@ export default function WishlistPublicViewPage() {
     );
 
   const wishlist = data.wishlist;
+  const sortedWishlists = wishlist.wish_list.sort(
+    (a, b) => (a.bought_by === "-" ? 1 : 0) - (b.bought_by === "-" ? 1 : 0),
+  );
 
   return (
     <main className="mx-auto max-w-3xl space-y-6 px-4">
@@ -70,7 +73,7 @@ export default function WishlistPublicViewPage() {
       </div>
 
       <ul className="space-y-4">
-        {wishlist.wish_list.map((product) => (
+        {sortedWishlists.map((product) => (
           <Card
             key={product.id}
             className="flex flex-col items-center gap-2 p-4"
@@ -81,6 +84,7 @@ export default function WishlistPublicViewPage() {
               width={100}
               height={100}
             />
+            {/* {(product.image === "" || product.image === null) && <>no image</>} */}
             <div className="flex w-full flex-1 flex-col items-center">
               <p className="w-full text-center text-sm leading-tight font-medium">
                 {product.title}
@@ -95,7 +99,7 @@ export default function WishlistPublicViewPage() {
             <div className="mt-2 flex w-full justify-center">
               {product.bought_by ? (
                 <span className="text-xs whitespace-nowrap text-green-700">
-                  Gekocht door {product.bought_by}
+                  Gemarkeerd als gekocht
                 </span>
               ) : (
                 <Dialog>
@@ -148,6 +152,7 @@ export default function WishlistPublicViewPage() {
         <DialogContent className="w-[400px]">
           <DialogHeader>
             <DialogTitle>Markeer als gekocht</DialogTitle>
+            <p className="text-sm text-zinc-500">Markeer als gekocht, zodat het niet meer aanklikbaar is.</p>
           </DialogHeader>
 
           <Button
