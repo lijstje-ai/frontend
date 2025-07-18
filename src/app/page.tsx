@@ -1,7 +1,13 @@
 "use client";
 
-import { CreateWishlistForm, Header } from "@/components";
-import { Hero, RatingSection, WhySection } from "./_components";
+import { CreateWishlistForm, Footer, Header } from "@/components";
+import {
+  Hero,
+  RatingSection,
+  WhySection,
+  HowItWorksSection,
+  BeginSection,
+} from "./_components";
 
 export default function CreateWishlistPage() {
   return (
@@ -14,7 +20,10 @@ export default function CreateWishlistPage() {
           <CreateWishlistForm />
         </section>
         <WhySection />
+        <HowItWorksSection />
+        <BeginSection />
       </main>
+      <Footer />
     </>
   );
 }

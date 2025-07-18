@@ -71,7 +71,6 @@ export default function WishlistPublicViewPage() {
           Bekijk en markeer cadeaus als gekocht
         </p>
       </div>
-
       <ul className="space-y-4">
         {sortedWishlists.map((product) => (
           <Card
@@ -147,12 +146,13 @@ export default function WishlistPublicViewPage() {
           </Card>
         ))}
       </ul>
-
       <Dialog open={isMarkOpen} onOpenChange={setIsMarkOpen}>
         <DialogContent className="w-[400px]">
           <DialogHeader>
             <DialogTitle>Markeer als gekocht</DialogTitle>
-            <p className="text-sm text-zinc-500">Markeer als gekocht, zodat het niet meer aanklikbaar is.</p>
+            <p className="text-sm text-zinc-500">
+              Markeer als gekocht, zodat het niet meer aanklikbaar is.
+            </p>
           </DialogHeader>
 
           <Button

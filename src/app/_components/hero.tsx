@@ -1,6 +1,10 @@
+import { useScrollToElement } from "@/hooks";
+
 import { Button } from "@/components";
 
 export const Hero = () => {
+  const { scrollToElement } = useScrollToElement();
+
   return (
     <section className="bg-gradient-to-b from-white to-gray-100 px-6 py-10">
       <div className="container mx-auto text-center">
@@ -11,7 +15,7 @@ export const Hero = () => {
           Maak snel en eenvoudig een online verlanglijstje met AI-suggesties en
           deel het gratis met familie en vrienden!
         </p>
-        <Button className="transform px-8 py-3 font-semibold shadow-md transition hover:scale-105">
+        <Button onClick={() => scrollToElement("userForm")} className="transform px-8 py-3 font-semibold shadow-md transition hover:scale-105">
           Start je lijstje
         </Button>
       </div>

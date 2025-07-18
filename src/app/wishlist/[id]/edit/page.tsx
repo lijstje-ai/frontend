@@ -211,14 +211,12 @@ export default function EditWishlistPage() {
   );
   const isValidRecommendations = recommendations.length > 0;
 
-  console.log("Filtered Recommendations for AI Section:", data);
-
   if (!wishlist)
     return <div className="p-4 text-red-500">Wishlist not found</div>;
 
   return (
-    <main className="flex flex-col gap-8">
-      <h1 className="text-2xl font-bold">Cadeaus toevoegen</h1>
+    <main className="flex flex-col bg-gray-50 px-6 py-8">
+      <h1 className="mb-6 text-3xl font-extrabold">Cadeaus toevoegen</h1>
 
       <section className="space-y-4">
         <h2 className="text-lg font-semibold">Aanbevolen door AI</h2>
@@ -304,7 +302,9 @@ export default function EditWishlistPage() {
       </section>
 
       <section className="space-y-4">
-        <BolProductSearch onAdd={handleAdd} />
+        <div className="mt-2">
+          <BolProductSearch onAdd={handleAdd} />
+        </div>
 
         <div className="space-y-2">
           <Label htmlFor="url">Voeg productlink (URL) handmatig toe</Label>

@@ -50,7 +50,10 @@ export const CreateWishlistForm = () => {
   };
 
   return (
-    <div className="border-lightgray container mx-auto max-w-md rounded-xl border bg-white p-6 shadow-sm">
+    <div
+      id="userForm"
+      className="border-lightgray container mx-auto max-w-md scroll-mt-20 rounded-xl border bg-white p-6 shadow-sm"
+    >
       <form onSubmit={handleSubmit(onSubmit)} className="flex flex-col gap-7">
         <div className="relative">
           <Label htmlFor="name">Naam verlanglijstje</Label>
@@ -178,6 +181,7 @@ export const CreateWishlistForm = () => {
                   id="aiSupport"
                   checked={field.value}
                   onCheckedChange={(val) => field.onChange(!!val)}
+                  className="data-[state=checked]:bg-main-blue data-[state=checked]:border-main-blue h-4.5 w-4.5"
                 />
                 <Label htmlFor="aiSupport" className="mb-0">
                   AI-ondersteuning?

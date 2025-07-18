@@ -29,7 +29,7 @@ export default function RootLayout({
           "bg-background text-foreground min-h-screen antialiased",
         )}
       >
-        <div className="flex min-h-full flex-col gap-6 bg-gray-100 py-6">
+        <div className="flex min-h-full flex-col bg-gray-50">
           <AppProviders>{children}</AppProviders>
         </div>
       </body>
