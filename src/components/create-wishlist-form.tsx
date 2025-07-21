@@ -89,20 +89,26 @@ export const CreateWishlistForm = () => {
             control={control}
             render={({ field }) => (
               <Select onValueChange={field.onChange} value={field.value}>
-                <SelectTrigger className="w-full py-6">
+                <SelectTrigger className="w-full py-[25px]">
                   <SelectValue
                     placeholder={
-                      <span className="text-lg font-semibold text-gray-400/80">
+                      <span className="text-[17px] font-semibold text-gray-400/80">
                         Selecteer
                       </span>
                     }
                   />
                 </SelectTrigger>
                 <SelectContent>
-                  <SelectItem value="Male" className="font-semibold">
+                  <SelectItem
+                    value="Male"
+                    className="py-2 text-[17px] font-semibold"
+                  >
                     Man
                   </SelectItem>
-                  <SelectItem value="Female" className="font-semibold">
+                  <SelectItem
+                    value="Female"
+                    className="py-2 text-[17px] font-semibold"
+                  >
                     Vrouw
                   </SelectItem>
                 </SelectContent>

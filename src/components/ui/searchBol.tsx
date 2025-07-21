@@ -52,7 +52,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
         placeholder="Bijv. Lego hijskraan"
         value={search}
         onChange={(e) => setSearch(e.target.value)}
-        className="w-full py-5"
+        className="mt-2 w-full bg-white placeholder:text-lg placeholder:font-semibold placeholder:text-gray-400/80"
       />
 
       {isDropdownOpen && (
@@ -78,11 +78,11 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                   <a
                     target="_blank"
                     href={product.link}
-                    className="text-sm leading-4 block text-blue-600 hover:text-blue-500"
+                    className="block text-sm leading-4 text-blue-600 hover:text-blue-500"
                   >
                     {product.title}
                   </a>
-                  <p className="text-sm mt-2 font-semibold text-gray-500">
+                  <p className="mt-2 text-sm font-semibold text-gray-500">
                     € {product.price.toFixed(2)}
                   </p>
                 </div>

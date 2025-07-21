@@ -30,7 +30,7 @@ import {
   DialogTitle,
   DialogTrigger,
 } from "@/components/ui/dialog";
-import { ChevronDown, ChevronUp } from "lucide-react";
+import { ChevronDown, ChevronUp, Ban } from "lucide-react";
 import { BolProductSearch } from "@/components/ui/searchBol";
 import { toast } from "react-toastify";
 import { getProductPreviewByUrl, updateGeneratedList } from "@/lib/api";
@@ -38,6 +38,7 @@ import { RatingStars } from "@/components/rating";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
+import { PageLoader } from "@/app/wishlist/_components";
 
 export default function EditWishlistPage() {
   const params = useParams();
@@ -190,11 +191,15 @@ export default function EditWishlistPage() {
     updateGeneratedListMutation(wishlist.id);
   };
 
-  if (isLoading) return <div className="p-4">Laden...</div>;
+  if (isLoading) return <PageLoader />;
+
   if (!data)
     return (
-      <div className="p-4 text-red-500">
-        Fout bij het laden van de verlanglijst
+      <div className="-mt-16 flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
+        <div className="flex items-center gap-2 text-zinc-600">
+          <Ban size={18} />
+          <p>Fout bij het laden van de verlanglijst</p>
+        </div>
       </div>
     );
 
@@ -212,35 +217,37 @@ export default function EditWishlistPage() {
   const isValidRecommendations = recommendations.length > 0;
 
   if (!wishlist)
-    return <div className="p-4 text-red-500">Wishlist not found</div>;
+    return <div className="p-4 text-red-500">Wensenlijst niet gevonden</div>;
 
   return (
     <main className="flex flex-col bg-gray-50 px-6 py-8">
-      <h1 className="mb-6 text-3xl font-extrabold">Cadeaus toevoegen</h1>
+      <h1 className="mb-6 text-3xl font-extrabold text-zinc-800">
+        Cadeaus toevoegen
+      </h1>
 
-      <section className="space-y-4">
-        <h2 className="text-lg font-semibold">Aanbevolen door AI</h2>
+      <section>
+        <h2 className="text-xl font-semibold">Suggesties van AI</h2>
 
         <Button
           onClick={() => setIsExpanded(!isExpanded)}
           variant="outline"
-          className="flex w-full items-center justify-between"
+          className="mt-2 flex w-full items-center justify-between"
         >
           <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
-          {isExpanded ? <ChevronUp size={20} /> : <ChevronDown size={20} />}
+          {isExpanded ? <ChevronUp size={30} /> : <ChevronDown size={24} />}
         </Button>
 
         <div
-          className={`overflow-hidden transition-all duration-500 ease-in-out ${
+          className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
             isExpanded ? "max-h-full" : "max-h-0"
           }`}
         >
           {isExpanded && isValidRecommendations ? (
-            <div className="space-y-2">
+            <div className="space-y-3">
               {filteredRecommendationsForAISection.slice(0, 10).map((item) => (
                 <Card
                   key={item.id}
-                  className="flex min-h-20 flex-row items-center gap-3 p-3"
+                  className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
                 >
                   <Image
                     src={item.image}
@@ -254,7 +261,7 @@ export default function EditWishlistPage() {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="line-clamp-2 block text-sm leading-tight font-semibold text-blue-600 hover:text-blue-800 hover:underline"
+                      className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
                     >
                       {item.title}
                     </a>
@@ -263,15 +270,15 @@ export default function EditWishlistPage() {
                       <RatingStars rating={item.rating} />
                     )}
 
-                    <span className="text-sm font-bold select-none">
+                    <span className="text-md font-bold select-none">
                       €{item.price.toFixed(2).replace(".00", "")}
                     </span>
                   </div>
-                  <div className="ml-2 flex min-w-[70px] flex-col items-center justify-center">
+                  <div className="ml-2 flex min-w-[40px] flex-col items-center">
                     <Button
                       onClick={() => handleAdd(item)}
                       disabled={loadingItemId === item.id}
-                      className="mt-1 flex h-10 w-10 items-center justify-center rounded-full text-white"
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-white"
                       aria-label="Add"
                     >
                       {loadingItemId === item.id ? (
@@ -292,8 +299,9 @@ export default function EditWishlistPage() {
         </div>
 
         <Button
-          className="w-full"
+          className="mt-3 w-full"
           onClick={handleUseAttempt}
+          variant="default"
           disabled={wishlist.generate_attempts < 1 || isUpdatePending}
           loading={isUpdatePending}
         >
@@ -301,21 +309,21 @@ export default function EditWishlistPage() {
         </Button>
       </section>
 
-      <section className="space-y-4">
+      <section className="mt-8 space-y-4">
         <div className="mt-2">
           <BolProductSearch onAdd={handleAdd} />
         </div>
 
-        <div className="space-y-2">
+        <div>
           <Label htmlFor="url">Voeg productlink (URL) handmatig toe</Label>
-          <div className="flex items-center gap-2">
+          <div className="mt-2 flex gap-2">
             <Input
               id="url"
               placeholder="Bijv. https://www.bol.com/..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-              className="py-5"
+              className="h-[53px] bg-white placeholder:text-lg placeholder:font-semibold placeholder:text-gray-400/80"
             />
             <Button
               type="button"
@@ -323,6 +331,7 @@ export default function EditWishlistPage() {
               disabled={isPending}
               loading={isPending}
               variant="outline"
+              className="h-[53px] border-black"
             >
               Toevoegen
             </Button>
@@ -330,11 +339,9 @@ export default function EditWishlistPage() {
           {previewLoading && (
             <div className="text-muted-foreground text-xs">Laden...</div>
           )}
+
           {preview && (
-            <Card
-              className="mt-2 flex flex-row items-center gap-3 p-3"
-              style={{ minHeight: 80 }}
-            >
+            <Card className="mt-3 flex min-h-20 flex-row items-center gap-3 rounded-md p-3">
               <Image
                 src={preview.image}
                 alt={preview.title}
@@ -342,29 +349,32 @@ export default function EditWishlistPage() {
                 height={64}
                 className="h-16 w-16 flex-shrink-0 rounded object-cover"
               />
-              <div className="flex min-w-0 flex-1 flex-col justify-center">
+              <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                 <a
                   href={preview.link}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="line-clamp-2 block text-sm leading-tight font-semibold text-blue-600 hover:text-blue-800 hover:underline"
+                  className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
                 >
                   {preview.title}
                 </a>
-              </div>
-              <div className="ml-2 flex min-w-[70px] flex-col items-center justify-center">
-                <span className="text-lg font-bold text-red-600 select-none">
+
+                <span className="text-md font-bold select-none">
                   €{preview.price?.toFixed(2).replace(".00", "")}
                 </span>
+              </div>
+
+              <div className="ml-2 flex min-w-[40px] flex-col items-center">
                 <Button
                   onClick={() => handleSubmit()}
-                  disabled={isPending}
-                  loading={isPending}
-                  size="icon"
-                  className="mt-1 flex h-10 w-10 items-center justify-center rounded-full bg-black text-2xl text-white hover:bg-neutral-800"
+                  className="flex h-10 w-10 items-center justify-center rounded-full text-white"
                   aria-label="Add"
                 >
-                  +
+                  {isPending ? (
+                    <Ring size={18} stroke={2.5} speed={2} color="#fff" />
+                  ) : (
+                    <Plus className="size-6" strokeWidth={2.5} />
+                  )}
                 </Button>
               </div>
             </Card>
@@ -373,15 +383,14 @@ export default function EditWishlistPage() {
         </div>
       </section>
 
-      <section className="space-y-4">
-        <h2 className="text-lg font-semibold">{wishlist.name}</h2>
+      <section className="mt-8 space-y-4">
+        <h2 className="text-xl font-semibold text-zinc-800">{wishlist.name}</h2>
         <ul className="space-y-2">
           {wishlist.wish_list.length > 0 ? (
             wishlist.wish_list.map((item) => (
               <Card
                 key={item.id}
-                className="relative flex flex-row items-center justify-between gap-3 p-3 pr-6"
-                style={{ minHeight: 80 }}
+                className="flex min-h-20 flex-row items-center justify-between gap-3 rounded-md p-3"
               >
                 <div className="flex items-center gap-3">
                   <Image
@@ -396,25 +405,29 @@ export default function EditWishlistPage() {
                       href={item.link}
                       target="_blank"
                       rel="noopener noreferrer"
-                      className="line-clamp-2 block text-sm leading-tight font-semibold text-blue-600 hover:text-blue-800 hover:underline"
+                      className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
                     >
                       {item.title}
                     </a>
 
-                    {item.rating && <RatingStars rating={item.rating} />}
+                    {typeof item.rating === "number" && item.rating > 0 && (
+                      <RatingStars rating={item.rating} />
+                    )}
 
-                    <span className="text-sm font-bold select-none">
+                    <span className="text-md font-bold select-none">
                       €{item.price?.toFixed(2).replace(".00", "")}
                     </span>
 
-                    <div className="">
-                      {item.bought_by !== "" ? (
-                        <p className="text-xs text-green-600 italic">
+                    <div>
+                      {item.bought_by === "-" && (
+                        <p className="text-sm text-green-600">
                           Gemarkeerd als gekocht
                         </p>
-                      ) : (
-                        <p className="text-xs text-red-600 italic">
-                          Nog niet gemarkeerd als gekocht Gemarkeerd als gekocht
+                      )}
+
+                      {item.bought_by === "" && (
+                        <p className="text-main-red text-sm">
+                          Nog niet gemarkeerd als gekocht
                         </p>
                       )}
                     </div>
@@ -422,7 +435,7 @@ export default function EditWishlistPage() {
                 </div>
 
                 {item.bought_by !== "" ? (
-                  <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-400 text-white">
+                  <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
                     <Check size={22} strokeWidth={2.5} />
                   </div>
                 ) : (
@@ -438,7 +451,7 @@ export default function EditWishlistPage() {
               </Card>
             ))
           ) : (
-            <p className="text-muted-foreground text-sm italic">
+            <p className="text-muted-foreground text-sm">
               Geen cadeaus toegevoegd
             </p>
           )}
@@ -448,7 +461,7 @@ export default function EditWishlistPage() {
       <section className="space-y-4">
         <Dialog>
           <DialogTrigger asChild>
-            <Button className="w-full">Deel verlanglijstje</Button>
+            <Button className="mt-4 w-full">Deel verlanglijstje</Button>
           </DialogTrigger>
           <DialogContent className="max-w-sm">
             <DialogHeader>
@@ -498,11 +511,11 @@ export default function EditWishlistPage() {
           </DialogContent>
         </Dialog>
 
-        <section className="space-y-4">
+        <section className="border-lightgray mt-4 rounded-lg border bg-gray-100/90 p-4">
           <h2 className="text-lg font-semibold">Back-up (optioneel)</h2>
 
           <div className="space-y-2">
-            <Label htmlFor="backup-email">
+            <Label htmlFor="backup-email" className="text-base text-gray-600">
               Ontvang bewerk-link om later aanpassingen te kunnen maken
             </Label>
             <div className="flex gap-2">
@@ -511,7 +524,7 @@ export default function EditWishlistPage() {
                 placeholder="voorbeeld@voorbeeld.com"
                 value={backupEmail}
                 onChange={(e) => setBackupEmail(e.target.value)}
-                className="w-full py-5"
+                className="h-[53px] bg-white"
               />
               <Button
                 type="button"
@@ -519,12 +532,13 @@ export default function EditWishlistPage() {
                 disabled={isLoadingEmail}
                 loading={isLoadingEmail}
                 variant="outline"
+                className="h-[53px] border-black"
               >
                 Versturen
               </Button>
             </div>
             {backupEmailError && (
-              <p className="text-sm text-red-500">{backupEmailError}</p>
+              <p className="text-smtext-red-500">{backupEmailError}</p>
             )}
           </div>
         </section>
@@ -557,7 +571,7 @@ export default function EditWishlistPage() {
         <Link href={`/wishlist/${id}/edit-data`}>
           <Button
             variant="ghost"
-            className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+            className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
           >
             <ChevronLeft size={18} />
             Gegevens aanpassen
@@ -570,7 +584,7 @@ export default function EditWishlistPage() {
         >
           <Button
             variant="ghost"
-            className="flex items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+            className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
           >
             Naar verlanglijstje
             <ChevronRight size={18} />
