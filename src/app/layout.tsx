@@ -1,9 +1,13 @@
+import React from "react";
+
 import "@/app/globals.css";
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-const GeistSans = Inter({ subsets: ["latin"] });
+
 import { cn } from "@/lib/utils";
 import { AppProviders } from "./providers";
+
+const GeistSans = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: {
@@ -12,7 +16,7 @@ export const metadata: Metadata = {
   },
   description: "Create, share and reserve gifts with AI assistance.",
   keywords: ["wishlist", "gift list", "AI", "kids", "birthday", "sharing"],
-  authors: [{ name: "Your Name or Team", url: "https://yourdomain.com" }],
+  authors: [{ name: "", url: "" }],
   icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 

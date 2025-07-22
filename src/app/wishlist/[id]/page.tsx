@@ -17,6 +17,9 @@ import {
 } from "@/lib/tanstack/useWishListQueryMutate";
 import Image from "next/image";
 import { RatingStars } from "@/components/rating";
+import { PageLoader } from "@/app/wishlist/_components";
+
+import { Ban } from "lucide-react";
 
 export default function WishlistPublicViewPage() {
   const params = useParams();
@@ -50,11 +53,14 @@ export default function WishlistPublicViewPage() {
     );
   };
 
-  if (isLoading) return <div className="p-4">Laden...</div>;
+  if (isLoading) return <PageLoader />;
   if (error || !data?.wishlist)
     return (
-      <div className="p-4 text-red-500">
-        Fout bij het laden van de verlanglijst
+      <div className="-mt-16 flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
+        <div className="flex items-center gap-2 text-zinc-600">
+          <Ban size={18} />
+          <p>Fout bij het laden van de verlanglijst</p>
+        </div>
       </div>
     );
 
@@ -64,18 +70,18 @@ export default function WishlistPublicViewPage() {
   );
 
   return (
-    <main className="mx-auto max-w-3xl space-y-6 px-4">
+    <main className="mx-auto max-w-3xl space-y-6 px-4 pt-5 pb-10">
       <div>
         <h1 className="text-center text-2xl font-bold">{wishlist.name}</h1>
-        <p className="text-muted-foreground text-center text-sm">
+        <p className="mt-2 text-center text-gray-500">
           Bekijk en markeer cadeaus als gekocht
         </p>
       </div>
-      <ul className="space-y-4">
+      <ul className="flex flex-col items-center gap-5">
         {sortedWishlists.map((product) => (
           <Card
             key={product.id}
-            className="flex flex-col items-center gap-2 p-4"
+            className="flex w-full flex-col items-center gap-2 p-4 shadow-md sm:w-[400px]"
           >
             <Image
               src={product.image}
@@ -93,18 +99,20 @@ export default function WishlistPublicViewPage() {
             {product.rating && <RatingStars rating={product.rating} />}
 
             <div className="mt-2 w-full text-center">
-              <span className="mr-2 text-sm font-bold">€{product.price}</span>
+              <span className="mr-2 text-lg font-semibold text-zinc-800">
+                €{product.price}
+              </span>
             </div>
             <div className="mt-2 flex w-full justify-center">
               {product.bought_by ? (
-                <span className="text-xs whitespace-nowrap text-green-700">
+                <span className="text-[17px] whitespace-nowrap text-green-600">
                   Gemarkeerd als gekocht
                 </span>
               ) : (
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
-                      className="h-10 w-[120px] rounded-md text-base text-white"
+                      className="w-full rounded-md text-base text-white"
                       onClick={() =>
                         setSelectedProduct({
                           id: product.id,
