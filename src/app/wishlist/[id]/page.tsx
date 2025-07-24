@@ -18,6 +18,7 @@ import {
 import Image from "next/image";
 import { RatingStars } from "@/components/rating";
 import { PageLoader } from "@/app/wishlist/_components";
+import { Footer } from "@/components";
 
 import { Ban } from "lucide-react";
 
@@ -70,110 +71,114 @@ export default function WishlistPublicViewPage() {
   );
 
   return (
-    <main className="mx-auto max-w-3xl space-y-6 px-4 pt-5 pb-10">
-      <div>
-        <h1 className="text-center text-2xl font-bold">{wishlist.name}</h1>
-        <p className="mt-2 text-center text-gray-500">
-          Bekijk en markeer cadeaus als gekocht
-        </p>
-      </div>
-      <ul className="flex flex-col items-center gap-5">
-        {sortedWishlists.map((product) => (
-          <Card
-            key={product.id}
-            className="flex w-full flex-col items-center gap-2 p-4 shadow-md sm:w-[400px]"
-          >
-            <Image
-              src={product.image}
-              alt={product.title}
-              width={100}
-              height={100}
-            />
-            {/* {(product.image === "" || product.image === null) && <>no image</>} */}
-            <div className="flex w-full flex-1 flex-col items-center">
-              <p className="w-full text-center text-sm leading-tight font-medium">
-                {product.title}
-              </p>
-            </div>
+    <>
+      <main className="mx-auto max-w-3xl space-y-6 px-4 pt-5 pb-5">
+        <div>
+          <h1 className="text-center text-2xl font-bold">{wishlist.name}</h1>
+          <p className="mt-2 text-center text-gray-500">
+            Bekijk en markeer cadeaus als gekocht
+          </p>
+        </div>
+        <ul className="flex flex-col items-center gap-5">
+          {sortedWishlists.map((product) => (
+            <Card
+              key={product.id}
+              className="flex w-full flex-col items-center gap-2 p-4 shadow-md sm:w-[400px]"
+            >
+              <Image
+                src={product.image}
+                alt={product.title}
+                width={100}
+                height={100}
+              />
+              {/* {(product.image === "" || product.image === null) && <>no image</>} */}
+              <div className="flex w-full flex-1 flex-col items-center">
+                <p className="w-full text-center text-lg leading-tight font-semibold text-zinc-700">
+                  {product.title}
+                </p>
+              </div>
 
-            {product.rating && <RatingStars rating={product.rating} />}
+              {product.rating && <RatingStars rating={product.rating} />}
 
-            <div className="mt-2 w-full text-center">
-              <span className="mr-2 text-lg font-semibold text-zinc-800">
-                €{product.price}
-              </span>
-            </div>
-            <div className="mt-2 flex w-full justify-center">
-              {product.bought_by ? (
-                <span className="text-[17px] whitespace-nowrap text-green-600">
-                  Gemarkeerd als gekocht
+              <div className="mt-2 w-full text-center">
+                <span className="mr-2 text-lg font-semibold text-zinc-800">
+                  €{product.price}
                 </span>
-              ) : (
-                <Dialog>
-                  <DialogTrigger asChild>
-                    <Button
-                      className="w-full rounded-md text-base text-white"
-                      onClick={() =>
-                        setSelectedProduct({
-                          id: product.id,
-                          title: product.title,
-                          link: product.link,
-                        })
-                      }
-                    >
-                      Bekijk
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{selectedProduct?.title}</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <a
-                        href={selectedProduct?.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
-                      >
-                        <Button className="w-full">Koop op bol.com</Button>
-                      </a>
+              </div>
+              <div className="mt-2 flex w-full justify-center">
+                {product.bought_by ? (
+                  <span className="text-[17px] whitespace-nowrap text-green-600">
+                    Gemarkeerd als gekocht
+                  </span>
+                ) : (
+                  <Dialog>
+                    <DialogTrigger asChild>
                       <Button
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => {
-                          setIsMarkOpen(true);
-                        }}
+                        className="w-full rounded-md text-base text-white"
+                        onClick={() =>
+                          setSelectedProduct({
+                            id: product.id,
+                            title: product.title,
+                            link: product.link,
+                          })
+                        }
                       >
-                        Markeer als gekocht
+                        Bekijk
                       </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
-              )}
-            </div>
-          </Card>
-        ))}
-      </ul>
-      <Dialog open={isMarkOpen} onOpenChange={setIsMarkOpen}>
-        <DialogContent className="w-[400px]">
-          <DialogHeader>
-            <DialogTitle>Markeer als gekocht</DialogTitle>
-            <p className="text-sm text-zinc-500">
-              Markeer als gekocht, zodat het niet meer aanklikbaar is.
-            </p>
-          </DialogHeader>
+                    </DialogTrigger>
+                    <DialogContent>
+                      <DialogHeader>
+                        <DialogTitle>{selectedProduct?.title}</DialogTitle>
+                      </DialogHeader>
+                      <div className="space-y-4">
+                        <a
+                          href={selectedProduct?.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="block"
+                        >
+                          <Button className="w-full">Koop op bol.com</Button>
+                        </a>
+                        <Button
+                          variant="outline"
+                          className="w-full"
+                          onClick={() => {
+                            setIsMarkOpen(true);
+                          }}
+                        >
+                          Markeer als gekocht
+                        </Button>
+                      </div>
+                    </DialogContent>
+                  </Dialog>
+                )}
+              </div>
+            </Card>
+          ))}
+        </ul>
+        <Dialog open={isMarkOpen} onOpenChange={setIsMarkOpen}>
+          <DialogContent className="w-[400px]">
+            <DialogHeader>
+              <DialogTitle>Markeer als gekocht</DialogTitle>
+              <p className="text-sm text-zinc-500">
+                Markeer als gekocht, zodat het niet meer aanklikbaar is.
+              </p>
+            </DialogHeader>
 
-          <Button
-            className="mt-4 w-full"
-            onClick={handleConfirm}
-            type="submit"
-            disabled={isMarking}
-            loading={isMarking}
-          >
-            Verzenden
-          </Button>
-        </DialogContent>
-      </Dialog>
-    </main>
+            <Button
+              className="mt-4 w-full"
+              onClick={handleConfirm}
+              type="submit"
+              disabled={isMarking}
+              loading={isMarking}
+            >
+              Verzenden
+            </Button>
+          </DialogContent>
+        </Dialog>
+      </main>
+
+      <Footer className="bg-gray-50" />
+    </>
   );
 }

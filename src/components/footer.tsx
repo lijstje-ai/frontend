@@ -1,6 +1,14 @@
-export const Footer = () => {
+import React from "react";
+
+import { cn } from "@/lib/utils";
+
+interface FooterProps {
+  className?: string;
+}
+
+export const Footer: React.FC<FooterProps> = ({ className }) => {
   return (
-    <footer className="bg-gray-100 px-6 py-8">
+    <footer className={cn("bg-gray-100 px-6 py-8", className)}>
       <div className="container mx-auto max-w-md">
         <div className="mb-6 flex justify-center space-x-6">
           <span className="hover:text-main-red cursor-pointer text-gray-500">
