@@ -265,7 +265,7 @@ export default function PrivacyPolicyPage() {
                 <p className="text-sm text-gray-600">
                   Heeft u vragen over uw privacy? Neem contact op via{" "}
                   <a
-                    href="mailto:help@lijstje.ai"
+                    href="mailto:info@lijstje.ai"
                     target="_blank"
                     className="text-main-blue cursor-pointer underline"
                   >
