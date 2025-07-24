@@ -1,5 +1,7 @@
 import React from "react";
 
+import NextLink from "next/link";
+
 import { cn } from "@/lib/utils";
 
 interface FooterProps {
@@ -52,20 +54,30 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           </span>
         </div>
         <div className="mb-4 text-center text-sm text-gray-500">
-          <span className="hover:text-primary mx-2 cursor-pointer">
+          <NextLink
+            href="/privacy-policy"
+            className="hover:text-primary mx-2 cursor-pointer"
+          >
             Privacybeleid
-          </span>
-          <span className="">•</span>
-          <span className="hover:text-primary mx-2 cursor-pointer">
-            Cookies
-          </span>
+          </NextLink>
+          <span>•</span>
+          <NextLink
+            href="/terms"
+            className="hover:text-primary mx-2 cursor-pointer"
+          >
+            Gebruiksvoorwaarden
+          </NextLink>
         </div>
         <div className="text-center text-sm text-gray-500">
           <p className="">
             Support:{" "}
-            <span className="text-main-blue cursor-pointer hover:underline">
+            <a
+              href="mailto:help@lijstje.ai"
+              target="_blank"
+              className="text-main-blue cursor-pointer hover:underline"
+            >
               help@lijstje.ai
-            </span>
+            </a>
           </p>
           <p className="mt-2">© 2025 lijstje.ai - Alle rechten voorbehouden</p>
         </div>

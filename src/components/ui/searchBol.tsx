@@ -78,7 +78,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
                   <a
                     target="_blank"
                     href={product.link}
-                    className="block text-sm leading-4 text-blue-600 hover:text-blue-500"
+                    className="block text-sm leading-4 text-blue-900 hover:text-blue-800"
                   >
                     {product.title}
                   </a>
