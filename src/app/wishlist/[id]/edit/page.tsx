@@ -223,7 +223,7 @@ export default function EditWishlistPage() {
   return (
     <>
       <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
-        <h1 className="mb-6 text-3xl font-extrabold text-zinc-800">
+        <h1 className="mb-6 text-3xl font-bold text-zinc-800">
           Cadeaus toevoegen
         </h1>
 
