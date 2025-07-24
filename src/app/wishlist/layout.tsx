@@ -4,7 +4,7 @@ import { WishlistHeader } from "@/app/wishlist/_components";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <div className="mx-auto min-h-screen max-w-md bg-white">
+    <div className="mx-auto min-h-screen w-full bg-white sm:max-w-md">
       <WishlistHeader />
       {children}
     </div>
