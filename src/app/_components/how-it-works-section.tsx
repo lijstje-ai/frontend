@@ -3,7 +3,7 @@ import { howItWorksItems } from "@/data";
 export const HowItWorksSection = () => {
   return (
     <section className="scroll-mt-20 bg-gray-100 px-6 py-10" id="howItWorksBox">
-      <h2 className="mb-8 text-center text-2xl font-bold">Hoe het werkt</h2>
+      <h2 className="mb-8 text-center text-2xl font-bold">Hoe werkt het?</h2>
 
       <div className="mx-auto flex max-w-md flex-col">
         {howItWorksItems.map((item, index) => (

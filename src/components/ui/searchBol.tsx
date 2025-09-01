@@ -62,42 +62,44 @@ export const BolProductSearch = ({ onAdd }: Props) => {
               <Ring size={20} stroke={2.5} speed={2} color="currentColor" />
             </li>
           ) : data && data.length > 0 ? (
-            data.map((product) => (
-              <li
-                key={product.link}
-                className="flex items-center gap-3 border-b p-2 last:border-none"
-              >
-                <Image
-                  src={product.image}
-                  alt={product.title}
-                  height={30}
-                  width={30}
-                  className="h-12 w-12 object-cover"
-                />
-                <div className="flex-1">
-                  <a
-                    target="_blank"
-                    href={product.link}
-                    className="block text-sm leading-4 text-blue-900 hover:text-blue-800"
-                  >
-                    {product.title}
-                  </a>
-                  <p className="mt-2 text-sm font-semibold text-gray-500">
-                    € {product.price.toFixed(2)}
-                  </p>
-                </div>
-
-                <Button
-                  size="sm"
-                  onClick={() => {
-                    onAdd(product);
-                  }}
-                  className="flex h-8 w-8 items-center justify-center rounded-full"
+            data
+              .filter((item) => item.price !== 0)
+              .map((product) => (
+                <li
+                  key={product.link}
+                  className="flex items-center gap-3 border-b p-2 last:border-none"
                 >
-                  <Plus size={19} />
-                </Button>
-              </li>
-            ))
+                  <Image
+                    src={product.image}
+                    alt={product.title}
+                    height={30}
+                    width={30}
+                    className="h-12 w-12 object-cover"
+                  />
+                  <div className="flex-1">
+                    <a
+                      target="_blank"
+                      href={product.link}
+                      className="block text-sm leading-4 text-blue-900 hover:text-blue-800"
+                    >
+                      {product.title}
+                    </a>
+                    <p className="mt-2 text-sm font-semibold text-gray-500">
+                      € {product.price.toFixed(2)}
+                    </p>
+                  </div>
+
+                  <Button
+                    size="sm"
+                    onClick={() => {
+                      onAdd(product);
+                    }}
+                    className="flex h-8 w-8 items-center justify-center rounded-full"
+                  >
+                    <Plus size={19} />
+                  </Button>
+                </li>
+              ))
           ) : (
             <li className="p-4 text-center text-sm text-gray-500">
               No products found

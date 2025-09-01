@@ -170,7 +170,7 @@ export default function WishlistPublicViewPage() {
             disabled={isMarking}
             loading={isMarking}
           >
-            Verzenden
+            Markeren
           </Button>
         </DialogContent>
       </Dialog>

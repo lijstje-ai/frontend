@@ -56,6 +56,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
         <div className="mb-4 text-center text-sm text-gray-500">
           <NextLink
             href="/privacy-policy"
+            target="_blank"
             className="hover:text-primary mx-2 cursor-pointer"
           >
             Privacybeleid
@@ -63,6 +64,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           <span>•</span>
           <NextLink
             href="/terms"
+            target="_blank"
             className="hover:text-primary mx-2 cursor-pointer"
           >
             Gebruiksvoorwaarden

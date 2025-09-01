@@ -1,10 +1,5 @@
 "use client";
-import {
-  WhatsappShareButton,
-  TelegramShareButton,
-  WhatsappIcon,
-  TelegramIcon,
-} from "react-share";
+
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { Button } from "@/components/ui/button";
@@ -22,13 +17,12 @@ import {
 import Image from "next/image";
 import { Recommendation } from "@/types/wishlist.type";
 import { useState, useEffect } from "react";
-import { Check, ChevronLeft, ChevronRight, Plus, Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
 } from "@/components/ui/dialog";
 import { ChevronDown, ChevronUp, Ban } from "lucide-react";
 import { BolProductSearch } from "@/components/ui/searchBol";
@@ -38,7 +32,12 @@ import { RatingStars } from "@/components/rating";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
-import { PageLoader } from "@/app/wishlist/_components";
+import {
+  CopyLinkModal,
+  PageLoader,
+  WishListItem,
+} from "@/app/wishlist/_components";
+import { AnimatePresence } from "framer-motion";
 
 export default function EditWishlistPage() {
   const params = useParams();
@@ -207,14 +206,28 @@ export default function EditWishlistPage() {
 
   const wishListItemsIds = wishlist.wish_list.map((item) => item.id);
 
-  const filteredRecommendationsForAISection = recommendations.filter(
-    (item) =>
-      !wishListItemsIds.includes(item.id) &&
-      item.wishlist_id === wishlist.id &&
-      item.rating &&
-      item.rating > 0,
-  );
+  const filteredRecommendationsForAISection = recommendations
+    .filter(
+      (item) =>
+        !wishListItemsIds.includes(item.id) &&
+        item.wishlist_id === wishlist.id &&
+        item.rating &&
+        item.rating > 0,
+    )
+    .sort((item1, item2) => (item2.rating ?? 0) - (item1.rating ?? 0));
   const isValidRecommendations = recommendations.length > 0;
+  const wishlistItems = wishlist.wish_list
+    .slice()
+    .sort((a, b) => {
+      if (a.bought_by !== "" && b.bought_by === "") return -1;
+      if (a.bought_by === "" && b.bought_by !== "") return 1;
+
+      return 0;
+    })
+    .filter(
+      (item, index, self) =>
+        index === self.findIndex((t) => t.title === item.title),
+    );
 
   if (!wishlist)
     return <div className="p-4 text-red-500">Wensenlijst niet gevonden</div>;
@@ -305,7 +318,7 @@ export default function EditWishlistPage() {
           disabled={wishlist.generate_attempts < 1 || isUpdatePending}
           loading={isUpdatePending}
         >
-          Ververs aanbevelingen ({wishlist.generate_attempts}/5)
+          Ververs suggesties ({wishlist.generate_attempts}/5)
         </Button>
       </section>
 
@@ -385,131 +398,30 @@ export default function EditWishlistPage() {
 
       <section className="mt-8 space-y-4">
         <h2 className="text-xl font-semibold text-zinc-800">{wishlist.name}</h2>
-        <ul className="space-y-2">
-          {wishlist.wish_list.length > 0 ? (
-            wishlist.wish_list.map((item) => (
-              <Card
-                key={item.id}
-                className="flex min-h-20 flex-row items-center justify-between gap-3 rounded-md p-3"
-              >
-                <div className="flex items-center gap-3">
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 flex-shrink-0 rounded object-cover"
-                  />
-                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
-                    >
-                      {item.title}
-                    </a>
 
-                    {typeof item.rating === "number" && item.rating > 0 && (
-                      <RatingStars rating={item.rating} />
-                    )}
-
-                    <span className="text-md font-bold select-none">
-                      €{item.price?.toFixed(2).replace(".00", "")}
-                    </span>
-
-                    <div>
-                      {item.bought_by === "-" && (
-                        <p className="text-sm text-green-600">
-                          Gemarkeerd als gekocht
-                        </p>
-                      )}
-
-                      {item.bought_by === "" && (
-                        <p className="text-main-red text-sm">
-                          Nog niet gemarkeerd als gekocht
-                        </p>
-                      )}
-                    </div>
-                  </div>
-                </div>
-
-                {item.bought_by !== "" ? (
-                  <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
-                    <Check size={22} strokeWidth={2.5} />
-                  </div>
-                ) : (
-                  <Button
-                    variant="ghost"
-                    className="flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-red-500 p-0 text-red-500 transition-colors hover:bg-zinc-100 hover:text-red-500"
-                    onClick={() => deleteItem(item.id)}
-                    aria-label="Delete"
-                  >
-                    <Trash2 size={18} strokeWidth={2.5} />
-                  </Button>
-                )}
-              </Card>
-            ))
-          ) : (
-            <p className="text-muted-foreground text-sm">
-              Geen cadeaus toegevoegd
-            </p>
-          )}
-        </ul>
+        {wishlist.wish_list.length > 0 ? (
+          <ul className="space-y-2">
+            <AnimatePresence>
+              {wishlistItems.map((item) => (
+                <WishListItem
+                  key={item.id}
+                  item={item}
+                  onDelete={(id) => deleteItem(id)}
+                />
+              ))}
+            </AnimatePresence>
+          </ul>
+        ) : (
+          <p className="text-muted-foreground text-sm">
+            Geen cadeaus toegevoegd
+          </p>
+        )}
       </section>
 
       <section className="space-y-4">
-        <Dialog>
-          <DialogTrigger asChild>
-            <Button className="mt-4 w-full">Deel verlanglijstje</Button>
-          </DialogTrigger>
-          <DialogContent className="max-w-sm">
-            <DialogHeader>
-              <DialogTitle>Deel je verlanglijstje</DialogTitle>
-            </DialogHeader>
-            <div className="flex flex-row items-center gap-4 pt-4">
-              <WhatsappShareButton url={shareLink}>
-                <WhatsappIcon round size={48} />
-              </WhatsappShareButton>
-              <TelegramShareButton url={shareLink}>
-                <TelegramIcon round size={48} />
-              </TelegramShareButton>
-              <a
-                href={`mailto:?subject=${encodeURIComponent(wishlist.name)}&body=${encodeURIComponent(shareLink)}`}
-                target="_blank"
-                rel="noopener noreferrer"
-              >
-                <svg
-                  width="48"
-                  height="48"
-                  viewBox="0 0 48 48"
-                  fill="none"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <circle cx="24" cy="24" r="24" fill="#ececec" />
-                  <path
-                    d="M12 18v12a2 2 0 002 2h20a2 2 0 002-2V18a2 2 0 00-2-2H14a2 2 0 00-2 2zm2 0l10 7 10-7"
-                    stroke="#222"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  />
-                </svg>
-              </a>
-            </div>
-            <div className="mt-4 flex items-center gap-2">
-              <Input value={shareLink} readOnly className="flex-1" />
-              <Button
-                type="button"
-                onClick={() => {
-                  navigator.clipboard.writeText(shareLink);
-                }}
-              >
-                Kopieer link
-              </Button>
-            </div>
-          </DialogContent>
-        </Dialog>
+        {wishlist && (
+          <CopyLinkModal wishlistName={wishlist.name} link={shareLink} />
+        )}
 
         <div className="border-lightgray mt-4 rounded-lg border bg-gray-100/90 p-4">
           <h2 className="text-lg font-semibold">Back-up (optioneel)</h2>

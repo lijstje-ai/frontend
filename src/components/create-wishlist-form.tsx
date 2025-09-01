@@ -61,7 +61,7 @@ export const CreateWishlistForm = () => {
           <Label htmlFor="name">Naam verlanglijstje</Label>
           <Input
             id="name"
-            placeholder="bijv. Verjaardag Jasmin"
+            placeholder="bijv. Verjaardag Emma"
             {...register("name")}
             className="text-lg font-semibold placeholder:text-lg placeholder:text-gray-400/80"
           />
@@ -192,7 +192,7 @@ export const CreateWishlistForm = () => {
                   className="data-[state=checked]:bg-main-blue data-[state=checked]:border-main-blue h-4.5 w-4.5"
                 />
                 <Label htmlFor="aiSupport" className="mb-0">
-                  AI-ondersteuning?
+                  AI-suggesties?
                 </Label>
               </div>
             )}
