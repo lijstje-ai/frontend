@@ -79,7 +79,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
+              className="line-clamp-2 block max-w-[230px] text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
             >
               {item.title}
             </a>

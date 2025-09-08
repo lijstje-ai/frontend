@@ -11,11 +11,15 @@ import { Recommendation } from "@/types/wishlist.type";
 import { Ring } from "ldrs/react";
 import { Plus } from "lucide-react";
 
-interface Props {
+interface BolProductSearchProps {
   onAdd: (product: Recommendation) => void;
+  listItems: Recommendation[];
 }
 
-export const BolProductSearch = ({ onAdd }: Props) => {
+export const BolProductSearch: React.FC<BolProductSearchProps> = ({
+  onAdd,
+  listItems,
+}) => {
   const [search, setSearch] = useState("");
   const debounced = useDebounce(search, 500);
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
@@ -64,6 +68,7 @@ export const BolProductSearch = ({ onAdd }: Props) => {
           ) : data && data.length > 0 ? (
             data
               .filter((item) => item.price !== 0)
+              .filter((item => !listItems.some(l => l.title === item.title)))
               .map((product) => (
                 <li
                   key={product.link}

@@ -324,7 +324,7 @@ export default function EditWishlistPage() {
 
       <section className="mt-8 space-y-4">
         <div className="mt-2">
-          <BolProductSearch onAdd={handleAdd} />
+          <BolProductSearch onAdd={handleAdd} listItems={wishlistItems} />
         </div>
 
         <div>
@@ -342,7 +342,6 @@ export default function EditWishlistPage() {
               type="button"
               onClick={handleSubmit}
               disabled={isPending}
-              loading={isPending}
               variant="outline"
               className="h-[53px] border-black text-sm sm:text-lg"
             >
@@ -353,45 +352,53 @@ export default function EditWishlistPage() {
             <div className="text-muted-foreground text-xs">Laden...</div>
           )}
 
-          {preview && (
-            <Card className="mt-3 flex min-h-20 flex-row items-center gap-3 rounded-md p-3">
-              <Image
-                src={preview.image}
-                alt={preview.title}
-                width={64}
-                height={64}
-                className="h-16 w-16 flex-shrink-0 rounded object-cover"
-              />
-              <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                <a
-                  href={preview.link}
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
-                >
-                  {preview.title}
-                </a>
+          {preview &&
+            !wishlistItems.some((item) => item.title === preview.title) && (
+              <Card className="mt-3 flex min-h-20 flex-row items-center gap-3 rounded-md p-3">
+                <Image
+                  src={preview.image}
+                  alt={preview.title}
+                  width={64}
+                  height={64}
+                  className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                />
+                <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                  <a
+                    href={preview.link}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
+                  >
+                    {preview.title}
+                  </a>
 
-                <span className="text-md font-bold select-none">
-                  €{preview.price?.toFixed(2).replace(".00", "")}
-                </span>
-              </div>
+                  <span className="text-md font-bold select-none">
+                    €{preview.price?.toFixed(2).replace(".00", "")}
+                  </span>
+                </div>
 
-              <div className="ml-2 flex min-w-[40px] flex-col items-center">
-                <Button
-                  onClick={() => handleSubmit()}
-                  className="flex h-10 w-10 items-center justify-center rounded-full text-white"
-                  aria-label="Add"
-                >
-                  {isPending ? (
-                    <Ring size={18} stroke={2.5} speed={2} color="#fff" />
-                  ) : (
-                    <Plus className="size-6" strokeWidth={2.5} />
-                  )}
-                </Button>
-              </div>
-            </Card>
-          )}
+                <div className="ml-2 flex min-w-[40px] flex-col items-center">
+                  <Button
+                    onClick={() => handleSubmit()}
+                    className="flex h-10 w-10 items-center justify-center rounded-full text-white"
+                    aria-label="Add"
+                  >
+                    {isPending ? (
+                      <Ring size={18} stroke={2.5} speed={2} color="#fff" />
+                    ) : (
+                      <Plus className="size-6" strokeWidth={2.5} />
+                    )}
+                  </Button>
+                </div>
+              </Card>
+            )}
+
+          {preview &&
+            wishlistItems.some((item) => item.title === preview.title) && (
+              <p className="mt-2 text-sm text-gray-700">
+                Dit product staat al op je verlanglijstje
+              </p>
+            )}
           {error && <p className="text-sm text-red-500">{error}</p>}
         </div>
       </section>

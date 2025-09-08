@@ -19,6 +19,8 @@ import Image from "next/image";
 import { RatingStars } from "@/components/rating";
 import { PageLoader } from "@/app/wishlist/_components";
 
+import confetti from "canvas-confetti";
+
 import { Ban } from "lucide-react";
 
 export default function WishlistPublicViewPage() {
@@ -46,8 +48,15 @@ export default function WishlistPublicViewPage() {
       },
       {
         onSuccess: () => {
-          setIsMarkOpen(false);
-          setSelectedProduct(null);
+          confetti({
+            particleCount: 150,
+            spread: 60,
+          });
+          
+          setTimeout(() => {
+            setIsMarkOpen(false);
+            setSelectedProduct(null);
+          }, 300);
         },
       },
     );
