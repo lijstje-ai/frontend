@@ -72,14 +72,14 @@ export const WishListItem: React.FC<WishListItemProps> = ({
             alt={item.title}
             width={64}
             height={64}
-            className="h-16 w-16 flex-shrink-0 rounded object-cover"
+            className="h-16 flex-1 flex-shrink-0 rounded object-cover"
           />
-          <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+          <div className="flex min-w-0 flex-4 flex-col justify-center gap-1">
             <a
               href={item.link}
               target="_blank"
               rel="noopener noreferrer"
-              className="line-clamp-2 block max-w-[230px] text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
+              className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
             >
               {item.title}
             </a>
@@ -107,7 +107,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
         </div>
 
         {item.bought_by !== "" ? (
-          <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
+          <div className="flex flex-2 h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
             <Check size={22} strokeWidth={2.5} />
           </div>
         ) : (
