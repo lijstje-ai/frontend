@@ -64,17 +64,17 @@ export const WishListItem: React.FC<WishListItemProps> = ({
     <motion.div ref={scope} layout>
       <Card
         key={item.id}
-        className="flex min-h-20 flex-row items-center justify-between gap-3 rounded-md p-3"
+        className="flex min-h-20 w-full flex-row items-center justify-between gap-3 rounded-md p-3"
       >
-        <div className="flex items-center gap-3">
-          <Image
-            src={item.image}
-            alt={item.title}
-            width={64}
-            height={64}
-            className="h-16 flex-1 flex-shrink-0 rounded object-cover"
-          />
-          <div className="flex min-w-0 flex-4 flex-col justify-center gap-1">
+        <Image
+          src={item.image}
+          alt={item.title}
+          width={64}
+          height={64}
+          className="h-16 w-1/5 flex-shrink-0 rounded object-cover"
+        />
+        <div className="flex w-6/10 items-center gap-3">
+          <div className="flex min-w-0 flex-col justify-center gap-1">
             <a
               href={item.link}
               target="_blank"
@@ -106,20 +106,22 @@ export const WishListItem: React.FC<WishListItemProps> = ({
           </div>
         </div>
 
-        {item.bought_by !== "" ? (
-          <div className="flex flex-2 h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
-            <Check size={22} strokeWidth={2.5} />
-          </div>
-        ) : (
-          <Button
-            variant="ghost"
-            className="flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-red-500 p-0 text-red-500 transition-colors hover:bg-zinc-100 hover:text-red-500"
-            onClick={() => onDelete(item.id)}
-            aria-label="Delete"
-          >
-            <Trash2 size={18} strokeWidth={2.5} />
-          </Button>
-        )}
+        <div className="w-1/5 flex justify-end">
+          {item.bought_by !== "" ? (
+            <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
+              <Check size={22} strokeWidth={2.5} />
+            </div>
+          ) : (
+            <Button
+              variant="ghost"
+              className="flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-red-500 p-0 text-red-500 transition-colors hover:bg-zinc-100 hover:text-red-500"
+              onClick={() => onDelete(item.id)}
+              aria-label="Delete"
+            >
+              <Trash2 size={18} strokeWidth={2.5} />
+            </Button>
+          )}
+        </div>
       </Card>
     </motion.div>
   );
