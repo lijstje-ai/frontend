@@ -10,14 +10,12 @@ import { AppProviders } from "./providers";
 const GeistSans = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: {
-    default: "Wishlist App",
-    template: "%s | Wishlist",
+  title: "Slim verlanglijstje maken zonder account - Lijstje.ai",
+  description:
+    "Maak eenvoudig een online verlanglijstje met AI-cadeautips gebaseerd op leeftijd, geslacht, interesses en budget. Deel het gratis met familie en vrienden.",
+  alternates: {
+    canonical: "https://lijstje.ai/",
   },
-  description: "Create, share and reserve gifts with AI assistance.",
-  keywords: ["wishlist", "gift list", "AI", "kids", "birthday", "sharing"],
-  authors: [{ name: "", url: "" }],
-  icons: [{ rel: "icon", url: "/favicon.ico" }],
 };
 
 export default function RootLayout({
@@ -26,7 +24,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en">
+    <html lang="nl">
       <body
         className={cn(
           GeistSans.className,

@@ -318,7 +318,8 @@ export default function EditWishlistPage() {
           disabled={wishlist.generate_attempts < 1 || isUpdatePending}
           loading={isUpdatePending}
         >
-          Ververs suggesties ({wishlist.generate_attempts}/5)
+          {isUpdatePending ? <span>Bezig met verversen</span> : <span>Ververs suggesties</span>} (
+          {wishlist.generate_attempts}/5)
         </Button>
       </section>
 

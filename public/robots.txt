@@ -1,0 +1,6 @@
+User-agent: *
+Disallow: /w/
+
+Allow: /
+
+Sitemap: https://lijstje.ai/sitemap.xml
