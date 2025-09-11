@@ -10,7 +10,7 @@ module.exports = {
       },
       {
         userAgent: "*",
-        disallow: "/wishlist",
+        disallow: "/w",
       },
     ],
     sitemap: "https://lijstje.ai/sitemap.xml",
