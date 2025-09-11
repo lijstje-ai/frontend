@@ -1,6 +1,9 @@
+# *
 User-agent: *
-Disallow: /wishlist/
-
 Allow: /
 
+# Host
+Host: https://lijstje.ai
+
+# Sitemaps
 Sitemap: https://lijstje.ai/sitemap.xml
