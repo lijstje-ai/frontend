@@ -2,5 +2,17 @@
 module.exports = {
   siteUrl: "https://lijstje.ai",
   generateRobotsTxt: true,
-  sitemapSize: 5000,
+  robotsTxtOptions: {
+    policies: [
+      {
+        userAgent: "*",
+        allow: "/",
+      },
+      {
+        userAgent: "*",
+        disallow: "/wishlist",
+      },
+    ],
+    sitemap: "https://lijstje.ai/sitemap.xml",
+  },
 };
