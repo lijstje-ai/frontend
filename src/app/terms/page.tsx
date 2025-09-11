@@ -3,7 +3,7 @@
 import NextLink from "next/link";
 
 import { Footer } from "@/components";
-import { WishlistHeader } from "@/app/wishlist/_components";
+import { WishlistHeader } from "@/app/w/_components";
 
 export default function TermsPage() {
   return (

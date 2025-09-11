@@ -36,7 +36,7 @@ import {
   CopyLinkModal,
   PageLoader,
   WishListItem,
-} from "@/app/wishlist/_components";
+} from "@/app/w/_components";
 import { AnimatePresence } from "framer-motion";
 
 export default function EditWishlistPage() {
@@ -66,11 +66,11 @@ export default function EditWishlistPage() {
 
   const editLink =
     typeof window !== "undefined"
-      ? `${window.location.origin}/wishlist/${id}/edit`
+      ? `${window.location.origin}/w/${id}/edit`
       : "";
   const shareLink =
     typeof window !== "undefined"
-      ? `${window.location.origin}/wishlist/${id}`
+      ? `${window.location.origin}/w/${id}`
       : "";
 
   const isValidUrl = (str: string) => {
@@ -488,7 +488,7 @@ export default function EditWishlistPage() {
       </Dialog>
 
       <div className="mt-3 flex w-full flex-col items-center justify-between gap-2 sm:flex-row">
-        <Link href={`/wishlist/${id}/edit-data`}>
+        <Link href={`/w/${id}/edit-data`}>
           <Button
             variant="ghost"
             className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
@@ -497,7 +497,7 @@ export default function EditWishlistPage() {
             <span>Gegevens aanpassen</span>
           </Button>
         </Link>
-        <Link href={`/wishlist/${id}`} target="_blank">
+        <Link href={`/w/${id}`} target="_blank">
           <Button
             variant="ghost"
             className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"

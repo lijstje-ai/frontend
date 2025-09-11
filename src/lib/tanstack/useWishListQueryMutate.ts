@@ -22,7 +22,7 @@ export const useCreateWishlistMutation = () => {
   return useMutation({
     mutationFn: (data: WishlistFormValues) => createWishlist(data),
     onSuccess: ({ id }) => {
-      router.push(`/wishlist/${id}/edit`);
+      router.push(`/w/${id}/edit`);
     },
   });
 };

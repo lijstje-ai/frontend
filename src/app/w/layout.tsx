@@ -1,7 +1,7 @@
 import React from "react";
 
 import { Footer } from "@/components";
-import { WishlistHeader } from "@/app/wishlist/_components";
+import { WishlistHeader } from "@/app/w/_components";
 
 export default function Layout({ children }: { children: React.ReactNode }) {
   return (

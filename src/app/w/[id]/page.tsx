@@ -17,7 +17,7 @@ import {
 } from "@/lib/tanstack/useWishListQueryMutate";
 import Image from "next/image";
 import { RatingStars } from "@/components/rating";
-import { PageLoader } from "@/app/wishlist/_components";
+import { PageLoader } from "@/app/w/_components";
 
 import confetti from "canvas-confetti";
 

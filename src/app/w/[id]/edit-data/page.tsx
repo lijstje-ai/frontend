@@ -24,7 +24,7 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { PageLoader } from "@/app/wishlist/_components";
+import { PageLoader } from "@/app/w/_components";
 
 export default function EditWishlistInfoPage() {
   const params = useParams();
@@ -71,7 +71,7 @@ export default function EditWishlistInfoPage() {
   const onSubmit = (form: WishlistFormValues) => {
     mutate(form, {
       onSuccess: () => {
-        router.push(`/wishlist/${id}/edit`);
+        router.push(`/w/${id}/edit`);
       },
     });
   };
@@ -197,7 +197,7 @@ export default function EditWishlistInfoPage() {
         <Button
           variant="link"
           type="button"
-          onClick={() => router.push(`/wishlist/${id}/edit`)}
+          onClick={() => router.push(`/w/${id}/edit`)}
         >
           Terug
         </Button>

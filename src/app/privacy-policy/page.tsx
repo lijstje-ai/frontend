@@ -1,7 +1,7 @@
 "use client";
 
 import { Footer } from "@/components";
-import { WishlistHeader } from "@/app/wishlist/_components";
+import { WishlistHeader } from "@/app/w/_components";
 import NextLink from "next/link";
 
 export default function PrivacyPolicyPage() {
