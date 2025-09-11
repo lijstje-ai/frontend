@@ -37,6 +37,7 @@ export default function RootLayout({
             })(window,document,'script','dataLayer','GTM-GTM-5HP95SWT');
           `}
         </Script>
+        <link rel="icon" href="/favicon.ico" sizes="any" />
       </head>
       <body
         className={cn(
