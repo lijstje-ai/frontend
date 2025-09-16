@@ -16,11 +16,13 @@ import { WishlistFormValues } from "@/app/schemas/wishlist.schema";
 import { useRouter } from "next/navigation";
 import { toast } from "react-toastify";
 
+type CreateListData = WishlistFormValues & { recaptchaToken: string };
+
 export const useCreateWishlistMutation = () => {
   const router = useRouter();
 
   return useMutation({
-    mutationFn: (data: WishlistFormValues) => createWishlist(data),
+    mutationFn: (data: CreateListData) => createWishlist(data),
     onSuccess: ({ id }) => {
       router.push(`/w/${id}/edit`);
     },
@@ -64,7 +66,7 @@ export const useUpdateBoughtBy = (wishlistId: string) => {
 
 export const useDeleteWishListItem = (wishlistId: string) => {
   const queryClient = useQueryClient();
-  
+
   return useMutation({
     mutationFn: (itemId: string) => deleteWishListItem(wishlistId, itemId),
     onSuccess: () => {

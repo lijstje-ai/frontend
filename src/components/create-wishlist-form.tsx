@@ -26,10 +26,14 @@ import { zodResolver } from "@hookform/resolvers/zod";
 
 import { Check } from "lucide-react";
 
+import { useReCaptcha } from "next-recaptcha-v3";
+
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
 
 export const CreateWishlistForm = () => {
+  const { executeRecaptcha } = useReCaptcha();
+
   const [customGender, setCustomGender] = useState("");
   const [showCustomGenderInput, setShowCustomGenderInput] = useState(false);
   const { mutate, isPending } = useCreateWishlistMutation();
@@ -43,8 +47,20 @@ export const CreateWishlistForm = () => {
     resolver: zodResolver(wishlistSchema),
   });
 
-  const onSubmit = (data: WishlistFormValues) => {
-    mutate(data, {
+  const onSubmit = async (data: WishlistFormValues) => {
+    if (!executeRecaptcha) {
+      console.error("Recaptcha not ready");
+      return;
+    }
+
+    const token = await executeRecaptcha("CREATE_WISHLIST");
+
+    const listData = {
+      ...data,
+      recaptchaToken: token,
+    };
+
+    mutate(listData, {
       onError: (error) => {
         console.error("Error creating wishlist:", error);
       },
