@@ -53,7 +53,7 @@ export const CreateWishlistForm = () => {
       return;
     }
 
-    const token = await executeRecaptcha("CREATE_WISHLIST");
+    const token = await executeRecaptcha("LOGIN");
 
     const listData = {
       ...data,
