@@ -15,7 +15,11 @@ import {
   Card,
 } from "@/components/ui";
 
-import { useUpdateBoughtBy, useWishlistQuery } from "@/hooks/api";
+import {
+  useCreateAffiliateLink,
+  useUpdateBoughtBy,
+  useWishlistQuery,
+} from "@/hooks/api";
 
 import { RatingStars } from "@/components/rating";
 import { PageLoader } from "@/app/w/_components";
@@ -38,6 +42,14 @@ export default function WishlistPublicViewPage() {
   const { data, isLoading, error } = useWishlistQuery(wishlistId);
   const { mutate: markAsBought, isPending: isMarking } =
     useUpdateBoughtBy(wishlistId);
+  const {
+    mutate: createAffiliateLinkMutation,
+    isPending: isCreateLinkPending,
+  } = useCreateAffiliateLink();
+
+  const openCreatedAffiliateLink = (link: string) => {
+    createAffiliateLinkMutation({ link });
+  };
 
   const handleConfirm = () => {
     if (!selectedProduct?.id) return;
@@ -138,14 +150,19 @@ export default function WishlistPublicViewPage() {
                       <DialogTitle>{selectedProduct?.title}</DialogTitle>
                     </DialogHeader>
                     <div className="space-y-4">
-                      <a
-                        href={selectedProduct?.link}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="block"
+                      <Button
+                        onClick={() =>
+                          selectedProduct &&
+                          openCreatedAffiliateLink(selectedProduct.link)
+                        }
+                        className="w-full"
                       >
-                        <Button className="w-full">Koop op bol.com</Button>
-                      </a>
+                        {isCreateLinkPending ? (
+                          <span>Laden...</span>
+                        ) : (
+                          <span>Koop op bol.com</span>
+                        )}
+                      </Button>
                       <Button
                         variant="outline"
                         className="w-full"

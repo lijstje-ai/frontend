@@ -16,13 +16,13 @@ export const WishlistCardLink: React.FC<WishlistCardLinkProps> = ({
   const { mutate: createAffiliateLinkMutation, isPending: isCreatePending } =
     useCreateAffiliateLink();
 
-  const handleOpenAffiliateLink = () => {
+  const openCreatedAffiliateLink = () => {
     createAffiliateLinkMutation({ link });
   };
 
   return (
     <div
-      onClick={handleOpenAffiliateLink}
+      onClick={openCreatedAffiliateLink}
       className="line-clamp-2 cursor-pointer text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
     >
       {isCreatePending ? (
