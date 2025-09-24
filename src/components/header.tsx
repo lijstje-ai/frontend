@@ -1,4 +1,4 @@
-import { useScrollToElement } from "@/hooks";
+import { useScrollToElement } from "@/hooks/ui";
 
 export const Header = () => {
   const { scrollToElement } = useScrollToElement();

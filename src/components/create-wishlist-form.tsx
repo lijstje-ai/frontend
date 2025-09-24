@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 
-import { useCreateWishlistMutation } from "@/lib/tanstack/useWishListQueryMutate";
+import { useCreateWishlistMutation } from "@/hooks/api";
 
 import {
   Button,

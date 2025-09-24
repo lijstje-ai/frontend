@@ -1,30 +1,33 @@
 "use client";
 
+import { useEffect } from "react";
+
+import { useRouter, useParams } from "next/navigation";
+
 import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
-import { Label } from "@/components/ui/label";
+
+import { useUpdateWishlistInfo, useWishlistQuery } from "@/hooks/api";
+
 import {
   WishlistFormValues,
   wishlistSchema,
 } from "@/app/schemas/wishlist.schema";
-import { useRouter, useParams } from "next/navigation";
-import { Ring } from "ldrs/react";
-import "ldrs/react/Ring.css";
+
+import { PageLoader } from "@/app/w/_components";
 import {
-  useUpdateWishlistInfo,
-  useWishlistQuery,
-} from "@/lib/tanstack/useWishListQueryMutate";
-import { useEffect } from "react";
-import {
+  Input,
+  Button,
+  Label,
   Select,
   SelectContent,
   SelectItem,
   SelectTrigger,
   SelectValue,
-} from "@/components/ui/select";
-import { PageLoader } from "@/app/w/_components";
+} from "@/components/ui";
+
+import { Ring } from "ldrs/react";
+import "ldrs/react/Ring.css";
 
 export default function EditWishlistInfoPage() {
   const params = useParams();

@@ -1,13 +1,16 @@
 "use client";
 
-import { useEffect, useRef, useState } from "react";
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { useSearchBolProductsQuery } from "@/lib/tanstack/useWishListQueryMutate";
-import { useDebounce } from "@/hooks/debounce";
+import React, { useEffect, useRef, useState } from "react";
+
 import Image from "next/image";
-import { Recommendation } from "@/types/wishlist.type";
+
+import { Recommendation } from "@/types";
+
+import { useSearchBolProductsQuery } from "@/hooks/api";
+import { useDebounce } from "@/hooks/ui";
+
+import { Input, Label, Button } from "@/components/ui";
+
 import { Ring } from "ldrs/react";
 import { Plus } from "lucide-react";
 
@@ -68,7 +71,7 @@ export const BolProductSearch: React.FC<BolProductSearchProps> = ({
           ) : data && data.length > 0 ? (
             data
               .filter((item) => item.price !== 0)
-              .filter((item => !listItems.some(l => l.title === item.title)))
+              .filter((item) => !listItems.some((l) => l.title === item.title))
               .map((product) => (
                 <li
                   key={product.link}

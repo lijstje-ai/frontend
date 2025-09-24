@@ -1,42 +1,52 @@
 "use client";
 
-import { Input } from "@/components/ui/input";
-import { Label } from "@/components/ui/label";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
+import { useState, useEffect } from "react";
+
 import { useParams } from "next/navigation";
 import Link from "next/link";
+import Image from "next/image";
+
+import { Recommendation } from "@/types";
+
 import {
   useAddByUrlMutation,
   useAddWishListItem,
   useDeleteWishListItem,
   useSendEmail,
-  // useUpdateBoughtBy,
   useWishlistQuery,
-} from "@/lib/tanstack/useWishListQueryMutate";
-import Image from "next/image";
-import { Recommendation } from "@/types/wishlist.type";
-import { useState, useEffect } from "react";
-import { ChevronLeft, ChevronRight, Plus } from "lucide-react";
+} from "@/hooks/api";
+
+import { getProductPreviewByUrl, updateGeneratedList } from "@/services";
+
+import { useMutation, useQueryClient } from "@tanstack/react-query";
+
 import {
+  Input,
+  Label,
+  Button,
+  Card,
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-} from "@/components/ui/dialog";
-import { ChevronDown, ChevronUp, Ban } from "lucide-react";
-import { BolProductSearch } from "@/components/ui/searchBol";
-import { toast } from "react-toastify";
-import { getProductPreviewByUrl, updateGeneratedList } from "@/lib/api";
-import { RatingStars } from "@/components/rating";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
+  BolProductSearch,
+} from "@/components/ui";
+import { RatingStars, WishlistCardLink } from "@/components";
+import { CopyLinkModal, PageLoader, WishListItem } from "@/app/w/_components";
+
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
+
 import {
-  CopyLinkModal,
-  PageLoader,
-  WishListItem,
-} from "@/app/w/_components";
+  ChevronDown,
+  ChevronUp,
+  Ban,
+  ChevronLeft,
+  ChevronRight,
+  Plus,
+} from "lucide-react";
+import { toast } from "react-toastify";
+
 import { AnimatePresence } from "framer-motion";
 
 export default function EditWishlistPage() {
@@ -53,7 +63,6 @@ export default function EditWishlistPage() {
   const [previewLoading, setPreviewLoading] = useState(false);
 
   const { mutate } = useAddWishListItem(id);
-  // const { mutate: markAsBought } = useUpdateBoughtBy(id);
   const { mutate: deleteItem } = useDeleteWishListItem(id);
   const { mutate: addByUrl, isPending } = useAddByUrlMutation();
 
@@ -69,9 +78,7 @@ export default function EditWishlistPage() {
       ? `${window.location.origin}/w/${id}/edit`
       : "";
   const shareLink =
-    typeof window !== "undefined"
-      ? `${window.location.origin}/w/${id}`
-      : "";
+    typeof window !== "undefined" ? `${window.location.origin}/w/${id}` : "";
 
   const isValidUrl = (str: string) => {
     try {
@@ -93,7 +100,6 @@ export default function EditWishlistPage() {
       onError: () => {},
     });
 
-  //
   useEffect(() => {
     if (!isValidUrl(url)) {
       setPreview(null);
@@ -270,14 +276,7 @@ export default function EditWishlistPage() {
                     className="h-16 w-16 flex-shrink-0 rounded object-cover"
                   />
                   <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                    <a
-                      href={item.link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
-                    >
-                      {item.title}
-                    </a>
+                    <WishlistCardLink link={item.link} title={item.title} />
 
                     {typeof item.rating === "number" && item.rating > 0 && (
                       <RatingStars rating={item.rating} />
@@ -318,8 +317,12 @@ export default function EditWishlistPage() {
           disabled={wishlist.generate_attempts < 1 || isUpdatePending}
           loading={isUpdatePending}
         >
-          {isUpdatePending ? <span>Bezig met verversen</span> : <span>Ververs suggesties</span>} (
-          {wishlist.generate_attempts}/5)
+          {isUpdatePending ? (
+            <span>Bezig met verversen</span>
+          ) : (
+            <span>Ververs suggesties</span>
+          )}{" "}
+          ({wishlist.generate_attempts}/5)
         </Button>
       </section>
 
@@ -364,14 +367,7 @@ export default function EditWishlistPage() {
                   className="h-16 w-16 flex-shrink-0 rounded object-cover"
                 />
                 <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                  <a
-                    href={preview.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
-                  >
-                    {preview.title}
-                  </a>
+                  <WishlistCardLink link={preview.link} title={preview.title} />
 
                   <span className="text-md font-bold select-none">
                     €{preview.price?.toFixed(2).replace(".00", "")}

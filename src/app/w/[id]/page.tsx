@@ -1,21 +1,22 @@
 "use client";
 
-import { useParams } from "next/navigation";
 import { useState } from "react";
+
+import { useParams } from "next/navigation";
+import Image from "next/image";
+
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
   DialogTrigger,
-} from "@/components/ui/dialog";
-import { Button } from "@/components/ui/button";
-import { Card } from "@/components/ui/card";
-import {
-  useUpdateBoughtBy,
-  useWishlistQuery,
-} from "@/lib/tanstack/useWishListQueryMutate";
-import Image from "next/image";
+  Button,
+  Card,
+} from "@/components/ui";
+
+import { useUpdateBoughtBy, useWishlistQuery } from "@/hooks/api";
+
 import { RatingStars } from "@/components/rating";
 import { PageLoader } from "@/app/w/_components";
 
@@ -52,7 +53,7 @@ export default function WishlistPublicViewPage() {
             particleCount: 150,
             spread: 60,
           });
-          
+
           setTimeout(() => {
             setIsMarkOpen(false);
             setSelectedProduct(null);
@@ -98,7 +99,6 @@ export default function WishlistPublicViewPage() {
               width={100}
               height={100}
             />
-            {/* {(product.image === "" || product.image === null) && <>no image</>} */}
             <div className="flex w-full flex-1 flex-col items-center">
               <p className="w-full text-center text-lg leading-tight font-semibold text-zinc-700">
                 {product.title}

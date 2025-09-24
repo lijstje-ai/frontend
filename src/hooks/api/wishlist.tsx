@@ -1,7 +1,11 @@
-import { useQuery } from "@tanstack/react-query";
+import { useRouter } from "next/navigation";
+
+import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
+
 import {
   addByUrl,
   addWishListItem,
+  createAffiliateLink,
   createWishlist,
   deleteWishListItem,
   getWishlist,
@@ -9,11 +13,12 @@ import {
   sendEmail,
   updateBoughtBy,
   updateWishlistInfo,
-} from "../api";
-import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { Recommendation } from "@/types/wishlist.type";
+} from "@/services";
+
+import { Recommendation } from "@/types";
+
 import { WishlistFormValues } from "@/app/schemas/wishlist.schema";
-import { useRouter } from "next/navigation";
+
 import { toast } from "react-toastify";
 
 type CreateListData = WishlistFormValues & { recaptchaToken: string };
@@ -119,6 +124,18 @@ export const useUpdateWishlistInfo = (wishlistId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", wishlistId],
       });
+    },
+  });
+};
+
+export const useCreateAffiliateLink = () => {
+  return useMutation({
+    mutationFn: (data: { link: string }) => createAffiliateLink(data.link),
+    onSuccess: (link: string) => {
+      if (link) window.open(link, "_blank");
+    },
+    onError: () => {
+      toast.error("Er is iets misgegaan");
     },
   });
 };

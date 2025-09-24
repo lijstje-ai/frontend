@@ -1,6 +1,6 @@
-import { useScrollToElement } from "@/hooks";
+import { useScrollToElement } from "@/hooks/ui";
 
-import { Button } from "@/components";
+import { Button } from "@/components/ui";
 
 export const Hero = () => {
   const { scrollToElement } = useScrollToElement();
@@ -15,7 +15,10 @@ export const Hero = () => {
           Maak snel en eenvoudig een online verlanglijstje met AI-suggesties en
           deel het gratis met familie en vrienden!
         </p>
-        <Button onClick={() => scrollToElement("userForm")} className="transform px-8 py-3 font-semibold shadow-md transition hover:scale-105">
+        <Button
+          onClick={() => scrollToElement("userForm")}
+          className="transform px-8 py-3 font-semibold shadow-md transition hover:scale-105"
+        >
           Start je lijstje
         </Button>
       </div>
