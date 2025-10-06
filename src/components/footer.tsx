@@ -1,8 +1,28 @@
 import React from "react";
 
-import NextLink from "next/link";
+import Link from "next/link";
+
+import { pageRoutes } from "@/config";
 
 import { cn } from "@/lib/utils";
+
+const links = [
+  {
+    id: 1,
+    title: "Privacy & cookies",
+    path: pageRoutes.privacy,
+  },
+  {
+    id: 2,
+    title: "Gebruiksvoorwaarden",
+    path: pageRoutes.terms,
+  },
+  {
+    id: 3,
+    title: "Support",
+    path: pageRoutes.support,
+  },
+] as const;
 
 interface FooterProps {
   className?: string;
@@ -53,25 +73,24 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
             </svg>
           </span>
         </div>
-        <div className="mb-4 text-center text-sm text-gray-500">
-          <NextLink
-            href="/privacy-policy"
-            target="_blank"
-            className="hover:text-primary mx-2 cursor-pointer"
-          >
-            Privacybeleid
-          </NextLink>
-          <span>•</span>
-          <NextLink
-            href="/terms"
-            target="_blank"
-            className="hover:text-primary mx-2 cursor-pointer"
-          >
-            Gebruiksvoorwaarden
-          </NextLink>
+        <div>
+          <ul className="mb-4 flex justify-center text-center text-sm text-gray-500">
+            {links.map((link, index) => (
+              <li key={link.id}>
+                <Link
+                  href={link.path}
+                  target="_blank"
+                  className="hover:text-primary mx-2 cursor-pointer"
+                >
+                  {link.title}
+                </Link>
+                {index !== links.length - 1 && <span>•</span>}
+              </li>
+            ))}
+          </ul>
         </div>
         <div className="text-center text-sm text-gray-500">
-          <p className="">
+          <p>
             Support:{" "}
             <a
               href="mailto:help@lijstje.ai"

@@ -13,6 +13,7 @@ import {
   sendEmail,
   updateBoughtBy,
   updateWishlistInfo,
+  getWishlistsCount,
 } from "@/services";
 
 import { Recommendation } from "@/types";
@@ -137,5 +138,13 @@ export const useCreateAffiliateLink = () => {
     onError: () => {
       toast.error("Er is iets misgegaan");
     },
+  });
+};
+
+export const useGetWishlistsCount = () => {
+  return useQuery({
+    queryFn: () => getWishlistsCount(),
+    queryKey: ["wishlists-count"],
+    staleTime: 1000 * 60 * 60,
   });
 };

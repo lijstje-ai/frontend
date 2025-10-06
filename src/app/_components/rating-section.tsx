@@ -1,9 +1,13 @@
 import Image from "next/image";
 
+import { useGetWishlistsCount } from "@/hooks/api";
+
 import { RatingStars } from "@/components";
 import { Check } from "lucide-react";
 
 export const RatingSection = () => {
+  const { data: wishlistsCount } = useGetWishlistsCount();
+
   return (
     <div className="w-full">
       <div className="border-lightgray border-t border-b bg-white px-6 py-6 shadow-sm">
@@ -43,7 +47,7 @@ export const RatingSection = () => {
             <div className="flex items-center gap-1">
               <Check size={15} strokeWidth={2.5} className="text-emerald-600" />
               <span className="text-sm font-semibold text-gray-600">
-                100.000+ &nbsp;gebruikers
+                {wishlistsCount?.count} &nbsp;gebruikers
               </span>
             </div>
           </div>

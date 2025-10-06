@@ -55,6 +55,8 @@ export const CreateWishlistForm = () => {
 
     const token = await executeRecaptcha("LOGIN");
 
+    console.log("Recaptcha token:", token);
+
     const listData = {
       ...data,
       recaptchaToken: token,

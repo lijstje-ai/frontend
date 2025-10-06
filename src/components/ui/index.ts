@@ -6,3 +6,4 @@ export * from "./input";
 export * from "./label";
 export * from "../../app/_components/search-bol";
 export * from "./select";
+export * from "./accordion";

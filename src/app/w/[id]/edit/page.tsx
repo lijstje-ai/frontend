@@ -283,7 +283,14 @@ export default function EditWishlistPage() {
                     )}
 
                     <span className="text-md font-bold select-none">
-                      €{item.price.toFixed(2).replace(".00", "")}
+                      €{item.price.toFixed(2).replace(".00", "")}{" "}
+                      <span className="font-normal">
+                        &#40;
+                        <Link href="https://bol.com" target="_blank">
+                          bol.com
+                        </Link>
+                        &#41;
+                      </span>
                     </span>
                   </div>
                   <div className="ml-2 flex min-w-[40px] flex-col items-center">

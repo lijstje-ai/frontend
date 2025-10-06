@@ -66,3 +66,15 @@ export const updateGeneratedList = async (wishlistId: string) => {
     throw e;
   }
 };
+
+export const getWishlistsCount = async () => {
+  try {
+    const { data } = await axios.get(
+      `${process.env.NEXT_PUBLIC_API_URL}/wishlist/wishlists/count`,
+    );
+
+    return data as { count: number };
+  } catch (e) {
+    console.error("Error fetching wishlists count:", e);
+  }
+};
