@@ -32,7 +32,8 @@ export default function WishlistPublicViewPage() {
   const params = useParams();
   const wishlistId = typeof params?.id === "string" ? params.id : "";
 
-  const [isMarkOpen, setIsMarkOpen] = useState(false);
+  const [isMarkModalOpen, setIsMarkModalOpen] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<{
     id: string;
     title: string;
@@ -67,7 +68,8 @@ export default function WishlistPublicViewPage() {
           });
 
           setTimeout(() => {
-            setIsMarkOpen(false);
+            setIsMarkModalOpen(false);
+            setIsModalOpen(false);
             setSelectedProduct(null);
           }, 300);
         },
@@ -130,7 +132,7 @@ export default function WishlistPublicViewPage() {
                   Gemarkeerd als gekocht
                 </span>
               ) : (
-                <Dialog>
+                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
                   <DialogTrigger asChild>
                     <Button
                       id="btn-bekijk"
@@ -170,7 +172,7 @@ export default function WishlistPublicViewPage() {
                         variant="outline"
                         className="w-full"
                         onClick={() => {
-                          setIsMarkOpen(true);
+                          setIsMarkModalOpen(true);
                         }}
                       >
                         Markeer als gekocht
@@ -183,7 +185,8 @@ export default function WishlistPublicViewPage() {
           </Card>
         ))}
       </ul>
-      <Dialog open={isMarkOpen} onOpenChange={setIsMarkOpen}>
+
+      <Dialog open={isMarkModalOpen} onOpenChange={setIsMarkModalOpen}>
         <DialogContent className="w-[400px]">
           <DialogHeader>
             <DialogTitle>Markeer als gekocht</DialogTitle>
