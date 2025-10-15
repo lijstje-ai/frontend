@@ -100,6 +100,25 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
               help@lijstje.ai
             </a>
           </p>
+          <p className="mt-4">
+            Deze site wordt beschermd door reCAPTCHA en Google{" "}
+            <Link
+              href="https://policies.google.com/privacy"
+              target="_blank"
+              className="text-main-blue cursor-pointer hover:underline"
+            >
+              Privacybeleid
+            </Link>{" "}
+            en{" "}
+            <Link
+              href="https://policies.google.com/terms"
+              target="_blank"
+              className="text-main-blue cursor-pointer hover:underline"
+            >
+              Gebruiksvoorwaarden
+            </Link>{" "}
+            zijn van toepassing.
+          </p>
           <p className="mt-2">© 2025 lijstje.ai - Alle rechten voorbehouden</p>
         </div>
       </div>

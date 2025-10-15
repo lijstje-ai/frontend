@@ -205,11 +205,7 @@ export default function PrivacyPolicyPage() {
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
                 Conform de AVG kunt u inzage vragen in uw gegevens of een
-                verzoek tot verwijdering doen via{" "}
-                <span className="text-main-blue cursor-pointer underline">
-                  info@lijstje.ai
-                </span>
-                .
+                verzoek tot verwijdering doen via.
               </p>
             </div>
 
@@ -238,42 +234,6 @@ export default function PrivacyPolicyPage() {
                 helpen met analytics en affiliate tracking, allen volgens
                 AVG-richtlijnen.
               </p>
-            </div>
-          </div>
-
-          <div className="bg-main-blue/10 border-main-blue/20 rounded-lg border p-4">
-            <div className="flex items-start space-x-3">
-              <svg
-                className="text-main-blue h-4.5 w-4.5"
-                aria-hidden="true"
-                focusable="false"
-                data-prefix="fas"
-                data-icon="envelope"
-                role="img"
-                xmlns="http://www.w3.org/2000/svg"
-                viewBox="0 0 512 512"
-                data-fa-i2svg=""
-              >
-                <path
-                  fill="currentColor"
-                  d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
-                ></path>
-              </svg>
-
-              <div>
-                <h3 className="text-main-blue mb-1 font-semibold">Vragen?</h3>
-                <p className="text-sm text-gray-600">
-                  Heeft u vragen over uw privacy? Neem contact op via{" "}
-                  <a
-                    href="mailto:info@lijstje.ai"
-                    target="_blank"
-                    className="text-main-blue cursor-pointer underline"
-                  >
-                    info@lijstje.ai
-                  </a>
-                  .
-                </p>
-              </div>
             </div>
           </div>
 

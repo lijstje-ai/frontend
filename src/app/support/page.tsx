@@ -61,7 +61,7 @@ export default function SupportPage() {
             <AccordionItem
               key={item.id}
               value={item.id.toString()}
-              className="rounded-md border"
+              className="rounded-md border last:border-b"
             >
               <AccordionTrigger className="cursor-pointer p-5 text-lg font-semibold text-gray-800 hover:bg-gray-100 hover:no-underline">
                 {item.question}
@@ -73,7 +73,7 @@ export default function SupportPage() {
           ))}
         </Accordion>
 
-        <div className="border-lightgray border-t px-6 py-6">
+        <div className="border-lightgray mt-6 border-t px-6 py-6">
           <div>
             <Link
               href="/"

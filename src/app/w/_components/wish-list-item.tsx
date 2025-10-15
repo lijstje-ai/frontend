@@ -2,8 +2,6 @@
 
 import React, { useEffect } from "react";
 
-import Link from "next/link";
-
 import { Recommendation } from "@/types/wishlist.type";
 
 import Image from "next/image";
@@ -94,9 +92,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
               €{item.price?.toFixed(2).replace(".00", "")}{" "}
               <span className="font-normal">
                 &#40;
-                <Link href="https://bol.com" target="_blank">
-                  bol.com
-                </Link>
+                <span>bol.com</span>
                 &#41;
               </span>
             </span>
@@ -108,7 +104,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
 
               {item.bought_by === "" && (
                 <p className="text-main-red text-sm">
-                  Nog niet gemarkeerd als gekocht
+                  Niet gemarkeerd als gekocht
                 </p>
               )}
             </div>

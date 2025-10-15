@@ -116,15 +116,14 @@ export const useSendEmail = () => {
   });
 };
 
-export const useUpdateWishlistInfo = (wishlistId: string) => {
+export const useUpdateWishlistInfo = () => {
   const queryClient = useQueryClient();
+
   return useMutation({
-    mutationFn: (data: Partial<WishlistFormValues>) =>
-      updateWishlistInfo(wishlistId, data),
+    mutationFn: (data: { id: string; data: Partial<WishlistFormValues> }) =>
+      updateWishlistInfo(data.id, data.data),
     onSuccess: () => {
-      queryClient.invalidateQueries({
-        queryKey: ["wishlist", wishlistId],
-      });
+      queryClient.invalidateQueries();
     },
   });
 };

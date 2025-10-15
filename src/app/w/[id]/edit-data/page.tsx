@@ -24,6 +24,7 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
+  Checkbox,
 } from "@/components/ui";
 
 import { Ring } from "ldrs/react";
@@ -35,7 +36,11 @@ export default function EditWishlistInfoPage() {
   const router = useRouter();
 
   const { data, isLoading } = useWishlistQuery(id);
-  const { mutate, isPending } = useUpdateWishlistInfo(id);
+  const { mutate, isPending } = useUpdateWishlistInfo();
+
+  const handleReturnToWishlist = () => {
+    router.push(`/w/${id}/edit`);
+  };
 
   const {
     register,
@@ -55,7 +60,7 @@ export default function EditWishlistInfoPage() {
         if (!wl.gender) return "";
         const g = wl.gender.toLowerCase();
         if (g === "female" || g === "vrouw" || g === "f") return "Female";
-        return "Male"; // default
+        return "Male";
       })();
 
       reset({
@@ -71,12 +76,13 @@ export default function EditWishlistInfoPage() {
     }
   }, [data, reset, setValue]);
 
-  const onSubmit = (form: WishlistFormValues) => {
-    mutate(form, {
-      onSuccess: () => {
-        router.push(`/w/${id}/edit`);
+  const onSubmit = (data: WishlistFormValues) => {
+    mutate(
+      { id, data },
+      {
+        onSuccess: () => handleReturnToWishlist(),
       },
-    });
+    );
   };
 
   if (isLoading) return <PageLoader />;
@@ -125,7 +131,7 @@ export default function EditWishlistInfoPage() {
                 onValueChange={field.onChange}
                 value={field.value}
               >
-                <SelectTrigger className="w-full bg-white py-[25px]">
+                <SelectTrigger className="w-full bg-white py-6.5">
                   <SelectValue
                     placeholder={
                       <span className="text-[17px] font-semibold text-gray-400/80">
@@ -181,12 +187,23 @@ export default function EditWishlistInfoPage() {
           </p>
         </div>
 
-        {/*<div className="flex items-center space-x-2">*/}
-        {/*  <Checkbox id="aiSupport" {...register("aiSupport")} />*/}
-        {/*  <Label htmlFor="aiSupport" className="mb-0">*/}
-        {/*    AI-ondersteuning?*/}
-        {/*  </Label>*/}
-        {/*</div>*/}
+        <div className="flex items-center space-x-2">
+          <Controller
+            name="aiSupport"
+            control={control}
+            render={({ field }) => (
+              <Checkbox
+                id="aiSupport"
+                checked={field.value}
+                onCheckedChange={(val) => field.onChange(!!val)}
+                className="data-[state=checked]:bg-main-blue data-[state=checked]:border-main-blue h-4.5 w-4.5 bg-white"
+              />
+            )}
+          />
+          <Label htmlFor="aiSupport" className="mb-0">
+            AI-suggesties?
+          </Label>
+        </div>
         <Button type="submit" className="mt-4 w-full" disabled={isPending}>
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">
@@ -200,7 +217,7 @@ export default function EditWishlistInfoPage() {
         <Button
           variant="link"
           type="button"
-          onClick={() => router.push(`/w/${id}/edit`)}
+          onClick={() => handleReturnToWishlist()}
         >
           Terug
         </Button>

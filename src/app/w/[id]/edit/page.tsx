@@ -240,98 +240,106 @@ export default function EditWishlistPage() {
 
   return (
     <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
-      <h1 className="mb-6 text-3xl font-bold text-zinc-800">
-        Cadeaus toevoegen
-      </h1>
+      <h1 className="text-3xl font-bold text-zinc-800">Cadeaus toevoegen</h1>
 
-      <section>
-        <h2 className="text-xl font-semibold">Suggesties van AI</h2>
+      {wishlist.ai_support && (
+        <section className="mt-6">
+          <h2 className="text-xl font-semibold">Suggesties van AI</h2>
 
-        <Button
-          onClick={() => setIsExpanded(!isExpanded)}
-          variant="outline"
-          className="mt-2 flex w-full items-center justify-between"
-        >
-          <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
-          {isExpanded ? <ChevronUp size={30} /> : <ChevronDown size={24} />}
-        </Button>
+          <Button
+            onClick={() => setIsExpanded(!isExpanded)}
+            variant="outline"
+            className="mt-2 flex w-full items-center justify-between"
+          >
+            <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
+            {isExpanded ? <ChevronUp size={30} /> : <ChevronDown size={24} />}
+          </Button>
 
-        <div
-          className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
-            isExpanded ? "max-h-full" : "max-h-0"
-          }`}
-        >
-          {isExpanded && isValidRecommendations ? (
-            <div className="space-y-3">
-              {filteredRecommendationsForAISection.slice(0, 10).map((item) => (
-                <Card
-                  key={item.id}
-                  className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
-                >
-                  <Image
-                    src={item.image}
-                    alt={item.title}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 flex-shrink-0 rounded object-cover"
-                  />
-                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                    <WishlistCardLink link={item.link} title={item.title} />
-
-                    {typeof item.rating === "number" && item.rating > 0 && (
-                      <RatingStars rating={item.rating} />
-                    )}
-
-                    <span className="text-md font-bold select-none">
-                      €{item.price.toFixed(2).replace(".00", "")}{" "}
-                      <span className="font-normal">
-                        &#40;
-                        <Link href="https://bol.com" target="_blank">
-                          bol.com
-                        </Link>
-                        &#41;
-                      </span>
-                    </span>
-                  </div>
-                  <div className="ml-2 flex min-w-[40px] flex-col items-center">
-                    <Button
-                      onClick={() => handleAdd(item)}
-                      disabled={loadingItemId === item.id}
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-white"
-                      aria-label="Add"
+          <div
+            className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
+              isExpanded ? "max-h-full" : "max-h-0"
+            }`}
+          >
+            {isExpanded && isValidRecommendations ? (
+              <div className="space-y-3">
+                {filteredRecommendationsForAISection
+                  .slice(0, 10)
+                  .map((item) => (
+                    <Card
+                      key={item.id}
+                      className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
                     >
-                      {loadingItemId === item.id ? (
-                        <Ring size={18} stroke={2.5} speed={2} color="#fff" />
-                      ) : (
-                        <Plus className="size-6" strokeWidth={2.5} />
-                      )}
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
-          ) : null}
+                      <Image
+                        src={item.image}
+                        alt={item.title}
+                        width={64}
+                        height={64}
+                        className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                      />
+                      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                        <WishlistCardLink link={item.link} title={item.title} />
 
-          {filteredRecommendationsForAISection.length === 0 && (
-            <p className="text-center text-sm text-gray-700">Geen suggesties</p>
-          )}
-        </div>
+                        {typeof item.rating === "number" && item.rating > 0 && (
+                          <RatingStars rating={item.rating} />
+                        )}
 
-        <Button
-          className="mt-3 w-full"
-          onClick={handleUseAttempt}
-          variant="default"
-          disabled={wishlist.generate_attempts < 1 || isUpdatePending}
-          loading={isUpdatePending}
-        >
-          {isUpdatePending ? (
-            <span>Bezig met verversen</span>
-          ) : (
-            <span>Ververs suggesties</span>
-          )}{" "}
-          ({wishlist.generate_attempts}/5)
-        </Button>
-      </section>
+                        <span className="text-md font-bold select-none">
+                          €{item.price.toFixed(2).replace(".00", "")}{" "}
+                          <span className="font-normal">
+                            &#40;
+                            <span>bol.com</span>
+                            &#41;
+                          </span>
+                        </span>
+                      </div>
+                      <div className="ml-2 flex min-w-[40px] flex-col items-center">
+                        <Button
+                          onClick={() => handleAdd(item)}
+                          disabled={loadingItemId === item.id}
+                          className="flex h-10 w-10 items-center justify-center rounded-full text-white"
+                          aria-label="Add"
+                        >
+                          {loadingItemId === item.id ? (
+                            <Ring
+                              size={18}
+                              stroke={2.5}
+                              speed={2}
+                              color="#fff"
+                            />
+                          ) : (
+                            <Plus className="size-6" strokeWidth={2.5} />
+                          )}
+                        </Button>
+                      </div>
+                    </Card>
+                  ))}
+              </div>
+            ) : null}
+
+            {filteredRecommendationsForAISection.length === 0 && (
+              <p className="text-center text-sm text-gray-700">
+                Geen suggesties
+              </p>
+            )}
+          </div>
+
+          <Button
+            id="btn-ververs-suggesties"
+            className="mt-3 w-full border border-black"
+            onClick={handleUseAttempt}
+            variant="outline"
+            disabled={wishlist.generate_attempts < 1 || isUpdatePending}
+            loading={isUpdatePending}
+          >
+            {isUpdatePending ? (
+              <span>Bezig met verversen</span>
+            ) : (
+              <span>Ververs suggesties</span>
+            )}{" "}
+            ({wishlist.generate_attempts}/5)
+          </Button>
+        </section>
+      )}
 
       <section className="mt-8 space-y-4">
         <div className="mt-2">
@@ -350,6 +358,7 @@ export default function EditWishlistPage() {
               className="h-[53px] bg-white placeholder:text-lg placeholder:font-semibold placeholder:text-gray-400/80"
             />
             <Button
+              id="btn-toevoegen"
               type="button"
               onClick={handleSubmit}
               disabled={isPending}
@@ -450,6 +459,7 @@ export default function EditWishlistPage() {
                 className="h-[53px] bg-white"
               />
               <Button
+                id="btn-versturen"
                 type="button"
                 onClick={handleBackupEmailSubmit}
                 disabled={isLoadingEmail}

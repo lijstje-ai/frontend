@@ -37,7 +37,9 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
   return (
     <Dialog>
       <DialogTrigger asChild>
-        <Button className="mt-4 w-full">Deel verlanglijstje</Button>
+        <Button id="btn-deel-verlanglijstje" className="mt-4 w-full">
+          Deel verlanglijstje
+        </Button>
       </DialogTrigger>
       <DialogContent className="max-w-sm">
         <DialogHeader>

@@ -133,6 +133,7 @@ export default function WishlistPublicViewPage() {
                 <Dialog>
                   <DialogTrigger asChild>
                     <Button
+                      id="btn-bekijk"
                       className="w-full rounded-md text-base text-white"
                       onClick={() =>
                         setSelectedProduct({
@@ -151,6 +152,7 @@ export default function WishlistPublicViewPage() {
                     </DialogHeader>
                     <div className="space-y-4">
                       <Button
+                        id="btn-koop-bol"
                         onClick={() =>
                           selectedProduct &&
                           openCreatedAffiliateLink(selectedProduct.link)
@@ -164,6 +166,7 @@ export default function WishlistPublicViewPage() {
                         )}
                       </Button>
                       <Button
+                        id="btn-markeren"
                         variant="outline"
                         className="w-full"
                         onClick={() => {
