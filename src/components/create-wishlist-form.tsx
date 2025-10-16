@@ -55,18 +55,12 @@ export const CreateWishlistForm = () => {
 
     const token = await executeRecaptcha("LOGIN");
 
-    console.log("Recaptcha token:", token);
-
     const listData = {
       ...data,
       recaptchaToken: token,
     };
 
-    mutate(listData, {
-      onError: (error) => {
-        console.error("Error creating wishlist:", error);
-      },
-    });
+    mutate(listData);
   };
 
   return (
@@ -216,7 +210,12 @@ export const CreateWishlistForm = () => {
             )}
           />
         </div>
-        <Button  type="submit" className="mt-4 w-full" disabled={isPending}>
+        <Button
+          id="btn-aanmaken"
+          type="submit"
+          className="mt-4 w-full"
+          disabled={isPending}
+        >
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">
               Bezig met maken

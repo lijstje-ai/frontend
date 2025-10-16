@@ -6,7 +6,7 @@ export const Hero = () => {
   const { scrollToElement } = useScrollToElement();
 
   return (
-    <section className="bg-gradient-to-b from-white to-gray-100 px-6 py-10">
+    <section className="bg-gradient-to-b from-white to-gray-100 px-6 py-10 mt-5.5">
       <div className="container mx-auto text-center">
         <h1 className="mb-4 text-3xl font-bold">
           Slim verlanglijstje maken zonder account

@@ -73,6 +73,43 @@ export default function SupportPage() {
           ))}
         </Accordion>
 
+        <div
+          id="usage-section"
+          className="mt-6 flex gap-4 rounded-lg border border-emerald-600/20 bg-emerald-600/10 p-6"
+        >
+          <svg
+            className="mt-1.5 h-4 w-4 text-emerald-500"
+            aria-hidden="true"
+            focusable="false"
+            data-prefix="fas"
+            data-icon="circle-play"
+            role="img"
+            xmlns="http://www.w3.org/2000/svg"
+            viewBox="0 0 512 512"
+            data-fa-i2svg=""
+          >
+            <path
+              fill="currentColor"
+              d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z"
+            ></path>
+          </svg>
+          <div>
+            <h3 className="flex items-center gap-2 text-lg font-bold text-gray-800">
+              Andere vragen?
+            </h3>
+            <p className="mt-2 text-sm leading-relaxed text-gray-700">
+              <a
+                href="mailto:help@lijstje.ai"
+                target="_blank"
+                className="underline"
+              >
+                Stuur een mailtje
+              </a>{" "}
+              voor al je andere vragen.
+            </p>
+          </div>
+        </div>
+
         <div className="border-lightgray mt-6 border-t px-6 py-6">
           <div>
             <Link

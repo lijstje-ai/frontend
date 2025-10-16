@@ -174,6 +174,7 @@ export default function EditWishlistPage() {
       setBackupEmailError("Voer een geldig e-mailadres in");
       return;
     }
+    
     try {
       sendEmail(
         { to: backupEmail, shareLink: editLink },
@@ -245,6 +246,16 @@ export default function EditWishlistPage() {
       {wishlist.ai_support && (
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Suggesties van AI</h2>
+          <p className="text-sm text-gray-500">
+            {wishlist.gender}, {wishlist.age} jaar, max €{wishlist.max_price},{" "}
+            {wishlist.interests}{" "}
+            <Link
+              href={`/w/${wishlist.id}/edit-data`}
+              className="text-blue-500"
+            >
+              &#40;aanpassen&#41;
+            </Link>
+          </p>
 
           <Button
             onClick={() => setIsExpanded(!isExpanded)}
@@ -471,7 +482,7 @@ export default function EditWishlistPage() {
               </Button>
             </div>
             {backupEmailError && (
-              <p className="text-smtext-red-500">{backupEmailError}</p>
+              <p className="text-sm text-red-500">{backupEmailError}</p>
             )}
           </div>
         </div>
