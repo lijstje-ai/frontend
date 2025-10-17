@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useRef } from "react";
-
 import Link from "next/link";
 
 import {
@@ -16,17 +14,13 @@ import { WishlistHeader } from "@/app/w/_components";
 import { supportQuestions } from "@/data";
 
 export const SupportContent = () => {
-  const emailLinkRef = useRef<HTMLAnchorElement | null>(null);
-
-  useEffect(() => {
+  const handleOpenEmailLink = () => {
     const user = "lijstje.ai";
     const domain = "gmail.com";
     const email = `${user}@${domain}`;
 
-    if (emailLinkRef.current) {
-      emailLinkRef.current.href = `mailto:${email}`;
-    }
-  }, []);
+    window.location.href = `mailto:${email}`;
+  };
 
   return (
     <div className="mx-auto min-h-screen w-full bg-white sm:max-w-md">
@@ -113,12 +107,18 @@ export const SupportContent = () => {
             <h3 className="flex items-center gap-2 text-lg font-bold text-gray-800">
               Andere vragen?
             </h3>
-            <p className="mt-2 text-sm leading-relaxed text-gray-700">
-              <a className="underline" target="_blank" ref={emailLinkRef}>
+            <div className="mt-2 text-sm leading-relaxed text-gray-700">
+              {/* <a className="underline" target="_blank" ref={emailLinkRef}>
                 Stuur een mailtje
-              </a>{" "}
-              voor al je andere vragen.
-            </p>
+              </a>{" "} */}
+              <button
+                className="cursor-pointer underline"
+                onClick={handleOpenEmailLink}
+              >
+                Stuur een mailtje
+              </button>
+              <span> voor al je andere vragen.</span>
+            </div>
           </div>
         </div>
 
