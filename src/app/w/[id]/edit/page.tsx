@@ -49,6 +49,13 @@ import { toast } from "react-toastify";
 
 import { AnimatePresence } from "framer-motion";
 
+const gendersNames = {
+  Male: "Man",
+  Female: "Vrouw",
+};
+
+type GenderType = "Male" | "Female";
+
 export default function EditWishlistPage() {
   const params = useParams();
   const id = params?.id as string;
@@ -174,7 +181,7 @@ export default function EditWishlistPage() {
       setBackupEmailError("Voer een geldig e-mailadres in");
       return;
     }
-    
+
     try {
       sendEmail(
         { to: backupEmail, shareLink: editLink },
@@ -247,13 +254,13 @@ export default function EditWishlistPage() {
         <section className="mt-6">
           <h2 className="text-xl font-semibold">Suggesties van AI</h2>
           <p className="text-sm text-gray-500">
-            {wishlist.gender}, {wishlist.age} jaar, max €{wishlist.max_price},{" "}
-            {wishlist.interests}{" "}
+            {gendersNames[wishlist.gender as GenderType]}, {wishlist.age} jaar,
+            max €{wishlist.max_price}, {wishlist.interests}{" "}
             <Link
               href={`/w/${wishlist.id}/edit-data`}
               className="text-blue-500"
             >
-              &#40;aanpassen&#41;
+              &#40;edit&#41;
             </Link>
           </p>
 

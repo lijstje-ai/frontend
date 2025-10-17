@@ -54,6 +54,7 @@ export default function RootLayout({
             style={{ display: "none", visibility: "hidden" }}
           ></iframe>
         </noscript>
+        
         <div className="flex min-h-full flex-col bg-gray-50">
           <AppProviders>{children}</AppProviders>
         </div>

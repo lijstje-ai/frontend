@@ -6,7 +6,7 @@ import { Recommendation } from "@/types/wishlist.type";
 
 import Image from "next/image";
 
-import { RatingStars, Card, Button } from "@/components";
+import { RatingStars, Card, Button, WishlistCardLink } from "@/components";
 
 import { Check, Trash2 } from "lucide-react";
 
@@ -75,14 +75,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
         />
         <div className="flex w-6/10 items-center gap-3">
           <div className="flex min-w-0 flex-col justify-center gap-1">
-            <a
-              href={item.link}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="line-clamp-2 block text-lg leading-tight font-semibold text-blue-900 hover:text-blue-800"
-            >
-              {item.title}
-            </a>
+            <WishlistCardLink title={item.title} link={item.link} />
 
             {typeof item.rating === "number" && item.rating > 0 && (
               <RatingStars rating={item.rating} />

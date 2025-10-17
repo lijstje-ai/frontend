@@ -14,7 +14,7 @@ const links = [
   },
   {
     id: 2,
-    title: "Gebruiksvoorwaarden",
+    title: "Voorwaarden",
     path: pageRoutes.terms,
   },
   {
@@ -90,16 +90,6 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
           </ul>
         </div>
         <div className="text-center text-sm text-gray-500">
-          <p>
-            Support:{" "}
-            <a
-              href="mailto:help@lijstje.ai"
-              target="_blank"
-              className="text-main-blue cursor-pointer hover:underline"
-            >
-              help@lijstje.ai
-            </a>
-          </p>
           <p className="mt-4">
             Deze site wordt beschermd door reCAPTCHA en Google{" "}
             <Link

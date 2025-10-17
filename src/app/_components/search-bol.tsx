@@ -10,6 +10,7 @@ import { useSearchBolProductsQuery } from "@/hooks/api";
 import { useDebounce } from "@/hooks/ui";
 
 import { Input, Label, Button } from "@/components/ui";
+import { WishlistCardLink } from "@/components";
 
 import { Ring } from "ldrs/react";
 import { Plus } from "lucide-react";
@@ -85,13 +86,11 @@ export const BolProductSearch: React.FC<BolProductSearchProps> = ({
                     className="h-12 w-12 object-cover"
                   />
                   <div className="flex-1">
-                    <a
-                      target="_blank"
-                      href={product.link}
-                      className="block text-sm leading-4 text-blue-900 hover:text-blue-800"
-                    >
-                      {product.title}
-                    </a>
+                    <WishlistCardLink
+                      title={product.title}
+                      link={product.link}
+                      className="text-sm leading-4"
+                    />
                     <p className="mt-2 text-sm font-semibold text-gray-500">
                       € {product.price.toFixed(2)}
                     </p>
