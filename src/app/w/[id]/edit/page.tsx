@@ -32,7 +32,12 @@ import {
   BolProductSearch,
 } from "@/components/ui";
 import { RatingStars, WishlistCardLink } from "@/components";
-import { CopyLinkModal, PageLoader, WishListItem } from "@/app/w/_components";
+import {
+  CopyLinkModal,
+  PageLoader,
+  WishListItem,
+  OnboardingModal,
+} from "@/app/w/_components";
 
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
@@ -248,6 +253,8 @@ export default function EditWishlistPage() {
 
   return (
     <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
+      <OnboardingModal />
+
       <section className="mb-8">
         <h1 className="text-5xl font-bold text-zinc-800">{wishlist.name}</h1>
 
