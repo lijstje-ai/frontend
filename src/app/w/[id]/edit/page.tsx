@@ -256,7 +256,7 @@ export default function EditWishlistPage() {
       <OnboardingModal />
 
       <section className="mb-8">
-        <h1 className="text-5xl font-bold text-zinc-800">{wishlist.name}</h1>
+        <h1 className="text-3xl font-bold text-zinc-800">{wishlist.name}</h1>
 
         {wishlist.wish_list.length > 0 ? (
           <ul className="mt-4 space-y-2">
@@ -475,8 +475,8 @@ export default function EditWishlistPage() {
       </section>
 
 
-      <section className="space-y-4">
-        <div className="border-lightgray mt-4 rounded-lg border bg-gray-100/90 p-4">
+      <section className="space-y-4 mt-8">
+        <div className="border-lightgray rounded-lg border bg-gray-100/90 p-4">
           <h2 className="text-lg font-semibold">Back-up (optioneel)</h2>
 
           <div className="space-y-2">

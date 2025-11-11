@@ -43,7 +43,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent
-        className="max-w-sm rounded-2xl"
+        className="rounded-2xl"
         showCloseButton={false}
       >
         <DialogTitle className="sr-only">
