@@ -21,11 +21,13 @@ import {
 interface CopyLinkModalProps {
   wishlistName: string;
   link: string;
+  disabled?: boolean;
 }
 
 export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
   wishlistName,
   link,
+  disabled = false,
 }) => {
   const [isCopied, setIsCopied] = useState(false);
 
@@ -36,11 +38,22 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
 
   return (
     <Dialog>
-      <DialogTrigger asChild>
-        <Button id="btn-deel-verlanglijstje" className="mt-4 w-full">
+      {disabled ? (
+        <Button
+          id="btn-deel-verlanglijstje"
+          className="mt-4 w-full"
+          variant="secondary"
+          disabled
+        >
           Deel verlanglijstje
         </Button>
-      </DialogTrigger>
+      ) : (
+        <DialogTrigger asChild>
+          <Button id="btn-deel-verlanglijstje" className="mt-4 w-full">
+            Deel verlanglijstje
+          </Button>
+        </DialogTrigger>
+      )}
       <DialogContent className="max-w-sm">
         <DialogHeader>
           <DialogTitle>Deel je verlanglijstje</DialogTitle>

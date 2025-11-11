@@ -248,10 +248,43 @@ export default function EditWishlistPage() {
 
   return (
     <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
-      <h1 className="text-3xl font-bold text-zinc-800">Cadeaus toevoegen</h1>
+      <section className="mb-8">
+        <h1 className="text-5xl font-bold text-zinc-800">{wishlist.name}</h1>
+
+        {wishlist.wish_list.length > 0 ? (
+          <ul className="mt-4 space-y-2">
+            <AnimatePresence>
+              {wishlistItems.map((item) => (
+                <WishListItem
+                  key={item.id}
+                  item={item}
+                  onDelete={(id) => deleteItem(id)}
+                />
+              ))}
+            </AnimatePresence>
+          </ul>
+        ) : (
+          <div className="mt-3 space-y-2 text-md">
+            <p className="text-gray-600">
+              Je verlanglijstje is nog leeg! 🙂
+            </p>
+            <p className="text-gray-600">
+              Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om cadeaus toe te voegen
+              aan je lijstje. Deel daarna met vrienden & familie👇
+            </p>
+          </div>
+        )}
+
+        <CopyLinkModal
+          wishlistName={wishlist.name}
+          link={shareLink}
+          disabled={wishlist.wish_list.length === 0}
+        />
+      </section>
+
 
       {wishlist.ai_support && (
-        <section className="mt-6">
+        <section>
           <h2 className="text-xl font-semibold">Suggesties van AI</h2>
           <p className="text-sm text-gray-500">
             {gendersNames[wishlist.gender as GenderType]}, {wishlist.age} jaar,
@@ -434,33 +467,8 @@ export default function EditWishlistPage() {
         </div>
       </section>
 
-      <section className="mt-8 space-y-4">
-        <h2 className="text-xl font-semibold text-zinc-800">{wishlist.name}</h2>
-
-        {wishlist.wish_list.length > 0 ? (
-          <ul className="space-y-2">
-            <AnimatePresence>
-              {wishlistItems.map((item) => (
-                <WishListItem
-                  key={item.id}
-                  item={item}
-                  onDelete={(id) => deleteItem(id)}
-                />
-              ))}
-            </AnimatePresence>
-          </ul>
-        ) : (
-          <p className="text-muted-foreground text-sm">
-            Geen cadeaus toegevoegd
-          </p>
-        )}
-      </section>
 
       <section className="space-y-4">
-        {wishlist && (
-          <CopyLinkModal wishlistName={wishlist.name} link={shareLink} />
-        )}
-
         <div className="border-lightgray mt-4 rounded-lg border bg-gray-100/90 p-4">
           <h2 className="text-lg font-semibold">Back-up (optioneel)</h2>
 
