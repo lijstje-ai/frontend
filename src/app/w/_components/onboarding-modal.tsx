@@ -56,7 +56,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               <Plus className="size-10 text-white" strokeWidth={3} />
             </div>
           </div>
-          <p className="text-lg leading-relaxed text-gray-700">
+          <p className="text-lg leading-relaxed text-gray-700 text-center">
             <b>Nu wordt het leuk!&nbsp;</b>🎉
             <br />
             <br />
