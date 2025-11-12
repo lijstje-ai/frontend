@@ -60,7 +60,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
 
                   {item.bought_by === "" && (
                     <p className="text-main-red text-sm">
-                      Nog niet afgevinkt! 👀
+                      Nog niet afgevinkt 👀
                     </p>
                   )}
             </div>

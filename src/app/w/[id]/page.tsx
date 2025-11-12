@@ -175,7 +175,7 @@ export default function WishlistPublicViewPage() {
                           setIsMarkModalOpen(true);
                         }}
                       >
-                        Markeer als gekocht
+                        Afvinken
                       </Button>
                     </div>
                   </DialogContent>
@@ -189,9 +189,10 @@ export default function WishlistPublicViewPage() {
       <Dialog open={isMarkModalOpen} onOpenChange={setIsMarkModalOpen}>
         <DialogContent className="w-[400px]">
           <DialogHeader>
-            <DialogTitle>Markeer als gekocht</DialogTitle>
+            <DialogTitle>Afvinken</DialogTitle>
             <p className="text-sm text-zinc-500">
-              Markeer als gekocht, zodat het niet meer aanklikbaar is.
+              Heb je dit cadeau gekocht? <br />
+              Vink het dan nu af zodat het niet meer aanklikbaar is.
             </p>
           </DialogHeader>
 
@@ -202,7 +203,7 @@ export default function WishlistPublicViewPage() {
             disabled={isMarking}
             loading={isMarking}
           >
-            Markeren
+            Ja, afvinken
           </Button>
         </DialogContent>
       </Dialog>
