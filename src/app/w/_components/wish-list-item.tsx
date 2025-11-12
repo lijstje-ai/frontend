@@ -1,7 +1,5 @@
 "use client";
 
-import React, { useEffect } from "react";
-
 import { Recommendation } from "@/types/wishlist.type";
 
 import Image from "next/image";
@@ -10,55 +8,20 @@ import { RatingStars, Card, Button, WishlistCardLink } from "@/components";
 
 import { Check, Trash2 } from "lucide-react";
 
-import { motion, usePresence, useAnimate } from "framer-motion";
+import { motion, useAnimate } from "framer-motion";
 
 interface WishListItemProps {
   item: Recommendation;
   onDelete: (id: string) => void;
+  isDeleting?: boolean;
 }
 
 export const WishListItem: React.FC<WishListItemProps> = ({
   item,
   onDelete,
+  isDeleting = false,
 }) => {
-  const [isPresent, safeToRemove] = usePresence();
-  const [scope, animate] = useAnimate();
-
-  useEffect(() => {
-    if (!isPresent) {
-      const exitAnimation = async () => {
-        await animate(
-          "a",
-          {
-            color: item.bought_by !== "" ? "#6ee7b7" : "#fca5a5",
-          },
-          {
-            ease: "easeIn",
-            duration: 0.125,
-          },
-        );
-
-        await animate(
-          scope.current,
-          { scale: 1.025 },
-          { ease: "easeIn", duration: 0.125 },
-        );
-
-        await animate(
-          scope.current,
-          {
-            opacity: 0,
-            x: item.bought_by !== "" ? 24 : -24,
-          },
-          { delay: 0.75 },
-        );
-
-        safeToRemove();
-      };
-
-      exitAnimation();
-    }
-  }, [isPresent]);
+  const [scope] = useAnimate();
 
   return (
     <motion.div ref={scope} layout>
@@ -92,14 +55,14 @@ export const WishListItem: React.FC<WishListItemProps> = ({
 
             <div>
               {item.bought_by === "-" && (
-                <p className="text-sm text-green-600">Gemarkeerd als gekocht</p>
+                <p className="text-sm text-green-600">Afgevinkt! 🎉</p>
               )}
 
-              {item.bought_by === "" && (
-                <p className="text-main-red text-sm">
-                  Niet gemarkeerd als gekocht
-                </p>
-              )}
+                  {item.bought_by === "" && (
+                    <p className="text-main-red text-sm">
+                      Nog niet afgevinkt! 👀
+                    </p>
+                  )}
             </div>
           </div>
         </div>
@@ -115,8 +78,34 @@ export const WishListItem: React.FC<WishListItemProps> = ({
               className="flex h-10 w-10 items-center justify-center rounded-full border-[2px] border-red-500 p-0 text-red-500 transition-colors hover:bg-zinc-100 hover:text-red-500"
               onClick={() => onDelete(item.id)}
               aria-label="Delete"
+              disabled={isDeleting}
             >
-              <Trash2 size={18} strokeWidth={2.5} />
+              {isDeleting ? (
+                <span className="flex items-center justify-center">
+                  <svg
+                    className="h-4 w-4 animate-spin text-red-500"
+                    xmlns="http://www.w3.org/2000/svg"
+                    fill="none"
+                    viewBox="0 0 24 24"
+                  >
+                    <circle
+                      className="opacity-25"
+                      cx="12"
+                      cy="12"
+                      r="10"
+                      stroke="currentColor"
+                      strokeWidth="4"
+                    ></circle>
+                    <path
+                      className="opacity-75"
+                      fill="currentColor"
+                      d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
+                    ></path>
+                  </svg>
+                </span>
+              ) : (
+                <Trash2 size={18} strokeWidth={2.5} />
+              )}
             </Button>
           )}
         </div>

@@ -129,7 +129,7 @@ export default function WishlistPublicViewPage() {
             <div className="mt-2 flex w-full justify-center">
               {product.bought_by ? (
                 <span className="text-[17px] whitespace-nowrap text-green-600">
-                  Gemarkeerd als gekocht
+                  Afgevinkt! 🎉
                 </span>
               ) : (
                 <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>

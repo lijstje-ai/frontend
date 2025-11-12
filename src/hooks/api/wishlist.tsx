@@ -79,6 +79,7 @@ export const useDeleteWishListItem = (wishlistId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", wishlistId],
       });
+      toast.success("Succesvol verwijderd");
     },
   });
 };

@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -73,6 +73,8 @@ export default function EditWishlistPage() {
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [preview, setPreview] = useState<Recommendation | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  
+  const aiSuggestionsRef = useRef<HTMLElement>(null);
 
   const { mutate } = useAddWishListItem(id);
   const { mutate: deleteItem } = useDeleteWishListItem(id);
@@ -108,6 +110,7 @@ export default function EditWishlistPage() {
       mutationFn: (id: string) => updateGeneratedList(id),
       onSuccess: () => {
         queryClient.invalidateQueries();
+        aiSuggestionsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
       },
       onError: () => {},
     });
@@ -224,11 +227,13 @@ export default function EditWishlistPage() {
   const { wishlist, recommendations } = data;
 
   const wishListItemsIds = wishlist.wish_list.map((item) => item.id);
+  const wishListItemsTitles = wishlist.wish_list.map((item) => item.title);
 
   const filteredRecommendationsForAISection = recommendations
     .filter(
       (item) =>
         !wishListItemsIds.includes(item.id) &&
+        !wishListItemsTitles.includes(item.title) &&
         item.wishlist_id === wishlist.id &&
         item.rating &&
         item.rating > 0,
@@ -274,19 +279,25 @@ export default function EditWishlistPage() {
         </div>
 
         {wishlist.wish_list.length > 0 ? (
-          <ul className="mt-4 space-y-2">
+          <ul className="mt-6 space-y-2">
             <AnimatePresence>
               {wishlistItems.map((item) => (
                 <WishListItem
                   key={item.id}
                   item={item}
-                  onDelete={(id) => deleteItem(id)}
+                  onDelete={(id) => {
+                    setLoadingItemId(id);
+                    deleteItem(id, {
+                      onSettled: () => setLoadingItemId(null),
+                    });
+                  }}
+                  isDeleting={loadingItemId === item.id}
                 />
               ))}
             </AnimatePresence>
           </ul>
         ) : (
-          <div className="mt-3 space-y-2 text-md">
+          <div className="mt-6 space-y-2 text-md">
             <p className="text-gray-600">
               Je verlanglijstje is nog leeg! 🙂
             </p>
@@ -306,7 +317,7 @@ export default function EditWishlistPage() {
 
 
       {wishlist.ai_support && (
-        <section>
+        <section ref={aiSuggestionsRef}>
           <h2 className="text-xl font-semibold mt-4">Suggesties van AI</h2>
 
           <Button
@@ -393,14 +404,16 @@ export default function EditWishlistPage() {
             variant="outline"
             disabled={wishlist.generate_attempts < 1 || isUpdatePending}
             loading={isUpdatePending}
-            style={{ display: isExpanded ? "block" : "none" }}
+            style={{ display: isExpanded ? "flex" : "none" }}
           >
+            <div>
             {isUpdatePending ? (
               <span>Bezig met verversen</span>
             ) : (
               <span>Ververs suggesties</span>
             )}{" "}
             ({wishlist.generate_attempts}/5)
+            </div>
           </Button>
         </section>
       )}
