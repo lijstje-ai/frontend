@@ -17,7 +17,7 @@ export const WishlistCardLink: React.FC<WishlistCardLinkProps> = ({
   title,
   className,
 }) => {
-  const { mutate: createAffiliateLinkMutation, isPending: isCreatePending } =
+  const { mutate: createAffiliateLinkMutation } =
     useCreateAffiliateLink();
 
   const openCreatedAffiliateLink = () => {
@@ -32,11 +32,7 @@ export const WishlistCardLink: React.FC<WishlistCardLinkProps> = ({
         className,
       )}
     >
-      {isCreatePending ? (
-        <span className="text-gray-800">Laden...</span>
-      ) : (
-        title
-      )}
+      {title}
     </div>
   );
 };

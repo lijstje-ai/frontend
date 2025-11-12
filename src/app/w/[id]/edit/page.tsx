@@ -253,10 +253,25 @@ export default function EditWishlistPage() {
 
   return (
     <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
-      <OnboardingModal />
+      {wishlist.wish_list.length === 0 && (
+        <OnboardingModal wishlistId={wishlist.id} />
+      )}
 
       <section className="mb-8">
         <h1 className="text-3xl font-bold text-zinc-800">{wishlist.name}</h1>
+
+        <div className="mt-1 mb-4">
+          <p className="text-sm text-gray-500 italic">
+            {gendersNames[wishlist.gender as GenderType]}, {wishlist.age} jaar,
+            max €{wishlist.max_price}, {wishlist.interests}{" "}
+            <Link
+              href={`/w/${wishlist.id}/edit-data`}
+              className="text-blue-500"
+            >
+              &#40;edit&#41;
+            </Link>
+          </p>
+        </div>
 
         {wishlist.wish_list.length > 0 ? (
           <ul className="mt-4 space-y-2">
@@ -292,17 +307,7 @@ export default function EditWishlistPage() {
 
       {wishlist.ai_support && (
         <section>
-          <h2 className="text-xl font-semibold">Suggesties van AI</h2>
-          <p className="text-sm text-gray-500">
-            {gendersNames[wishlist.gender as GenderType]}, {wishlist.age} jaar,
-            max €{wishlist.max_price}, {wishlist.interests}{" "}
-            <Link
-              href={`/w/${wishlist.id}/edit-data`}
-              className="text-blue-500"
-            >
-              &#40;edit&#41;
-            </Link>
-          </p>
+          <h2 className="text-xl font-semibold mt-4">Suggesties van AI</h2>
 
           <Button
             onClick={() => setIsExpanded(!isExpanded)}
@@ -388,6 +393,7 @@ export default function EditWishlistPage() {
             variant="outline"
             disabled={wishlist.generate_attempts < 1 || isUpdatePending}
             loading={isUpdatePending}
+            style={{ display: isExpanded ? "block" : "none" }}
           >
             {isUpdatePending ? (
               <span>Bezig met verversen</span>

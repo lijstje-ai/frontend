@@ -12,30 +12,35 @@ import { Plus } from "lucide-react";
 
 interface OnboardingModalProps {
   isOpen?: boolean;
+  wishlistId?: string;
   onClose?: () => void;
 }
 
 export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   isOpen: initialIsOpen = true,
+  wishlistId,
   onClose,
 }) => {
   const [isOpen, setIsOpen] = useState(initialIsOpen);
 
   useEffect(() => {
-    if (typeof window !== "undefined") {
-      const hasSeenOnboarding = localStorage.getItem("hasSeenEditPageOnboarding");
-      if (hasSeenOnboarding) {
-        setIsOpen(false);
-      } else {
-        setIsOpen(true);
-      }
-    }
-  }, []);
+    if (typeof window === "undefined") return;
+
+    const storageKey = wishlistId
+      ? `hasSeenEditPageOnboarding:${wishlistId}`
+      : "hasSeenEditPageOnboarding";
+
+    const hasSeenOnboarding = localStorage.getItem(storageKey);
+    setIsOpen(!hasSeenOnboarding);
+  }, [wishlistId]);
 
   const handleClose = () => {
     setIsOpen(false);
     if (typeof window !== "undefined") {
-      localStorage.setItem("hasSeenEditPageOnboarding", "true");
+      const storageKey = wishlistId
+        ? `hasSeenEditPageOnboarding:${wishlistId}`
+        : "hasSeenEditPageOnboarding";
+      localStorage.setItem(storageKey, "true");
     }
     onClose?.();
   };
