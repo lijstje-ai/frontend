@@ -234,9 +234,7 @@ export default function EditWishlistPage() {
       (item) =>
         !wishListItemsIds.includes(item.id) &&
         !wishListItemsTitles.includes(item.title) &&
-        item.wishlist_id === wishlist.id &&
-        item.rating &&
-        item.rating > 0,
+        item.wishlist_id === wishlist.id
     )
     .sort((item1, item2) => (item2.rating ?? 0) - (item1.rating ?? 0));
   const isValidRecommendations = recommendations.length > 0;
@@ -252,6 +250,9 @@ export default function EditWishlistPage() {
       (item, index, self) =>
         index === self.findIndex((t) => t.title === item.title),
     );
+
+    console.log('recommendations:', recommendations);
+    console.log('filteredRecommendationsForAISection:', filteredRecommendationsForAISection);
 
   if (!wishlist)
     return <div className="p-4 text-red-500">Wensenlijst niet gevonden</div>;
@@ -337,7 +338,6 @@ export default function EditWishlistPage() {
             {isExpanded && isValidRecommendations ? (
               <div className="space-y-3">
                 {filteredRecommendationsForAISection
-                  .slice(0, 10)
                   .map((item) => (
                     <Card
                       key={item.id}
@@ -353,7 +353,7 @@ export default function EditWishlistPage() {
                       <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
                         <WishlistCardLink link={item.link} title={item.title} />
 
-                        {typeof item.rating === "number" && item.rating > 0 && (
+                        {typeof item.rating === "number" && (
                           <RatingStars rating={item.rating} />
                         )}
 
