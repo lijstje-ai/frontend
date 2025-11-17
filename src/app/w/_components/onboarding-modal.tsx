@@ -9,6 +9,7 @@ import {
 } from "@/components/ui";
 import { Button } from "@/components/ui";
 import { Plus } from "lucide-react";
+import confetti from "canvas-confetti";
 
 interface OnboardingModalProps {
   isOpen?: boolean;
@@ -35,6 +36,11 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
   }, [wishlistId]);
 
   const handleClose = () => {
+    confetti({
+      particleCount: 150,
+      spread: 60,
+    });
+    
     setIsOpen(false);
     if (typeof window !== "undefined") {
       const storageKey = wishlistId

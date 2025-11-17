@@ -15,6 +15,7 @@ import {
   useSendEmail,
   useWishlistQuery,
 } from "@/hooks/api";
+import { useCountdown } from "@/hooks/ui";
 
 import { getProductPreviewByUrl, updateGeneratedList } from "@/services";
 
@@ -31,7 +32,7 @@ import {
   DialogTitle,
   BolProductSearch,
 } from "@/components/ui";
-import { RatingStars, WishlistCardLink } from "@/components";
+import { RatingStars, WishlistCardLink, WishlistImageLink } from "@/components";
 import {
   CopyLinkModal,
   PageLoader,
@@ -76,6 +77,10 @@ export default function EditWishlistPage() {
   
   const aiSuggestionsRef = useRef<HTMLElement>(null);
 
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, []);
+
   const { mutate } = useAddWishListItem(id);
   const { mutate: deleteItem } = useDeleteWishListItem(id);
   const { mutate: addByUrl, isPending } = useAddByUrlMutation();
@@ -114,6 +119,8 @@ export default function EditWishlistPage() {
       },
       onError: () => {},
     });
+
+  const { countdown, startCountdown } = useCountdown(isUpdatePending);
 
   useEffect(() => {
     if (!isValidUrl(url)) {
@@ -209,6 +216,7 @@ export default function EditWishlistPage() {
   };
 
   const handleUseAttempt = () => {
+    startCountdown();
     updateGeneratedListMutation(wishlist.id);
   };
 
@@ -251,9 +259,6 @@ export default function EditWishlistPage() {
         index === self.findIndex((t) => t.title === item.title),
     );
 
-    console.log('recommendations:', recommendations);
-    console.log('filteredRecommendationsForAISection:', filteredRecommendationsForAISection);
-
   if (!wishlist)
     return <div className="p-4 text-red-500">Wensenlijst niet gevonden</div>;
 
@@ -263,7 +268,7 @@ export default function EditWishlistPage() {
         <OnboardingModal wishlistId={wishlist.id} />
       )}
 
-      <section className="mb-8">
+      <section className="mb-8" data-wishlist-section>
         <h1 className="text-2xl font-bold text-zinc-800">{wishlist.name}</h1>
 
         <div className="mt-1 mb-4">
@@ -343,9 +348,10 @@ export default function EditWishlistPage() {
                       key={item.id}
                       className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
                     >
-                      <Image
-                        src={item.image}
-                        alt={item.title}
+                      <WishlistImageLink
+                        link={item.link}
+                        image={item.image}
+                        title={item.title}
                         width={64}
                         height={64}
                         className="h-16 w-16 flex-shrink-0 rounded object-cover"
@@ -403,16 +409,24 @@ export default function EditWishlistPage() {
             onClick={handleUseAttempt}
             variant="outline"
             disabled={wishlist.generate_attempts < 1 || isUpdatePending}
-            loading={isUpdatePending}
             style={{ display: isExpanded ? "flex" : "none" }}
           >
-            <div>
+            <div className="flex items-center gap-2">
             {isUpdatePending ? (
-              <span>Bezig met verversen</span>
+              <>
+                <span>Bezig met verversen</span>
+                <span>({wishlist.generate_attempts}/5)</span>
+                <Ring size="20" stroke="2.6" speed="2" color="black" />
+                {countdown !== null && (
+                  <span className="font-bold">{countdown}</span>
+                )}
+              </>
             ) : (
-              <span>Ververs suggesties</span>
-            )}{" "}
-            ({wishlist.generate_attempts}/5)
+              <>
+                <span>Ververs suggesties</span> {" "}
+                <span>({wishlist.generate_attempts}/5)</span>
+              </>
+            )}
             </div>
           </Button>
         </section>
@@ -567,7 +581,7 @@ export default function EditWishlistPage() {
             variant="ghost"
             className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
           >
-            Naar verlanglijstje
+            Bekijk verlanglijstje
             <ChevronRight size={18} />
           </Button>
         </Link>

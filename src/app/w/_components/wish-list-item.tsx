@@ -2,9 +2,7 @@
 
 import { Recommendation } from "@/types/wishlist.type";
 
-import Image from "next/image";
-
-import { RatingStars, Card, Button, WishlistCardLink } from "@/components";
+import { RatingStars, Card, Button, WishlistCardLink, WishlistImageLink } from "@/components";
 
 import { Check, Trash2 } from "lucide-react";
 
@@ -29,9 +27,10 @@ export const WishListItem: React.FC<WishListItemProps> = ({
         key={item.id}
         className="flex min-h-20 w-full flex-row items-center justify-between gap-3 rounded-md p-3"
       >
-        <Image
-          src={item.image}
-          alt={item.title}
+        <WishlistImageLink
+          link={item.link}
+          image={item.image}
+          title={item.title}
           width={64}
           height={64}
           className="h-16 w-1/5 flex-shrink-0 rounded object-cover"

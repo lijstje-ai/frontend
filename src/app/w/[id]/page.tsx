@@ -3,14 +3,12 @@
 import { useState } from "react";
 
 import { useParams } from "next/navigation";
-import Image from "next/image";
 
 import {
   Dialog,
   DialogContent,
   DialogHeader,
   DialogTitle,
-  DialogTrigger,
   Button,
   Card,
 } from "@/components/ui";
@@ -21,7 +19,7 @@ import {
   useWishlistQuery,
 } from "@/hooks/api";
 
-import { RatingStars } from "@/components/rating";
+import { RatingStars, WishlistImageLink } from "@/components";
 import { PageLoader } from "@/app/w/_components";
 
 import confetti from "canvas-confetti";
@@ -33,7 +31,6 @@ export default function WishlistPublicViewPage() {
   const wishlistId = typeof params?.id === "string" ? params.id : "";
 
   const [isMarkModalOpen, setIsMarkModalOpen] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
   const [selectedProduct, setSelectedProduct] = useState<{
     id: string;
     title: string;
@@ -43,10 +40,7 @@ export default function WishlistPublicViewPage() {
   const { data, isLoading, error } = useWishlistQuery(wishlistId);
   const { mutate: markAsBought, isPending: isMarking } =
     useUpdateBoughtBy(wishlistId);
-  const {
-    mutate: createAffiliateLinkMutation,
-    isPending: isCreateLinkPending,
-  } = useCreateAffiliateLink();
+  const { mutate: createAffiliateLinkMutation } = useCreateAffiliateLink();
 
   const openCreatedAffiliateLink = (link: string) => {
     createAffiliateLinkMutation({ link });
@@ -69,7 +63,6 @@ export default function WishlistPublicViewPage() {
 
           setTimeout(() => {
             setIsMarkModalOpen(false);
-            setIsModalOpen(false);
             setSelectedProduct(null);
           }, 300);
         },
@@ -107,9 +100,10 @@ export default function WishlistPublicViewPage() {
             key={product.id}
             className="flex w-full flex-col items-center gap-2 p-4 shadow-md sm:w-[400px]"
           >
-            <Image
-              src={product.image}
-              alt={product.title}
+            <WishlistImageLink
+              link={product.link}
+              image={product.image}
+              title={product.title}
               width={100}
               height={100}
             />
@@ -126,60 +120,38 @@ export default function WishlistPublicViewPage() {
                 €{product.price}
               </span>
             </div>
-            <div className="mt-2 flex w-full justify-center">
+            <div className="mt-4 flex w-full flex-col gap-2">
               {product.bought_by ? (
-                <span className="text-[17px] whitespace-nowrap text-green-600">
+                <span className="flex w-full items-center justify-center text-[17px] whitespace-nowrap text-green-600">
                   Afgevinkt! 🎉
                 </span>
               ) : (
-                <Dialog open={isModalOpen} onOpenChange={setIsModalOpen}>
-                  <DialogTrigger asChild>
-                    <Button
-                      id="btn-bekijk"
-                      className="w-full rounded-md text-base text-white"
-                      onClick={() =>
-                        setSelectedProduct({
-                          id: product.id,
-                          title: product.title,
-                          link: product.link,
-                        })
-                      }
-                    >
-                      Bekijk
-                    </Button>
-                  </DialogTrigger>
-                  <DialogContent>
-                    <DialogHeader>
-                      <DialogTitle>{selectedProduct?.title}</DialogTitle>
-                    </DialogHeader>
-                    <div className="space-y-4">
-                      <Button
-                        id="btn-koop-bol"
-                        onClick={() =>
-                          selectedProduct &&
-                          openCreatedAffiliateLink(selectedProduct.link)
-                        }
-                        className="w-full"
-                      >
-                        {isCreateLinkPending ? (
-                          <span>Laden...</span>
-                        ) : (
-                          <span>Koop op bol.com</span>
-                        )}
-                      </Button>
-                      <Button
-                        id="btn-markeren"
-                        variant="outline"
-                        className="w-full"
-                        onClick={() => {
-                          setIsMarkModalOpen(true);
-                        }}
-                      >
-                        Afvinken
-                      </Button>
-                    </div>
-                  </DialogContent>
-                </Dialog>
+                <>
+                  <Button
+                    id="btn-koop-bol"
+                    onClick={() =>
+                      openCreatedAffiliateLink(product.link)
+                    }
+                    className="w-full"
+                  >
+                    <span>Koop op bol.com</span>
+                  </Button>
+                  <Button
+                    id="btn-markeren"
+                    variant="outline"
+                    className="w-full"
+                    onClick={() => {
+                      setSelectedProduct({
+                        id: product.id,
+                        title: product.title,
+                        link: product.link,
+                      });
+                      setIsMarkModalOpen(true);
+                    }}
+                  >
+                    Afvinken
+                  </Button>
+                </>
               )}
             </div>
           </Card>

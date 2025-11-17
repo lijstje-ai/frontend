@@ -13,7 +13,6 @@ import {
   SelectTrigger,
   SelectValue,
   Input,
-  Checkbox,
 } from "@/components/ui";
 
 import { Controller, useForm } from "react-hook-form";
@@ -27,6 +26,7 @@ import { zodResolver } from "@hookform/resolvers/zod";
 import { Check } from "lucide-react";
 
 import { useReCaptcha } from "next-recaptcha-v3";
+import { useCountdown } from "@/hooks/ui";
 
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
@@ -37,6 +37,7 @@ export const CreateWishlistForm = () => {
   const [customGender, setCustomGender] = useState("");
   const [showCustomGenderInput, setShowCustomGenderInput] = useState(false);
   const { mutate, isPending } = useCreateWishlistMutation();
+  const { countdown, startCountdown } = useCountdown(isPending);
   const {
     register,
     handleSubmit,
@@ -48,18 +49,18 @@ export const CreateWishlistForm = () => {
   });
 
   const onSubmit = async (data: WishlistFormValues) => {
-    if (!executeRecaptcha) {
-      console.error("Recaptcha not ready");
-      return;
-    }
+    let token = "";
 
-    const token = await executeRecaptcha("LOGIN");
+    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && executeRecaptcha) {
+      token = await executeRecaptcha("LOGIN");
+    }
 
     const listData = {
       ...data,
       recaptchaToken: token,
     };
 
+    startCountdown();
     mutate(listData);
   };
 
@@ -190,26 +191,12 @@ export const CreateWishlistForm = () => {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Controller
-            name="aiSupport"
-            control={control}
-            defaultValue={false}
-            render={({ field }) => (
-              <div className="flex items-center space-x-2">
-                <Checkbox
-                  id="aiSupport"
-                  checked={field.value}
-                  onCheckedChange={(val) => field.onChange(!!val)}
-                  className="data-[state=checked]:bg-main-blue data-[state=checked]:border-main-blue h-4.5 w-4.5"
-                />
-                <Label htmlFor="aiSupport" className="mb-0">
-                  AI-suggesties?
-                </Label>
-              </div>
-            )}
-          />
-        </div>
+        <Controller
+          name="aiSupport"
+          control={control}
+          defaultValue={true}
+          render={({ field }) => <input type="hidden" {...field} value="true" />}
+        />
         <Button
           id="btn-aanmaken"
           type="submit"
@@ -220,6 +207,7 @@ export const CreateWishlistForm = () => {
             <div className="flex w-full items-center justify-center gap-2">
               Bezig met maken
               <Ring size="20" stroke="2.6" speed="2" color="white" />
+              {countdown !== null && <span className="font-bold">{countdown}</span>}
             </div>
           ) : (
             "Aanmaken"
