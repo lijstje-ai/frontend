@@ -39,7 +39,7 @@ export const WishlistHeader = () => {
           <Link
             href={pageRoutes.index}
             target="_blank"
-            className="flex items-center cursor-pointer text-gray-700 transition hover:text-primary"
+            className="hover:text-primary flex cursor-pointer items-center text-gray-700 transition"
           >
             Maak een lijstje!
           </Link>
@@ -49,7 +49,7 @@ export const WishlistHeader = () => {
           <button
             type="button"
             onClick={handleScrollToWishlist}
-            className="md:hidden cursor-pointer text-gray-700 transition hover:text-primary"
+            className="hover:text-primary cursor-pointer text-gray-700 transition md:hidden"
           >
             Bewerk verlanglijstje
           </button>

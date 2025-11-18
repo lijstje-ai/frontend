@@ -74,7 +74,8 @@ export const howItWorksItems = [
   {
     id: 2,
     title: "Ontvang suggesties",
-    description: "Onze AI geeft passende cadeautips binnen je budget. Maak je lijstje.",
+    description:
+      "Onze AI geeft passende cadeautips binnen je budget. Maak je lijstje.",
     iconBackgroundColor: "bg-main-blue",
   },
   {

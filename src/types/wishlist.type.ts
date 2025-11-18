@@ -7,7 +7,7 @@ export interface Recommendation {
   wishlist_id: string;
   created_at: string;
   bought_by?: string;
-  rating?: number; 
+  rating?: number;
 }
 
 export interface Wishlist {

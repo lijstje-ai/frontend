@@ -269,4 +269,4 @@ export const PrivacyPolicyContent = () => {
       <Footer className="bg-gray-50" />
     </div>
   );
-}
+};

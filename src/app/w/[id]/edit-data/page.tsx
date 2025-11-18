@@ -68,7 +68,7 @@ export default function EditWishlistInfoPage() {
         gender: genderNormalized,
         interests: wl.interests,
         maxPrice: wl.max_price,
-        aiSupport: wl.generate_attempts > 0,
+        aiSupport: true,
       });
 
       setValue("gender", genderNormalized);
@@ -76,9 +76,8 @@ export default function EditWishlistInfoPage() {
   }, [data, reset, setValue]);
 
   const onSubmit = (formValues: WishlistFormValues) => {
-    const hasAiAttempts = (data?.wishlist?.generate_attempts ?? 0) > 0;
     mutate(
-      { id, data: { ...formValues, aiSupport: hasAiAttempts } },
+      { id, data: { ...formValues, aiSupport: true } },
       {
         onSuccess: () => handleReturnToWishlist(),
       },

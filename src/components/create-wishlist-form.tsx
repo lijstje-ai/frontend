@@ -195,7 +195,9 @@ export const CreateWishlistForm = () => {
           name="aiSupport"
           control={control}
           defaultValue={true}
-          render={({ field }) => <input type="hidden" {...field} value="true" />}
+          render={({ field }) => (
+            <input type="hidden" {...field} value="true" />
+          )}
         />
         <Button
           id="btn-aanmaken"

@@ -129,9 +129,7 @@ export default function WishlistPublicViewPage() {
                 <>
                   <Button
                     id="btn-koop-bol"
-                    onClick={() =>
-                      openCreatedAffiliateLink(product.link)
-                    }
+                    onClick={() => openCreatedAffiliateLink(product.link)}
                     className="w-full"
                   >
                     <span>Koop op bol.com</span>

@@ -74,7 +74,7 @@ export default function EditWishlistPage() {
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [preview, setPreview] = useState<Recommendation | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
-  
+
   const aiSuggestionsRef = useRef<HTMLElement>(null);
 
   useEffect(() => {
@@ -115,7 +115,10 @@ export default function EditWishlistPage() {
       mutationFn: (id: string) => updateGeneratedList(id),
       onSuccess: () => {
         queryClient.invalidateQueries();
-        aiSuggestionsRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+        aiSuggestionsRef.current?.scrollIntoView({
+          behavior: "smooth",
+          block: "start",
+        });
       },
       onError: () => {},
     });
@@ -242,7 +245,7 @@ export default function EditWishlistPage() {
       (item) =>
         !wishListItemsIds.includes(item.id) &&
         !wishListItemsTitles.includes(item.title) &&
-        item.wishlist_id === wishlist.id
+        item.wishlist_id === wishlist.id,
     )
     .sort((item1, item2) => (item2.rating ?? 0) - (item1.rating ?? 0));
   const isValidRecommendations = recommendations.length > 0;
@@ -303,13 +306,12 @@ export default function EditWishlistPage() {
             </AnimatePresence>
           </ul>
         ) : (
-          <div className="mt-6 space-y-2 text-md">
+          <div className="text-md mt-6 space-y-2">
+            <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
-              Je verlanglijstje is nog leeg! 🙂
-            </p>
-            <p className="text-gray-600">
-              Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om cadeaus toe te voegen
-              aan je lijstje. Deel daarna met vrienden & familie👇
+              Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
+              cadeaus toe te voegen aan je lijstje. Deel daarna met vrienden &
+              familie👇
             </p>
           </div>
         )}
@@ -321,116 +323,105 @@ export default function EditWishlistPage() {
         />
       </section>
 
+      <section ref={aiSuggestionsRef}>
+        <h2 className="mt-4 text-xl font-semibold">Suggesties van AI</h2>
 
-      {wishlist.ai_support && (
-        <section ref={aiSuggestionsRef}>
-          <h2 className="text-xl font-semibold mt-4">Suggesties van AI</h2>
+        <Button
+          onClick={() => setIsExpanded(!isExpanded)}
+          variant="outline"
+          className="mt-2 flex w-full items-center justify-between"
+        >
+          <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
+          {isExpanded ? <ChevronUp size={30} /> : <ChevronDown size={24} />}
+        </Button>
 
-          <Button
-            onClick={() => setIsExpanded(!isExpanded)}
-            variant="outline"
-            className="mt-2 flex w-full items-center justify-between"
-          >
-            <span>{isExpanded ? "Verbergen" : "Weergeven"}</span>
-            {isExpanded ? <ChevronUp size={30} /> : <ChevronDown size={24} />}
-          </Button>
+        <div
+          className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
+            isExpanded ? "max-h-full" : "max-h-0"
+          }`}
+        >
+          {isExpanded && isValidRecommendations ? (
+            <div className="space-y-3">
+              {filteredRecommendationsForAISection.map((item) => (
+                <Card
+                  key={item.id}
+                  className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
+                >
+                  <WishlistImageLink
+                    link={item.link}
+                    image={item.image}
+                    title={item.title}
+                    width={64}
+                    height={64}
+                    className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                  />
+                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                    <WishlistCardLink link={item.link} title={item.title} />
 
-          <div
-            className={`mt-4 overflow-hidden transition-all duration-500 ease-in-out ${
-              isExpanded ? "max-h-full" : "max-h-0"
-            }`}
-          >
-            {isExpanded && isValidRecommendations ? (
-              <div className="space-y-3">
-                {filteredRecommendationsForAISection
-                  .map((item) => (
-                    <Card
-                      key={item.id}
-                      className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
+                    {typeof item.rating === "number" && (
+                      <RatingStars rating={item.rating} />
+                    )}
+
+                    <span className="text-md font-bold select-none">
+                      €{item.price.toFixed(2).replace(".00", "")}{" "}
+                      <span className="font-normal">
+                        &#40;
+                        <span>bol.com</span>
+                        &#41;
+                      </span>
+                    </span>
+                  </div>
+                  <div className="ml-2 flex min-w-[40px] flex-col items-center">
+                    <Button
+                      onClick={() => handleAdd(item)}
+                      disabled={loadingItemId === item.id}
+                      className="flex h-10 w-10 items-center justify-center rounded-full text-white"
+                      aria-label="Add"
                     >
-                      <WishlistImageLink
-                        link={item.link}
-                        image={item.image}
-                        title={item.title}
-                        width={64}
-                        height={64}
-                        className="h-16 w-16 flex-shrink-0 rounded object-cover"
-                      />
-                      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                        <WishlistCardLink link={item.link} title={item.title} />
+                      {loadingItemId === item.id ? (
+                        <Ring size={18} stroke={2.5} speed={2} color="#fff" />
+                      ) : (
+                        <Plus className="size-6" strokeWidth={2.5} />
+                      )}
+                    </Button>
+                  </div>
+                </Card>
+              ))}
+            </div>
+          ) : null}
 
-                        {typeof item.rating === "number" && (
-                          <RatingStars rating={item.rating} />
-                        )}
+          {filteredRecommendationsForAISection.length === 0 && (
+            <p className="text-center text-sm text-gray-700">Geen suggesties</p>
+          )}
+        </div>
 
-                        <span className="text-md font-bold select-none">
-                          €{item.price.toFixed(2).replace(".00", "")}{" "}
-                          <span className="font-normal">
-                            &#40;
-                            <span>bol.com</span>
-                            &#41;
-                          </span>
-                        </span>
-                      </div>
-                      <div className="ml-2 flex min-w-[40px] flex-col items-center">
-                        <Button
-                          onClick={() => handleAdd(item)}
-                          disabled={loadingItemId === item.id}
-                          className="flex h-10 w-10 items-center justify-center rounded-full text-white"
-                          aria-label="Add"
-                        >
-                          {loadingItemId === item.id ? (
-                            <Ring
-                              size={18}
-                              stroke={2.5}
-                              speed={2}
-                              color="#fff"
-                            />
-                          ) : (
-                            <Plus className="size-6" strokeWidth={2.5} />
-                          )}
-                        </Button>
-                      </div>
-                    </Card>
-                  ))}
-              </div>
-            ) : null}
-
-            {filteredRecommendationsForAISection.length === 0 && (
-              <p className="text-center text-sm text-gray-700">
-                Geen suggesties
-              </p>
+        <Button
+          id="btn-ververs-suggesties"
+          className="mt-3 w-full border border-black"
+          onClick={handleUseAttempt}
+          variant="outline"
+          disabled={wishlist.generate_attempts < 1 || isUpdatePending}
+          style={{ display: isExpanded ? "flex" : "none" }}
+        >
+          <div className="flex w-full items-center justify-center gap-2">
+            {isUpdatePending ? (
+              <>
+                <span>Bezig met verversen</span>
+                <span>({wishlist.generate_attempts}/5)</span>
+                <Ring size="20" stroke="2.6" speed="2" color="black" />
+                <span className="inline-flex min-w-[3ch] justify-center">
+                  {countdown ?? ""}
+                </span>
+              </>
+            ) : (
+              <>
+                <span>Ververs suggesties</span>
+                <span>({wishlist.generate_attempts}/5)</span>
+              </>
             )}
           </div>
-
-          <Button
-            id="btn-ververs-suggesties"
-            className="mt-3 w-full border border-black"
-            onClick={handleUseAttempt}
-            variant="outline"
-            disabled={wishlist.generate_attempts < 1 || isUpdatePending}
-            style={{ display: isExpanded ? "flex" : "none" }}
-          >
-            <div className="flex w-full items-center justify-center gap-2">
-              {isUpdatePending ? (
-                <>
-                  <span>Bezig met verversen</span>
-                  <span>({wishlist.generate_attempts}/5)</span>
-                  <Ring size="20" stroke="2.6" speed="2" color="black" />
-                  <span className="inline-flex min-w-[3ch] justify-center">
-                    {countdown ?? ""}
-                  </span>
-                </>
-              ) : (
-                <>
-                  <span>Ververs suggesties</span>
-                  <span>({wishlist.generate_attempts}/5)</span>
-                </>
-              )}
-            </div>
-          </Button>
-        </section>
-      )}
+        </Button>
+      </section>
 
       <section className="mt-8 flex flex-col gap-6">
         <div className="mt-2 w-full">
@@ -515,8 +506,7 @@ export default function EditWishlistPage() {
         </div>
       </section>
 
-
-      <section className="space-y-4 mt-8">
+      <section className="mt-8 space-y-4">
         <div className="border-lightgray rounded-lg border bg-gray-100/90 p-4">
           <h2 className="text-lg font-semibold">Back-up (optioneel)</h2>
 

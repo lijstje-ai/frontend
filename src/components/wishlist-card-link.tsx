@@ -17,8 +17,7 @@ export const WishlistCardLink: React.FC<WishlistCardLinkProps> = ({
   title,
   className,
 }) => {
-  const { mutate: createAffiliateLinkMutation } =
-    useCreateAffiliateLink();
+  const { mutate: createAffiliateLinkMutation } = useCreateAffiliateLink();
 
   const openCreatedAffiliateLink = () => {
     createAffiliateLinkMutation({ link });

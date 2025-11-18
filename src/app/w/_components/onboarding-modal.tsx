@@ -40,7 +40,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
       particleCount: 150,
       spread: 60,
     });
-    
+
     setIsOpen(false);
     if (typeof window !== "undefined") {
       const storageKey = wishlistId
@@ -53,13 +53,8 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
   return (
     <Dialog open={isOpen} onOpenChange={handleClose}>
-      <DialogContent
-        className="rounded-2xl"
-        showCloseButton={false}
-      >
-        <DialogTitle className="sr-only">
-            Aan de slag!
-        </DialogTitle>
+      <DialogContent className="rounded-2xl" showCloseButton={false}>
+        <DialogTitle className="sr-only">Aan de slag!</DialogTitle>
 
         <DialogHeader className="flex flex-col items-center gap-0 text-center">
           <div className="mb-6 flex justify-center">
@@ -67,20 +62,17 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
               <Plus className="size-10 text-white" strokeWidth={3} />
             </div>
           </div>
-          <p className="text-lg leading-relaxed text-gray-700 text-center">
+          <p className="text-center text-lg leading-relaxed text-gray-700">
             <b>Nu wordt het leuk!&nbsp;</b>🎉
             <br />
             <br />
             Gebruik de rode +iconen om cadeaus toe te voegen aan je lijstje.
-            Deel het daarna met vrienden & familie. Klik op &apos;Start&apos; om te
-            beginnen👇&nbsp;🎁
+            Deel het daarna met vrienden & familie. Klik op &apos;Start&apos; om
+            te beginnen👇&nbsp;🎁
           </p>
         </DialogHeader>
 
-        <Button
-          onClick={handleClose}
-          className="mt-4 w-full"
-        >
+        <Button onClick={handleClose} className="mt-4 w-full">
           Start
         </Button>
       </DialogContent>

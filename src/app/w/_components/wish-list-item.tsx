@@ -2,7 +2,13 @@
 
 import { Recommendation } from "@/types/wishlist.type";
 
-import { RatingStars, Card, Button, WishlistCardLink, WishlistImageLink } from "@/components";
+import {
+  RatingStars,
+  Card,
+  Button,
+  WishlistCardLink,
+  WishlistImageLink,
+} from "@/components";
 
 import { Check, Trash2 } from "lucide-react";
 
@@ -57,11 +63,9 @@ export const WishListItem: React.FC<WishListItemProps> = ({
                 <p className="text-sm text-green-600">Afgevinkt! 🎉</p>
               )}
 
-                  {item.bought_by === "" && (
-                    <p className="text-main-red text-sm">
-                      Nog niet afgevinkt 👀
-                    </p>
-                  )}
+              {item.bought_by === "" && (
+                <p className="text-main-red text-sm">Nog niet afgevinkt 👀</p>
+              )}
             </div>
           </div>
         </div>
