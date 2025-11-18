@@ -22,7 +22,7 @@ export const whySectionQuestions = [
   },
   {
     id: 2,
-    title: "Geen account noding",
+    title: "Geen account nodig",
     description:
       "Direct beginnen zonder registratie of inloggen, vlot en gemakkelijk.",
     iconColor: "text-main-red",
