@@ -91,7 +91,7 @@ export default function WishlistPublicViewPage() {
       <div>
         <h1 className="text-center text-2xl font-bold">{wishlist.name}</h1>
         <p className="mt-2 text-center text-gray-500">
-          Bekijk en vink gekochte cadeaus af 👇🎁✅
+          Bekijk en vink gekochte cadeaus af 👇 🎁 ✅
         </p>
       </div>
       <ul className="flex flex-col items-center gap-5">

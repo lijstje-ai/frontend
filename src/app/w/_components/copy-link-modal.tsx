@@ -55,8 +55,12 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
         </DialogTrigger>
       )}
       <DialogContent>
-        <DialogHeader>
+        <DialogHeader className="items-start text-left">
           <DialogTitle>Deel je verlanglijstje</DialogTitle>
+          <p className="mt-2 text-sm text-gray-600">
+            Deel de link met familie en/of vrienden en vraag hen om gekochte
+            cadeaus af te vinken.
+          </p>
         </DialogHeader>
         <div className="flex flex-row items-center gap-4 pt-4">
           <WhatsappShareButton url={link}>
