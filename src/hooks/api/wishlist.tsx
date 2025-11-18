@@ -101,6 +101,7 @@ export const useAddByUrlMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", variables.wishlistId],
       });
+      toast.success("Succesvol toegevoegd");
     },
   });
 };

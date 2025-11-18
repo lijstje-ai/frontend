@@ -54,7 +54,7 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
           </Button>
         </DialogTrigger>
       )}
-      <DialogContent className="max-w-sm">
+      <DialogContent>
         <DialogHeader>
           <DialogTitle>Deel je verlanglijstje</DialogTitle>
         </DialogHeader>

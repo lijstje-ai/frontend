@@ -24,7 +24,6 @@ import {
   SelectItem,
   SelectTrigger,
   SelectValue,
-  Checkbox,
 } from "@/components/ui";
 
 import { Ring } from "ldrs/react";
@@ -69,16 +68,17 @@ export default function EditWishlistInfoPage() {
         gender: genderNormalized,
         interests: wl.interests,
         maxPrice: wl.max_price,
-        aiSupport: wl.ai_support,
+        aiSupport: wl.generate_attempts > 0,
       });
 
       setValue("gender", genderNormalized);
     }
   }, [data, reset, setValue]);
 
-  const onSubmit = (data: WishlistFormValues) => {
+  const onSubmit = (formValues: WishlistFormValues) => {
+    const hasAiAttempts = (data?.wishlist?.generate_attempts ?? 0) > 0;
     mutate(
-      { id, data },
+      { id, data: { ...formValues, aiSupport: hasAiAttempts } },
       {
         onSuccess: () => handleReturnToWishlist(),
       },
@@ -187,23 +187,6 @@ export default function EditWishlistInfoPage() {
           </p>
         </div>
 
-        <div className="flex items-center space-x-2">
-          <Controller
-            name="aiSupport"
-            control={control}
-            render={({ field }) => (
-              <Checkbox
-                id="aiSupport"
-                checked={field.value}
-                onCheckedChange={(val) => field.onChange(!!val)}
-                className="data-[state=checked]:bg-main-blue data-[state=checked]:border-main-blue h-4.5 w-4.5 bg-white"
-              />
-            )}
-          />
-          <Label htmlFor="aiSupport" className="mb-0">
-            AI-suggesties?
-          </Label>
-        </div>
         <Button type="submit" className="mt-4 w-full" disabled={isPending}>
           {isPending ? (
             <div className="flex w-full items-center justify-center gap-2">

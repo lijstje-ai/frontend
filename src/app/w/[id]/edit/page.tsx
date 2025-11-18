@@ -411,42 +411,42 @@ export default function EditWishlistPage() {
             disabled={wishlist.generate_attempts < 1 || isUpdatePending}
             style={{ display: isExpanded ? "flex" : "none" }}
           >
-            <div className="flex items-center gap-2">
-            {isUpdatePending ? (
-              <>
-                <span>Bezig met verversen</span>
-                <span>({wishlist.generate_attempts}/5)</span>
-                <Ring size="20" stroke="2.6" speed="2" color="black" />
-                {countdown !== null && (
-                  <span className="font-bold">{countdown}</span>
-                )}
-              </>
-            ) : (
-              <>
-                <span>Ververs suggesties</span> {" "}
-                <span>({wishlist.generate_attempts}/5)</span>
-              </>
-            )}
+            <div className="flex w-full items-center justify-center gap-2">
+              {isUpdatePending ? (
+                <>
+                  <span>Bezig met verversen</span>
+                  <span>({wishlist.generate_attempts}/5)</span>
+                  <Ring size="20" stroke="2.6" speed="2" color="black" />
+                  <span className="inline-flex min-w-[3ch] justify-center">
+                    {countdown ?? ""}
+                  </span>
+                </>
+              ) : (
+                <>
+                  <span>Ververs suggesties</span>
+                  <span>({wishlist.generate_attempts}/5)</span>
+                </>
+              )}
             </div>
           </Button>
         </section>
       )}
 
-      <section className="mt-8 space-y-4">
-        <div className="mt-2">
+      <section className="mt-8 flex flex-col gap-6">
+        <div className="mt-2 w-full">
           <BolProductSearch onAdd={handleAdd} listItems={wishlistItems} />
         </div>
 
-        <div>
+        <div className="relative w-full max-w-md">
           <Label htmlFor="url">Voeg productlink (URL) handmatig toe</Label>
-          <div className="mt-2 flex gap-2">
+          <div className="mt-2 flex flex-col gap-2 sm:flex-row">
             <Input
               id="url"
               placeholder="Bijv. https://www.bol.com/..."
               value={url}
               onChange={(e) => setUrl(e.target.value)}
               onKeyDown={(e) => e.key === "Enter" && handleSubmit()}
-              className="h-[53px] bg-white placeholder:text-lg placeholder:font-semibold placeholder:text-gray-400/80"
+              className="h-[53px] w-full bg-white placeholder:text-lg placeholder:font-semibold placeholder:text-gray-400/80"
             />
             <Button
               id="btn-toevoegen"
@@ -454,47 +454,55 @@ export default function EditWishlistPage() {
               onClick={handleSubmit}
               disabled={isPending}
               variant="outline"
-              className="h-[53px] border-black text-sm sm:text-lg"
+              className="h-[53px] w-full border-black text-sm sm:w-auto sm:text-lg"
             >
               Toevoegen
             </Button>
           </div>
           {previewLoading && (
-            <div className="text-muted-foreground text-xs">Laden...</div>
+            <div className="mt-2 text-xs text-gray-500">Laden...</div>
           )}
 
           {preview &&
             !wishlistItems.some((item) => item.title === preview.title) && (
-              <Card className="mt-3 flex min-h-20 flex-row items-center gap-3 rounded-md p-3">
+              <div className="mt-3 flex items-center gap-3 rounded-md border bg-white p-2 shadow-sm">
                 <Image
                   src={preview.image}
                   alt={preview.title}
-                  width={64}
-                  height={64}
-                  className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                  width={48}
+                  height={48}
+                  className="h-12 w-12 flex-shrink-0 rounded object-cover"
                 />
-                <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                  <WishlistCardLink link={preview.link} title={preview.title} />
+                <div className="flex min-w-0 flex-1 flex-col gap-1">
+                  <WishlistCardLink
+                    link={preview.link}
+                    title={preview.title}
+                    className="text-sm leading-4"
+                  />
 
-                  <span className="text-md font-bold select-none">
-                    €{preview.price?.toFixed(2).replace(".00", "")}
-                  </span>
-                </div>
-
-                <div className="ml-2 flex min-w-[40px] flex-col items-center">
-                  <Button
-                    onClick={() => handleSubmit()}
-                    className="flex h-10 w-10 items-center justify-center rounded-full text-white"
-                    aria-label="Add"
-                  >
-                    {isPending ? (
-                      <Ring size={18} stroke={2.5} speed={2} color="#fff" />
-                    ) : (
-                      <Plus className="size-6" strokeWidth={2.5} />
+                  <div className="flex flex-wrap items-center gap-2">
+                    <p className="text-sm font-semibold text-gray-600">
+                      €{preview.price?.toFixed(2).replace(".00", "")}
+                    </p>
+                    {typeof preview.rating === "number" && (
+                      <RatingStars rating={preview.rating} />
                     )}
-                  </Button>
+                  </div>
                 </div>
-              </Card>
+
+                <Button
+                  size="sm"
+                  onClick={() => handleSubmit()}
+                  className="flex h-8 w-8 items-center justify-center rounded-full"
+                  aria-label="Toevoegen"
+                >
+                  {isPending ? (
+                    <Ring size={16} stroke={2.5} speed={2} color="#fff" />
+                  ) : (
+                    <Plus className="size-4" strokeWidth={2.5} />
+                  )}
+                </Button>
+              </div>
             )}
 
           {preview &&
@@ -503,7 +511,7 @@ export default function EditWishlistPage() {
                 Dit product staat al op je verlanglijstje
               </p>
             )}
-          {error && <p className="text-sm text-red-500">{error}</p>}
+          {error && <p className="mt-2 text-sm text-red-500">{error}</p>}
         </div>
       </section>
 

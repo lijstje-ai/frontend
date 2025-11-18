@@ -207,7 +207,9 @@ export const CreateWishlistForm = () => {
             <div className="flex w-full items-center justify-center gap-2">
               Bezig met maken
               <Ring size="20" stroke="2.6" speed="2" color="white" />
-              {countdown !== null && <span className="font-bold">{countdown}</span>}
+              <span className="inline-flex min-w-[3ch] justify-center">
+                {countdown ?? ""}
+              </span>
             </div>
           ) : (
             "Aanmaken"

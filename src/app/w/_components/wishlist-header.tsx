@@ -4,7 +4,6 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 
 import { pageRoutes } from "@/config";
-import { Button } from "@/components";
 
 export const WishlistHeader = () => {
   const pathname = usePathname();
@@ -12,8 +11,7 @@ export const WishlistHeader = () => {
   const isEditPage = pathname.includes("/edit");
 
   const handleScrollToWishlist = () => {
-    const element = document.querySelector("[data-wishlist-section]");
-    element?.scrollIntoView({ behavior: "smooth", block: "start" });
+    window.scrollTo({ top: 0, behavior: "smooth" });
   };
 
   return (
@@ -41,20 +39,20 @@ export const WishlistHeader = () => {
           <Link
             href={pageRoutes.index}
             target="_blank"
-            className="flex items-center text-sm text-blue-500 hover:text-blue-600"
+            className="flex items-center cursor-pointer text-gray-700 transition hover:text-primary"
           >
             Maak een lijstje!
           </Link>
         )}
 
         {isEditPage && (
-          <Button
+          <button
+            type="button"
             onClick={handleScrollToWishlist}
-            className="md:hidden"
-            variant="ghost"
+            className="md:hidden cursor-pointer text-gray-700 transition hover:text-primary"
           >
             Bewerk verlanglijstje
-          </Button>
+          </button>
         )}
       </div>
     </header>
