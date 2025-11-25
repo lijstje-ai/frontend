@@ -7,7 +7,7 @@ User-agent: *
 Disallow: /w
 
 # Host
-Host: https://lijstje.ai
+Host: https://feest.ai
 
 # Sitemaps
-Sitemap: https://lijstje.ai/sitemap.xml
+Sitemap: https://feest.ai/sitemap.xml

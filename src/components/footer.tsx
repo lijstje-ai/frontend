@@ -109,7 +109,7 @@ export const Footer: React.FC<FooterProps> = ({ className }) => {
             </Link>{" "}
             zijn van toepassing.
           </p>
-          <p className="mt-2">© 2025 lijstje.ai - Alle rechten voorbehouden</p>
+          <p className="mt-2">© 2025 feest.ai - Alle rechten voorbehouden</p>
         </div>
       </div>
     </footer>

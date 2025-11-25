@@ -1,14 +1,14 @@
 export const supportQuestions = [
   {
     id: 1,
-    question: "Moet ik een account aanmaken om lijstje.ai te gebruiken?",
+    question: "Moet ik een account aanmaken om feest.ai te gebruiken?",
     answer:
       "Nee, je hoeft geen account aan te maken. Je kunt meteen aan de slag.",
   },
   {
     id: 2,
-    question: "Is lijstje.ai altijd gratis?",
-    answer: "Ja, het gebruik van lijstje.ai is helemaal gratis.",
+    question: "Is feest.ai altijd gratis?",
+    answer: "Ja, het gebruik van feest.ai is helemaal gratis.",
   },
   {
     id: 3,
@@ -64,7 +64,7 @@ export const supportQuestions = [
   },
   {
     id: 12,
-    question: "Werkt lijstje.ai ook op mijn telefoon?",
+    question: "Werkt feest.ai ook op mijn telefoon?",
     answer: "Ja, de site is mobielvriendelijk en werkt op alle apparaten.",
   },
   {

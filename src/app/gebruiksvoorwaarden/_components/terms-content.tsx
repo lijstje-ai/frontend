@@ -41,10 +41,10 @@ export const TermsContent = () => {
                     d="M47.6 300.4L228.3 469.1c7.5 7 17.4 10.9 27.7 10.9s20.2-3.9 27.7-10.9L464.4 300.4c30.4-28.3 47.6-68 47.6-109.5v-5.8c0-69.9-50.5-129.5-119.4-141C347 36.5 300.6 51.4 268 84L256 96 244 84c-32.6-32.6-79-47.5-124.6-39.9C50.5 55.6 0 115.2 0 185.1v5.8c0 41.5 17.2 81.2 47.6 109.5z"
                   ></path>
                 </svg>
-                Welkom bij Lijstje.ai
+                Welkom bij Feest.ai
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
-                Welkom bij Lijstje.ai, een gratis dienst waarmee gebruikers snel
+                Welkom bij Feest.ai, een gratis dienst waarmee gebruikers snel
                 en eenvoudig verlanglijstjes kunnen maken.
               </p>
             </div>
@@ -70,7 +70,7 @@ export const TermsContent = () => {
                     d="M0 256a256 256 0 1 1 512 0A256 256 0 1 1 0 256zM188.3 147.1c-7.6 4.2-12.3 12.3-12.3 20.9V344c0 8.7 4.7 16.7 12.3 20.9s16.8 4.1 24.3-.5l144-88c7.1-4.4 11.5-12.1 11.5-20.5s-4.4-16.1-11.5-20.5l-144-88c-7.4-4.5-16.7-4.7-24.3-.5z"
                   ></path>
                 </svg>
-                Gebruik van Lijstje.ai
+                Gebruik van Feest.ai
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
                 U kunt de dienst kosteloos gebruiken zonder account. Optioneel
@@ -100,7 +100,7 @@ export const TermsContent = () => {
                 Affiliate links
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
-                Op Lijstje.ai worden affiliate links geplaatst, onder andere
+                Op Feest.ai worden affiliate links geplaatst, onder andere
                 naar Bol.com. Wij ontvangen commissie als u via deze links een
                 aankoop doet binnen 5 dagen na aanklikken. Dit beïnvloedt de
                 prijs van uw aankoop niet. Wij zijn niet verantwoordelijk voor
@@ -156,7 +156,7 @@ export const TermsContent = () => {
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
                 Wij streven naar een goed functionerend platform, maar kunnen
-                geen volledige foutloosheid garanderen. Lijstje.ai is niet
+                geen volledige foutloosheid garanderen. Feest.ai is niet
                 aansprakelijk voor schade voortvloeiend uit het gebruik van de
                 dienst of externe links.
               </p>
@@ -213,7 +213,7 @@ export const TermsContent = () => {
                 Toepasselijk recht
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
-                Op deze website en de dienst van Lijstje.ai is Nederlands recht
+                Op deze website en de dienst van Feest.ai is Nederlands recht
                 van toepassing. Eventuele geschillen worden voorgelegd aan de
                 rechtbank Den Haag.
               </p>

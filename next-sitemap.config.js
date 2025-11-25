@@ -1,6 +1,6 @@
 /** @type {import('next-sitemap').IConfig} */
 module.exports = {
-  siteUrl: "https://lijstje.ai",
+  siteUrl: "https://feest.ai",
   generateRobotsTxt: true,
   robotsTxtOptions: {
     policies: [
@@ -13,6 +13,6 @@ module.exports = {
         disallow: "/w",
       },
     ],
-    sitemap: "https://lijstje.ai/sitemap.xml",
+    sitemap: "https://feest.ai/sitemap.xml",
   },
 };

@@ -1,7 +1,7 @@
 import { SupportContent } from "./_components";
 
 export const metadata = {
-  title: "Support - Lijstje.ai",
+  title: "Support - Feest.ai",
 };
 
 export default function SupportPage() {

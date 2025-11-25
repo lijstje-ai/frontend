@@ -15,7 +15,7 @@ import { supportQuestions } from "@/data";
 
 export const SupportContent = () => {
   const handleOpenEmailLink = () => {
-    const user = "lijstje.ai";
+    const user = "feest.ai";
     const domain = "gmail.com";
     const email = `${user}@${domain}`;
 
@@ -62,7 +62,7 @@ export const SupportContent = () => {
           </div>
           <p className="text-sm text-gray-700">
             Hieronder vind je antwoorden op de meest gestelde vragen over
-            lijstje.ai.
+            feest.ai.
           </p>
         </div>
 

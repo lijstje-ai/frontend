@@ -24,13 +24,13 @@ export const WishlistHeader = () => {
             className="flex items-center"
           >
             <span className="text-main-red cursor-pointer text-2xl font-bold">
-              lijstje<span className="text-main-blue">.ai</span>
+              feest<span className="text-main-blue">.ai</span>
             </span>
           </Link>
         ) : (
           <div className="flex items-center">
             <span className="text-main-red text-2xl font-bold">
-              lijstje<span className="text-main-blue">.ai</span>
+              feest<span className="text-main-blue">.ai</span>
             </span>
           </div>
         )}

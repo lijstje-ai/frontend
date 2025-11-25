@@ -11,11 +11,11 @@ import { AppProviders } from "./providers";
 const GeistSans = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "Slim verlanglijstje maken zonder account - Lijstje.ai",
+  title: "Slim verlanglijstje maken zonder account - Feest.ai",
   description:
     "Maak eenvoudig een online verlanglijstje met AI-cadeautips gebaseerd op leeftijd, geslacht, interesses en budget. Deel het gratis met familie en vrienden.",
   alternates: {
-    canonical: "https://lijstje.ai/",
+    canonical: "https://feest.ai/",
   },
 };
 

@@ -43,7 +43,7 @@ export const PrivacyPolicyContent = () => {
                 Privacy Respect
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
-                Lijstje.ai respecteert uw privacy. Wij verzamelen minimale
+                Feest.ai respecteert uw privacy. Wij verzamelen minimale
                 persoonsgegevens en gebruiken cookies en tracking om onze dienst
                 te verbeteren. Hieronder leest u hoe wij omgaan met uw gegevens.
               </p>

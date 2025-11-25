@@ -1,7 +1,7 @@
 import { TermsContent } from "./_components";
 
 export const metadata = {
-  title: "Gebruiksvoorwaarden - Lijstje.ai",
+  title: "Gebruiksvoorwaarden - Feest.ai",
 };
 
 export default function TermsPage() {

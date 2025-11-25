@@ -1,7 +1,7 @@
 import { PrivacyPolicyContent } from "./_components";
 
 export const metadata = {
-  title: "Privacy & cookies - Lijstje.ai",
+  title: "Privacy & cookies - Feest.ai",
 };
 
 export default function PrivacyPolicyPage() {
