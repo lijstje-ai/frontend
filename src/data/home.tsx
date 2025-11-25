@@ -67,7 +67,7 @@ export const whySectionQuestions = [
 export const howItWorksItems = [
   {
     id: 1,
-    title: "Start je lijst",
+    title: "Start je verlanglijstje",
     description: "Vul je basisgegevens in en geef je interesses en wensen aan.",
     iconBackgroundColor: "bg-main-red",
   },

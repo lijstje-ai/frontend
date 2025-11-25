@@ -49,11 +49,7 @@ export const CreateWishlistForm = () => {
   });
 
   const onSubmit = async (data: WishlistFormValues) => {
-    let token = "";
-
-    if (process.env.NEXT_PUBLIC_RECAPTCHA_SITE_KEY && executeRecaptcha) {
-      token = await executeRecaptcha("LOGIN");
-    }
+    const token = await executeRecaptcha("LOGIN");
 
     const listData = {
       ...data,
