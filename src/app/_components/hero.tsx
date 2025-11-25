@@ -19,7 +19,7 @@ export const Hero = () => {
           onClick={() => scrollToElement("userForm")}
           className="transform px-8 py-3 font-semibold shadow-md transition hover:scale-105"
         >
-          Start je lijstje
+          Start je verlanglijstje
         </Button>
       </div>
     </section>

@@ -16,7 +16,7 @@ export const BeginSection = () => {
         onClick={() => scrollToElement("userForm")}
         className="transition hover:scale-105"
       >
-        Start je lijstje
+        Start je verlanglijstje
       </Button>
     </div>
   );

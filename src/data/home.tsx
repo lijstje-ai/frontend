@@ -45,7 +45,7 @@ export const whySectionQuestions = [
     id: 3,
     title: "Unieke bewerklink",
     description:
-      "Ontvang optioneel een bewerklink om jouw lijstje later aan te passen.",
+      "Ontvang optioneel een bewerklink om jouw verlanglijstje later aan te passen.",
     iconColor: "text-emerald-500",
     iconBackgroundColor: "bg-emerald-500/10",
     icon: (
@@ -75,7 +75,7 @@ export const howItWorksItems = [
     id: 2,
     title: "Ontvang suggesties",
     description:
-      "Onze AI geeft passende cadeautips binnen je budget. Maak je lijstje.",
+      "Onze AI geeft passende cadeautips binnen je budget. Maak je verlanglijstje.",
     iconBackgroundColor: "bg-main-blue",
   },
   {

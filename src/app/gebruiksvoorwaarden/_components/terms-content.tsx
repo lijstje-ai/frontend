@@ -19,7 +19,7 @@ export const TermsContent = () => {
           <div className="space-y-4">
             <div className="mb-6 text-center">
               <p className="text-sm text-gray-600">
-                Laatst bijgewerkt: september 2025
+                Laatst bijgewerkt: november 2025
               </p>
             </div>
 
@@ -100,8 +100,8 @@ export const TermsContent = () => {
                 Affiliate links
               </h3>
               <p className="text-sm leading-relaxed text-gray-700">
-                Op Feest.ai worden affiliate links geplaatst, onder andere
-                naar Bol.com. Wij ontvangen commissie als u via deze links een
+                Op Feest.ai worden affiliate links geplaatst, onder andere naar
+                Bol.com. Wij ontvangen commissie als u via deze links een
                 aankoop doet binnen 5 dagen na aanklikken. Dit beïnvloedt de
                 prijs van uw aankoop niet. Wij zijn niet verantwoordelijk voor
                 de werking of levering van producten via externe websites.

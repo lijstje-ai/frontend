@@ -15,7 +15,7 @@ import { supportQuestions } from "@/data";
 
 export const SupportContent = () => {
   const handleOpenEmailLink = () => {
-    const user = "feest.ai";
+    const user = "feest.ai.site";
     const domain = "gmail.com";
     const email = `${user}@${domain}`;
 

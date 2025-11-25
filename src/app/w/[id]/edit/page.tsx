@@ -310,7 +310,7 @@ export default function EditWishlistPage() {
             <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
               Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
-              cadeaus toe te voegen aan je lijstje. Deel daarna met vrienden &
+              cadeaus toe te voegen aan je verlanglijstje. Deel daarna met vrienden &
               familie👇
             </p>
           </div>

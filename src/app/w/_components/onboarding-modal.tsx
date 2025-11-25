@@ -66,7 +66,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <b>Nu wordt het leuk!&nbsp;</b>🎉
             <br />
             <br />
-            Gebruik de rode +iconen om cadeaus toe te voegen aan je lijstje.
+            Gebruik de rode +iconen om cadeaus toe te voegen aan je verlanglijstje.
             Deel het daarna met vrienden & familie. Klik op &apos;Start&apos; om
             te beginnen👇&nbsp;🎁
           </p>

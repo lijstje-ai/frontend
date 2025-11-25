@@ -41,7 +41,7 @@ export const WishlistHeader = () => {
             target="_blank"
             className="hover:text-primary flex cursor-pointer items-center text-gray-700 transition"
           >
-            Maak een lijstje!
+            Maak een verlanglijstje!
           </Link>
         )}
 

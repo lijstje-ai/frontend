@@ -12,19 +12,19 @@ export const supportQuestions = [
   },
   {
     id: 3,
-    question: "Kan ik mijn lijstje delen met anderen?",
+    question: "Kan ik mijn verlanglijstje delen met anderen?",
     answer:
-      "Ja, dat kan via de deelknop. Iedereen met de link kan je lijstje bekijken..",
+      "Ja, dat kan via de deelknop. Iedereen met de link kan je verlanglijstje bekijken..",
   },
   {
     id: 4,
-    question: "Kan ik een lijstje van iemand anders op naam vinden?",
+    question: "Kan ik een verlanglijstje van iemand anders op naam vinden?",
     answer:
-      "Nee, dat kan niet. Wil je iemands lijstje zien, vraag dan even rechtstreeks aan de maker.",
+      "Nee, dat kan niet. Wil je iemands verlanglijstje zien, vraag dan even rechtstreeks aan de maker.",
   },
   {
     id: 5,
-    question: "Kan ik mijn lijstje later aanpassen?",
+    question: "Kan ik mijn verlanglijstje later aanpassen?",
     answer:
       "Ja, mits je jezelf een backup hebt gemaild, kun je later producten toevoegen of verwijderen. Anders niet.",
   },
@@ -32,11 +32,11 @@ export const supportQuestions = [
     id: 6,
     question: "Ik ben vergeten een backup naar mezelf te mailen. Wat nu?",
     answer:
-      "Maak een nieuw lijstje aan. Dat is de snelste oplossing. Als je je lijstje nog niet hebt gedeeld en de browser-tab hebt gesloten, dan kun je hem namelijk niet meer terugvinden. Maak dus altijd een backup als je je lijstje later wilt bewerken.",
+      "Maak een nieuw verlanglijstje aan. Dat is de snelste oplossing. Als je je verlanglijstje nog niet hebt gedeeld en de browser-tab hebt gesloten, dan kun je hem namelijk niet meer terugvinden. Maak dus altijd een backup als je je verlanglijstje later wilt bewerken.",
   },
   {
     id: 7,
-    question: "Waarom kan de AI-suggesties maar 5 keer verversen per lijstje?",
+    question: "Waarom kan de AI-suggesties maar 5 keer verversen per verlanglijstje?",
     answer:
       "Elke AI-suggestie kost ons geld. Om de tool gratis te houden, is 5 keer verversen (50 suggesties) de limiet.",
   },
