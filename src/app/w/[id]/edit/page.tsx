@@ -346,8 +346,7 @@ export default function EditWishlistPage() {
             <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
               Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
-              cadeaus toe te voegen aan je verlanglijstje. Deel daarna met
-              vrienden & familie👇
+              cadeaus toe te voegen en deel het daarna met deze knop👇
             </p>
           </div>
         )}
@@ -486,7 +485,7 @@ export default function EditWishlistPage() {
               onClick={(e) => handleSubmit(e.currentTarget)}
               disabled={isPending}
               variant="outline"
-              className="h-[53px] w-full border-black text-sm sm:w-auto sm:text-lg"
+              className="h-[53px] w-full border-black sm:w-auto"
             >
               Toevoegen
             </Button>

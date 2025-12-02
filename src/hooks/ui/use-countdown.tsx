@@ -1,12 +1,19 @@
 "use client";
 import { useState, useEffect } from "react";
 
-export const useCountdown = (isActive: boolean, initialValue: number = 10) => {
+export const useCountdown = (isActive: boolean, startCount: number = 10) => {
   const [countdown, setCountdown] = useState<number | null>(null);
 
   const startCountdown = () => {
-    setCountdown(initialValue * 10);
+    setCountdown(startCount * 10);
   };
+
+  const displayCountdown =
+    countdown === null
+      ? null
+      : countdown <= 0
+        ? "👀"
+        : (countdown / 10).toFixed(1);
 
   useEffect(() => {
     if (countdown === null || countdown <= 0) return;
@@ -25,7 +32,7 @@ export const useCountdown = (isActive: boolean, initialValue: number = 10) => {
   }, [isActive, countdown]);
 
   return {
-    countdown: countdown !== null ? (countdown / 10).toFixed(1) : null,
+    countdown: displayCountdown,
     startCountdown,
     setCountdown,
   };

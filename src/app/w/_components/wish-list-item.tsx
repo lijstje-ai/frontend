@@ -12,7 +12,7 @@ import {
 
 import { Check, Trash2 } from "lucide-react";
 
-import { motion, useAnimate } from "framer-motion";
+import { motion } from "framer-motion";
 
 interface WishListItemProps {
   item: Recommendation;
@@ -25,10 +25,14 @@ export const WishListItem: React.FC<WishListItemProps> = ({
   onDelete,
   isDeleting = false,
 }) => {
-  const [scope] = useAnimate();
-
   return (
-    <motion.div ref={scope} layout>
+    <motion.div
+      layout="position"
+      initial={{ opacity: 0, y: -12, scale: 0.98 }}
+      animate={{ opacity: 1, y: 0, scale: 1 }}
+      exit={{ opacity: 0, y: -12, scale: 0.98 }}
+      transition={{ type: "spring", stiffness: 420, damping: 32, mass: 0.9 }}
+    >
       <Card
         key={item.id}
         className="flex min-h-20 w-full flex-row items-center justify-between gap-3 rounded-md p-3"

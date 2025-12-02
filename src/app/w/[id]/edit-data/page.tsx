@@ -8,6 +8,7 @@ import { Controller, useForm } from "react-hook-form";
 import { zodResolver } from "@hookform/resolvers/zod";
 
 import { useUpdateWishlistInfo, useWishlistQuery } from "@/hooks/api";
+import { useCountdown } from "@/hooks/ui";
 
 import {
   WishlistFormValues,
@@ -36,6 +37,7 @@ export default function EditWishlistInfoPage() {
 
   const { data, isLoading } = useWishlistQuery(id);
   const { mutate, isPending } = useUpdateWishlistInfo();
+  const { countdown, startCountdown } = useCountdown(isPending, 5);
 
   const handleReturnToWishlist = () => {
     router.push(`/w/${id}/edit`);
@@ -76,6 +78,7 @@ export default function EditWishlistInfoPage() {
   }, [data, reset, setValue]);
 
   const onSubmit = (formValues: WishlistFormValues) => {
+    startCountdown();
     mutate(
       { id, data: { ...formValues, aiSupport: true } },
       {
@@ -191,6 +194,9 @@ export default function EditWishlistInfoPage() {
             <div className="flex w-full items-center justify-center gap-2">
               Opslaan
               <Ring size="20" stroke="2.6" speed="2" color="white" />
+              <span className="inline-flex min-w-[3ch] justify-center">
+                {countdown ?? ""}
+              </span>
             </div>
           ) : (
             "Opslaan"
