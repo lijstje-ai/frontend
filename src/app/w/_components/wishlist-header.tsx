@@ -79,11 +79,11 @@ export const WishlistHeader = () => {
               onClick={handleScrollToWishlist}
               animate={{ scale: addToCartAnimation?.isBumping ? 1.05 : 1 }}
               transition={{ type: "spring", stiffness: 280, damping: 16 }}
-              className="relative flex h-8 w-10 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
+              className="relative flex h-9 w-9 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <GiftIcon
-                size={48}
-                className="pointer-events-none absolute inset-0 m-auto text-black"
+                size={36}
+                className="pointer-events-none absolute inset-0 m-auto h-[36px] w-[36px] text-black"
               />
               {wishlistCount > 0 && (
                 <motion.span
@@ -91,7 +91,7 @@ export const WishlistHeader = () => {
                   initial={{ scale: 0.95 }}
                   animate={{ scale: [0.95, 1.15, 1] }}
                   transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="bg-main-red absolute -top-2 -right-3 flex min-h-[22px] min-w-[22px] items-center justify-center rounded-full px-1 text-sm leading-none font-bold text-white"
+                  className="bg-main-red absolute -top-0.5 -right-0.5 flex min-h-[16px] min-w-[16px] items-center justify-center rounded-full px-1 text-[10px] leading-none font-semibold text-white"
                 >
                   {wishlistCount}
                 </motion.span>

@@ -132,9 +132,13 @@ export const AddToCartAnimationProvider = ({
               x: item.deltaX,
               y: item.deltaY,
               scale: 0.2,
-              opacity: 0,
+              opacity: [1, 0.95, 0],
             }}
-            transition={{ duration: 0.85, ease: [0.22, 1, 0.36, 1] }}
+            transition={{
+              duration: 1.05,
+              ease: [0.22, 1, 0.36, 1],
+              opacity: { duration: 1.05, ease: "easeIn" },
+            }}
             onAnimationComplete={() => handleAnimationComplete(item.id)}
           >
             {item.html ? (

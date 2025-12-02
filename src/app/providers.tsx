@@ -18,7 +18,7 @@ export function AppProviders({ children }: { children: ReactNode }) {
       <ReCaptchaProvider reCaptchaKey={reCaptchaKey}>
         {children}
       </ReCaptchaProvider>
-      <ToastContainer />
+      <ToastContainer position="bottom-center" />
     </QueryClientProvider>
   );
 }
