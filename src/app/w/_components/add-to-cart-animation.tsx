@@ -50,7 +50,6 @@ export const AddToCartAnimationProvider = ({
   const targetRef = useRef<HTMLElement | null>(null);
   const [items, setItems] = useState<AnimationItem[]>([]);
   const [isBumping, setIsBumping] = useState(false);
-  const resetTimerRef = useRef<ReturnType<typeof setTimeout> | null>(null);
   const resolversRef = useRef<Map<string, () => void>>(new Map());
 
   const registerTarget = useCallback((node: HTMLElement | null) => {
@@ -74,8 +73,6 @@ export const AddToCartAnimationProvider = ({
       const id = `${Date.now()}-${Math.random().toString(16).slice(2)}`;
 
       setIsBumping(true);
-      if (resetTimerRef.current) clearTimeout(resetTimerRef.current);
-      resetTimerRef.current = setTimeout(() => setIsBumping(false), 300);
 
       return new Promise<void>((resolve) => {
         resolversRef.current.set(id, resolve);
@@ -101,7 +98,11 @@ export const AddToCartAnimationProvider = ({
   );
 
   const handleAnimationComplete = useCallback((id: string) => {
-    setItems((prev) => prev.filter((item) => item.id !== id));
+    setItems((prev) => {
+      const next = prev.filter((item) => item.id !== id);
+      if (!next.length) setIsBumping(false);
+      return next;
+    });
     const resolver = resolversRef.current.get(id);
     if (resolver) {
       resolver();

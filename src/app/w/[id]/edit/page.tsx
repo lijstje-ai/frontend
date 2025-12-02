@@ -79,14 +79,6 @@ export default function EditWishlistPage() {
 
   const aiSuggestionsRef = useRef<HTMLElement>(null);
   const addToCartAnimation = useAddToCartAnimation();
-  const toastAfterAnimation = (animation?: Promise<void> | void) => {
-    const maybePromise = animation as Promise<void> | undefined;
-    if (maybePromise && typeof maybePromise.then === "function") {
-      maybePromise.finally(() => toast.success("Succesvol toegevoegd"));
-    } else {
-      toast.success("Succesvol toegevoegd");
-    }
-  };
   const markPending = (id?: string) => {
     if (!id) return;
     setPendingAddIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
@@ -176,13 +168,12 @@ export default function EditWishlistPage() {
         onSuccess: () => {
           const sourceEl = getAnimationSource(triggerEl ?? undefined);
           markPending(preview?.id);
-          const animation = triggerEl
-            ? addToCartAnimation?.triggerAnimation(
-                sourceEl ?? triggerEl,
-                previewImage,
-              )
-            : undefined;
-          toastAfterAnimation(animation);
+          if (triggerEl) {
+            addToCartAnimation?.triggerAnimation(
+              sourceEl ?? triggerEl,
+              previewImage,
+            );
+          }
           setUrl("");
         },
         onError: () => {
@@ -216,10 +207,9 @@ export default function EditWishlistPage() {
       onSuccess: () => {
         const sourceEl = getAnimationSource(triggerEl ?? undefined);
         markPending(item.id);
-        const animation = sourceEl
-          ? addToCartAnimation?.triggerAnimation(sourceEl, item.image)
-          : undefined;
-        toastAfterAnimation(animation);
+        if (sourceEl) {
+          addToCartAnimation?.triggerAnimation(sourceEl, item.image);
+        }
       },
       onSettled: () => setLoadingItemId(null),
     });
@@ -312,7 +302,7 @@ export default function EditWishlistPage() {
     return <div className="p-4 text-red-500">Wensenlijst niet gevonden</div>;
 
   return (
-    <main className="flex w-full flex-col bg-gray-50 px-6 pt-8">
+    <main className="flex w-full flex-col bg-gray-50 px-6 pt-4">
       {wishlist.wish_list.length === 0 && (
         <OnboardingModal wishlistId={wishlist.id} />
       )}
