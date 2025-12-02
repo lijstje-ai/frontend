@@ -1,6 +1,6 @@
 "use client";
 
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useMemo, useRef, useState } from "react";
 
 import { useParams } from "next/navigation";
 import Link from "next/link";
@@ -54,7 +54,7 @@ import {
 } from "lucide-react";
 import { toast } from "react-toastify";
 
-import { AnimatePresence } from "framer-motion";
+import { AnimatePresence, motion, type Variants } from "framer-motion";
 
 const gendersNames = {
   Male: "Man",
@@ -62,6 +62,41 @@ const gendersNames = {
 };
 
 type GenderType = "Male" | "Female";
+
+const suggestionListVariants = {
+  hidden: { opacity: 1 },
+  show: {
+    opacity: 1,
+    transition: {
+      delayChildren: 0.05,
+      staggerChildren: 0.08, // play top-to-bottom
+      staggerDirection: 1,
+    },
+  },
+  exit: {
+    opacity: 1,
+    transition: {
+      staggerChildren: 0.08, // top-to-bottom when exiting
+      staggerDirection: 1,
+    },
+  },
+} satisfies Variants;
+
+const suggestionItemVariants = {
+  hidden: { opacity: 0, y: -18, scale: 0.98 },
+  show: {
+    opacity: 1,
+    y: 0,
+    scale: 1,
+    transition: { type: "spring", stiffness: 420, damping: 32, mass: 0.9 },
+  },
+  exit: {
+    opacity: 0,
+    y: 12,
+    scale: 0.97,
+    transition: { duration: 0.15, ease: "easeOut" },
+  },
+} satisfies Variants;
 
 export default function EditWishlistPage() {
   const params = useParams();
@@ -245,8 +280,9 @@ export default function EditWishlistPage() {
   };
 
   const handleUseAttempt = () => {
+    if (!wishlistData) return;
     startCountdown();
-    updateGeneratedListMutation(wishlist.id);
+    updateGeneratedListMutation(wishlistData.id);
   };
 
   useEffect(() => {
@@ -258,9 +294,20 @@ export default function EditWishlistPage() {
     );
   }, [data?.wishlist]);
 
+  const recommendationsList = useMemo(
+    () => data?.recommendations ?? [],
+    [data?.recommendations],
+  );
+  const wishlistData = data?.wishlist;
+
+  const suggestionsAnimationKey = useMemo(
+    () => recommendationsList.map((item) => item.id).join("-"),
+    [recommendationsList],
+  );
+
   if (isLoading) return <PageLoader />;
 
-  if (!data)
+  if (!data || !wishlistData)
     return (
       <div className="-mt-16 flex min-h-screen flex-col items-center justify-center bg-gray-50 p-4">
         <div className="flex items-center gap-2 text-zinc-600">
@@ -270,7 +317,8 @@ export default function EditWishlistPage() {
       </div>
     );
 
-  const { wishlist, recommendations } = data;
+  const wishlist = wishlistData;
+  const recommendations = recommendationsList;
 
   const wishListItemsIds = wishlist.wish_list.map((item) => item.id);
   const wishListItemsTitles = wishlist.wish_list.map((item) => item.title);
@@ -376,54 +424,73 @@ export default function EditWishlistPage() {
           }`}
         >
           {isExpanded && isValidRecommendations ? (
-            <div className="space-y-3">
-              {filteredRecommendationsForAISection.map((item) => (
-                <Card
-                  data-add-source
-                  key={item.id}
-                  className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
-                >
-                  <WishlistImageLink
-                    link={item.link}
-                    image={item.image}
-                    title={item.title}
-                    width={64}
-                    height={64}
-                    className="h-16 w-16 flex-shrink-0 rounded object-cover"
-                  />
-                  <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
-                    <WishlistCardLink link={item.link} title={item.title} />
-
-                    {typeof item.rating === "number" && (
-                      <RatingStars rating={item.rating} />
-                    )}
-
-                    <span className="text-md font-bold select-none">
-                      €{item.price.toFixed(2).replace(".00", "")}{" "}
-                      <span className="font-normal">
-                        &#40;
-                        <span>bol.com</span>
-                        &#41;
-                      </span>
-                    </span>
-                  </div>
-                  <div className="ml-2 flex min-w-[40px] flex-col items-center">
-                    <Button
-                      onClick={(e) => handleAdd(item, e.currentTarget)}
-                      disabled={loadingItemId === item.id}
-                      className="flex h-10 w-10 items-center justify-center rounded-full text-white"
-                      aria-label="Add"
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={suggestionsAnimationKey || "suggestions"}
+                className="space-y-3"
+                variants={suggestionListVariants}
+                initial="hidden"
+                animate="show"
+                exit="exit"
+              >
+                {filteredRecommendationsForAISection.map((item) => (
+                  <motion.div
+                    key={item.id}
+                    layout
+                    variants={suggestionItemVariants}
+                  >
+                    <Card
+                      data-add-source
+                      className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
                     >
-                      {loadingItemId === item.id ? (
-                        <Ring size={18} stroke={2.5} speed={2} color="#fff" />
-                      ) : (
-                        <Plus className="size-6" strokeWidth={2.5} />
-                      )}
-                    </Button>
-                  </div>
-                </Card>
-              ))}
-            </div>
+                      <WishlistImageLink
+                        link={item.link}
+                        image={item.image}
+                        title={item.title}
+                        width={64}
+                        height={64}
+                        className="h-16 w-16 flex-shrink-0 rounded object-cover"
+                      />
+                      <div className="flex min-w-0 flex-1 flex-col justify-center gap-1">
+                        <WishlistCardLink link={item.link} title={item.title} />
+
+                        {typeof item.rating === "number" && (
+                          <RatingStars rating={item.rating} />
+                        )}
+
+                        <span className="text-md font-bold select-none">
+                          €{item.price.toFixed(2).replace(".00", "")}{" "}
+                          <span className="font-normal">
+                            &#40;
+                            <span>bol.com</span>
+                            &#41;
+                          </span>
+                        </span>
+                      </div>
+                      <div className="ml-2 flex min-w-[40px] flex-col items-center">
+                        <Button
+                          onClick={(e) => handleAdd(item, e.currentTarget)}
+                          disabled={loadingItemId === item.id}
+                          className="flex h-10 w-10 items-center justify-center rounded-full text-white"
+                          aria-label="Add"
+                        >
+                          {loadingItemId === item.id ? (
+                            <Ring
+                              size={18}
+                              stroke={2.5}
+                              speed={2}
+                              color="#fff"
+                            />
+                          ) : (
+                            <Plus className="size-6" strokeWidth={2.5} />
+                          )}
+                        </Button>
+                      </div>
+                    </Card>
+                  </motion.div>
+                ))}
+              </motion.div>
+            </AnimatePresence>
           ) : null}
 
           {filteredRecommendationsForAISection.length === 0 && (
