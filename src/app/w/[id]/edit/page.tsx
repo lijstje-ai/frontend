@@ -68,8 +68,8 @@ const suggestionListVariants = {
   show: {
     opacity: 1,
     transition: {
-      delayChildren: 0.05,
-      staggerChildren: 0.08, // play top-to-bottom
+      delayChildren: 0.15,
+      staggerChildren: 0.15, // play top-to-bottom
       staggerDirection: 1,
     },
   },
@@ -88,13 +88,13 @@ const suggestionItemVariants = {
     opacity: 1,
     y: 0,
     scale: 1,
-    transition: { type: "spring", stiffness: 420, damping: 32, mass: 0.9 },
+    transition: { type: "spring", stiffness: 260, damping: 30, mass: 1.05 },
   },
   exit: {
     opacity: 0,
     y: 12,
     scale: 0.97,
-    transition: { duration: 0.15, ease: "easeOut" },
+    transition: { duration: 0.18, ease: "easeOut" },
   },
 } satisfies Variants;
 
