@@ -39,6 +39,7 @@ import {
   WishListItem,
   OnboardingModal,
 } from "@/app/w/_components";
+import { useAddToCartAnimation } from "@/app/w/_components/add-to-cart-animation";
 
 import { Ring } from "ldrs/react";
 import "ldrs/react/Ring.css";
@@ -74,8 +75,24 @@ export default function EditWishlistPage() {
   const [loadingItemId, setLoadingItemId] = useState<string | null>(null);
   const [preview, setPreview] = useState<Recommendation | null>(null);
   const [previewLoading, setPreviewLoading] = useState(false);
+  const [pendingAddIds, setPendingAddIds] = useState<string[]>([]);
 
   const aiSuggestionsRef = useRef<HTMLElement>(null);
+  const addToCartAnimation = useAddToCartAnimation();
+  const toastAfterAnimation = (animation?: Promise<void> | void) => {
+    const maybePromise = animation as Promise<void> | undefined;
+    if (maybePromise && typeof maybePromise.then === "function") {
+      maybePromise.finally(() => toast.success("Succesvol toegevoegd"));
+    } else {
+      toast.success("Succesvol toegevoegd");
+    }
+  };
+  const markPending = (id?: string) => {
+    if (!id) return;
+    setPendingAddIds((prev) => (prev.includes(id) ? prev : [...prev, id]));
+  };
+  const getAnimationSource = (el?: HTMLElement | null) =>
+    (el?.closest("[data-add-source]") as HTMLElement | null) || el || null;
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -139,7 +156,7 @@ export default function EditWishlistPage() {
     return () => clearTimeout(timeout);
   }, [url]);
 
-  const handleSubmit = () => {
+  const handleSubmit = (triggerEl?: HTMLElement | null) => {
     if (!isValidUrl(url)) {
       setError("Voer een geldige bol.com URL in");
       return;
@@ -150,11 +167,22 @@ export default function EditWishlistPage() {
       return;
     }
 
+    const previewImage = preview?.image;
+
     setError("");
     addByUrl(
       { url, wishlistId: id },
       {
         onSuccess: () => {
+          const sourceEl = getAnimationSource(triggerEl ?? undefined);
+          markPending(preview?.id);
+          const animation = triggerEl
+            ? addToCartAnimation?.triggerAnimation(
+                sourceEl ?? triggerEl,
+                previewImage,
+              )
+            : undefined;
+          toastAfterAnimation(animation);
           setUrl("");
         },
         onError: () => {
@@ -182,9 +210,17 @@ export default function EditWishlistPage() {
   //   );
   // };
 
-  const handleAdd = (item: Recommendation) => {
+  const handleAdd = (item: Recommendation, triggerEl?: HTMLElement | null) => {
     setLoadingItemId(item.id);
     mutate(item, {
+      onSuccess: () => {
+        const sourceEl = getAnimationSource(triggerEl ?? undefined);
+        markPending(item.id);
+        const animation = sourceEl
+          ? addToCartAnimation?.triggerAnimation(sourceEl, item.image)
+          : undefined;
+        toastAfterAnimation(animation);
+      },
       onSettled: () => setLoadingItemId(null),
     });
   };
@@ -223,6 +259,15 @@ export default function EditWishlistPage() {
     updateGeneratedListMutation(wishlist.id);
   };
 
+  useEffect(() => {
+    if (!data?.wishlist) return;
+    setPendingAddIds((prev) =>
+      prev.filter(
+        (id) => !data.wishlist.wish_list.some((item) => item.id === id),
+      ),
+    );
+  }, [data?.wishlist]);
+
   if (isLoading) return <PageLoader />;
 
   if (!data)
@@ -247,6 +292,7 @@ export default function EditWishlistPage() {
         !wishListItemsTitles.includes(item.title) &&
         item.wishlist_id === wishlist.id,
     )
+    .filter((item) => !pendingAddIds.includes(item.id))
     .sort((item1, item2) => (item2.rating ?? 0) - (item1.rating ?? 0));
   const isValidRecommendations = recommendations.length > 0;
   const wishlistItems = wishlist.wish_list
@@ -310,8 +356,8 @@ export default function EditWishlistPage() {
             <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
               Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
-              cadeaus toe te voegen aan je verlanglijstje. Deel daarna met vrienden &
-              familie👇
+              cadeaus toe te voegen aan je verlanglijstje. Deel daarna met
+              vrienden & familie👇
             </p>
           </div>
         )}
@@ -344,6 +390,7 @@ export default function EditWishlistPage() {
             <div className="space-y-3">
               {filteredRecommendationsForAISection.map((item) => (
                 <Card
+                  data-add-source
                   key={item.id}
                   className="flex min-h-20 flex-row items-center gap-3 rounded-md p-3"
                 >
@@ -373,7 +420,7 @@ export default function EditWishlistPage() {
                   </div>
                   <div className="ml-2 flex min-w-[40px] flex-col items-center">
                     <Button
-                      onClick={() => handleAdd(item)}
+                      onClick={(e) => handleAdd(item, e.currentTarget)}
                       disabled={loadingItemId === item.id}
                       className="flex h-10 w-10 items-center justify-center rounded-full text-white"
                       aria-label="Add"
@@ -425,7 +472,11 @@ export default function EditWishlistPage() {
 
       <section className="mt-8 flex flex-col gap-6">
         <div className="mt-2 w-full">
-          <BolProductSearch onAdd={handleAdd} listItems={wishlistItems} />
+          <BolProductSearch
+            onAdd={handleAdd}
+            listItems={wishlistItems}
+            pendingIds={pendingAddIds}
+          />
         </div>
 
         <div className="relative w-full max-w-md">
@@ -442,7 +493,7 @@ export default function EditWishlistPage() {
             <Button
               id="btn-toevoegen"
               type="button"
-              onClick={handleSubmit}
+              onClick={(e) => handleSubmit(e.currentTarget)}
               disabled={isPending}
               variant="outline"
               className="h-[53px] w-full border-black text-sm sm:w-auto sm:text-lg"
@@ -455,8 +506,12 @@ export default function EditWishlistPage() {
           )}
 
           {preview &&
-            !wishlistItems.some((item) => item.title === preview.title) && (
-              <div className="mt-3 flex items-center gap-3 rounded-md border bg-white p-2 shadow-sm">
+            !wishlistItems.some((item) => item.title === preview.title) &&
+            !pendingAddIds.includes(preview.id) && (
+              <div
+                data-add-source
+                className="mt-3 flex items-center gap-3 rounded-md border bg-white p-2 shadow-sm"
+              >
                 <Image
                   src={preview.image}
                   alt={preview.title}
@@ -483,7 +538,7 @@ export default function EditWishlistPage() {
 
                 <Button
                   size="sm"
-                  onClick={() => handleSubmit()}
+                  onClick={(e) => handleSubmit(e.currentTarget)}
                   className="flex h-8 w-8 items-center justify-center rounded-full"
                   aria-label="Toevoegen"
                 >

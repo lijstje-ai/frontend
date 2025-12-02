@@ -16,13 +16,15 @@ import { Ring } from "ldrs/react";
 import { Plus } from "lucide-react";
 
 interface BolProductSearchProps {
-  onAdd: (product: Recommendation) => void;
+  onAdd: (product: Recommendation, triggerEl?: HTMLElement | null) => void;
   listItems: Recommendation[];
+  pendingIds?: string[];
 }
 
 export const BolProductSearch: React.FC<BolProductSearchProps> = ({
   onAdd,
   listItems,
+  pendingIds = [],
 }) => {
   const [search, setSearch] = useState("");
   const debounced = useDebounce(search, 500);
@@ -73,9 +75,11 @@ export const BolProductSearch: React.FC<BolProductSearchProps> = ({
             data
               .filter((item) => item.price !== 0)
               .filter((item) => !listItems.some((l) => l.title === item.title))
+              .filter((item) => !pendingIds.includes(item.id))
               .map((product) => (
                 <li
                   key={product.link}
+                  data-add-source
                   className="flex items-center gap-3 border-b p-2 last:border-none"
                 >
                   <Image
@@ -103,8 +107,8 @@ export const BolProductSearch: React.FC<BolProductSearchProps> = ({
 
                   <Button
                     size="sm"
-                    onClick={() => {
-                      onAdd(product);
+                    onClick={(e) => {
+                      onAdd(product, e.currentTarget);
                     }}
                     className="flex h-8 w-8 items-center justify-center rounded-full"
                   >

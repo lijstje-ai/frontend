@@ -51,8 +51,6 @@ export const useAddWishListItem = (wishlistId: string) => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", wishlistId],
       });
-
-      toast.success("Succesvol toegevoegd");
     },
   });
 };
@@ -101,7 +99,6 @@ export const useAddByUrlMutation = () => {
       queryClient.invalidateQueries({
         queryKey: ["wishlist", variables.wishlistId],
       });
-      toast.success("Succesvol toegevoegd");
     },
   });
 };
