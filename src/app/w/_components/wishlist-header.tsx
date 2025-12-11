@@ -65,13 +65,6 @@ export const WishlistHeader = () => {
 
         {isEditPage && (
           <div className="flex items-center gap-2">
-            <button
-              type="button"
-              onClick={handleScrollToWishlist}
-              className="text-blue-900 transition hover:text-blue-800"
-            >
-              Bewerk verlanglijstje
-            </button>
             <motion.button
               type="button"
               aria-label="Scroll to boven"
@@ -83,19 +76,18 @@ export const WishlistHeader = () => {
             >
               <GiftIcon
                 size={44}
-                className="pointer-events-none absolute inset-0 m-auto h-[44px] w-[44px] text-black"
+                className="pointer-events-none absolute inset-0 m-auto h-11 w-11 text-black"
               />
-              {wishlistCount > 0 && (
-                <motion.span
-                  key={wishlistCount}
-                  initial={{ scale: 0.95 }}
-                  animate={{ scale: [0.95, 1.15, 1] }}
-                  transition={{ duration: 0.35, ease: "easeOut" }}
-                  className="bg-main-red absolute -top-1.5 -right-0.5 flex min-h-[18px] min-w-[18px] items-center justify-center rounded-full px-1.5 text-[12px] leading-none font-semibold text-white"
-                >
-                  {wishlistCount}
-                </motion.span>
-              )}
+
+              <motion.span
+                key={wishlistCount}
+                initial={{ scale: 0.95 }}
+                animate={{ scale: [0.95, 1.15, 1] }}
+                transition={{ duration: 0.35, ease: "easeOut" }}
+                className="bg-main-red absolute -top-1.5 -right-0.5 flex min-h-[18px] min-w-4.5 items-center justify-center rounded-full px-1.5 text-[12px] leading-none font-semibold text-white"
+              >
+                {wishlistCount}
+              </motion.span>
             </motion.button>
           </div>
         )}

@@ -41,7 +41,7 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
       {disabled ? (
         <Button
           id="btn-deel-verlanglijstje"
-          className="mt-4 w-full"
+          className="w-full"
           variant="secondary"
           disabled
         >
@@ -49,7 +49,7 @@ export const CopyLinkModal: React.FC<CopyLinkModalProps> = ({
         </Button>
       ) : (
         <DialogTrigger asChild>
-          <Button id="btn-deel-verlanglijstje" className="mt-4 w-full">
+          <Button id="btn-deel-verlanglijstje" className="w-full">
             Deel verlanglijstje
           </Button>
         </DialogTrigger>

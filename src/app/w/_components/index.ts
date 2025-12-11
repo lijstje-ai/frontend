@@ -5,3 +5,4 @@ export * from "./wish-list-item";
 export * from "./onboarding-modal";
 export * from "./add-to-cart-animation";
 export * from "./gift-icon";
+export * from "./copy-link-modal-button";

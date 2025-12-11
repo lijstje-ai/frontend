@@ -34,10 +34,10 @@ import {
 } from "@/components/ui";
 import { RatingStars, WishlistCardLink, WishlistImageLink } from "@/components";
 import {
-  CopyLinkModal,
   PageLoader,
   WishListItem,
   OnboardingModal,
+  CopyLinkModalButton,
 } from "@/app/w/_components";
 import { useAddToCartAnimation } from "@/app/w/_components/add-to-cart-animation";
 
@@ -366,7 +366,7 @@ export default function EditWishlistPage() {
               href={`/w/${wishlist.id}/edit-data`}
               className="text-blue-500"
             >
-              &#40;edit&#41;
+              &#40;bewerk gegevens&#41;
             </Link>
           </p>
         </div>
@@ -398,12 +398,6 @@ export default function EditWishlistPage() {
             </p>
           </div>
         )}
-
-        <CopyLinkModal
-          wishlistName={wishlist.name}
-          link={shareLink}
-          disabled={wishlist.wish_list.length === 0}
-        />
       </section>
 
       <section ref={aiSuggestionsRef}>
@@ -679,7 +673,7 @@ export default function EditWishlistPage() {
         <Link href={`/w/${id}/edit-data`}>
           <Button
             variant="ghost"
-            className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+            className="text-main-blue flex h-10 items-center gap-1 text-sm hover:text-blue-600"
           >
             <ChevronLeft size={18} />
             <span>Gegevens aanpassen</span>
@@ -688,13 +682,15 @@ export default function EditWishlistPage() {
         <Link href={`/w/${id}`} target="_blank">
           <Button
             variant="ghost"
-            className="flex h-10 items-center gap-1 text-sm text-blue-500 hover:text-blue-600"
+            className="text-main-blue flex h-10 items-center gap-1 text-sm hover:text-blue-600"
           >
             Bekijk verlanglijstje
             <ChevronRight size={18} />
           </Button>
         </Link>
       </div>
+
+      <CopyLinkModalButton wishlist={wishlist} link={shareLink} />
     </main>
   );
 }

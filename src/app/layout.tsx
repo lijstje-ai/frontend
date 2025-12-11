@@ -17,6 +17,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://feest.ai/",
   },
+  icons: {
+    icon: "/favicon.ico",
+  },
 };
 
 export default function RootLayout({

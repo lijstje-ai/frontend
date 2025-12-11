@@ -58,7 +58,7 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
 
         <DialogHeader className="flex flex-col items-center gap-0 text-center">
           <div className="mb-6 flex justify-center">
-            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-[#EF4444] shadow-lg">
+            <div className="flex h-20 w-20 items-center justify-center rounded-full bg-main-red shadow-lg">
               <Plus className="size-10 text-white" strokeWidth={3} />
             </div>
           </div>
@@ -66,9 +66,9 @@ export const OnboardingModal: React.FC<OnboardingModalProps> = ({
             <b>Nu wordt het leuk!&nbsp;</b>🎉
             <br />
             <br />
-            Gebruik de rode +iconen om cadeaus toe te voegen aan je verlanglijstje.
-            Deel het daarna met vrienden & familie. Klik op &apos;Start&apos; om
-            te beginnen👇&nbsp;🎁
+            Gebruik de <span className="text-main-red">rode +iconen</span> om cadeaus toe te voegen aan je
+            verlanglijstje. Deel het daarna met vrienden & familie. Klik op
+            &apos;Start&apos; om te beginnen👇&nbsp;🎁
           </p>
         </DialogHeader>
 

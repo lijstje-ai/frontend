@@ -12,7 +12,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
       <AddToCartAnimationProvider>
         <WishlistHeader />
         {children}
-        <Footer className="bg-gray-50" />
+        <Footer className="bg-gray-50 pb-20" />
       </AddToCartAnimationProvider>
     </div>
   );
