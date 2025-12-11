@@ -75,8 +75,8 @@ export const WishlistHeader = () => {
               className="relative flex h-8 w-12 items-center justify-center rounded-full focus:outline-none focus-visible:ring-2 focus-visible:ring-offset-2 focus-visible:ring-offset-white"
             >
               <GiftIcon
-                size={44}
-                className="pointer-events-none absolute inset-0 m-auto h-11 w-11 text-black"
+                size={42}
+                className="pointer-events-none absolute inset-0 m-auto h-10 w-10.5 text-black"
               />
 
               <motion.span

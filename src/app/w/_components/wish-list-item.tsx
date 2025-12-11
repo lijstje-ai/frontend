@@ -35,7 +35,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
     >
       <Card
         key={item.id}
-        className="flex min-h-20 w-full flex-row items-center justify-between gap-3 rounded-md p-3"
+        className="flex min-h-20 w-full flex-row items-center justify-between gap-1 rounded-md p-3"
       >
         <WishlistImageLink
           link={item.link}
@@ -45,7 +45,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
           height={64}
           className="h-16 w-1/5 flex-shrink-0 rounded object-cover"
         />
-        <div className="flex w-6/10 items-center gap-3">
+        <div className="flex w-7/10 items-center gap-3 ml-1">
           <div className="flex min-w-0 flex-col justify-center gap-1">
             <WishlistCardLink title={item.title} link={item.link} />
 
@@ -74,7 +74,7 @@ export const WishListItem: React.FC<WishListItemProps> = ({
           </div>
         </div>
 
-        <div className="flex w-1/5 justify-end">
+        <div className="flex justify-end">
           {item.bought_by !== "" ? (
             <div className="flex h-10 min-w-10 items-center justify-center rounded-full bg-emerald-500 text-white">
               <Check size={22} strokeWidth={2.5} />
