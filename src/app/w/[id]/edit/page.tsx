@@ -356,7 +356,9 @@ export default function EditWishlistPage() {
       )}
 
       <section className="mb-8" data-wishlist-section>
-        <h1 className="text-2xl font-bold text-zinc-800">{wishlist.name}</h1>
+        <h1 className="text-2xl font-bold text-zinc-800">
+          {wishlist.name} name
+        </h1>
 
         <div className="mt-1 mb-4">
           <p className="text-sm text-gray-500 italic">
@@ -394,7 +396,7 @@ export default function EditWishlistPage() {
             <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
               Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
-              cadeaus toe te voegen en deel het daarna met deze knop👇
+              cadeaus toe te voegen 👇
             </p>
           </div>
         )}
@@ -617,7 +619,8 @@ export default function EditWishlistPage() {
 
           <div className="space-y-2">
             <Label htmlFor="backup-email" className="text-base text-gray-600">
-              Ontvang bewerk-link om later aanpassingen te kunnen maken
+              Ontvang bewerk-link in je mail om later aanpassingen te kunnen
+              maken
             </Label>
             <div className="flex gap-2">
               <Input
