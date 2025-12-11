@@ -356,9 +356,7 @@ export default function EditWishlistPage() {
       )}
 
       <section className="mb-8" data-wishlist-section>
-        <h1 className="text-2xl font-bold text-zinc-800">
-          {wishlist.name} name
-        </h1>
+        <h1 className="text-2xl font-bold text-zinc-800">{wishlist.name}</h1>
 
         <div className="mt-1 mb-4">
           <p className="text-sm text-gray-500 italic">
