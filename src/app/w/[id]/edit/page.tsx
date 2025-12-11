@@ -390,7 +390,7 @@ export default function EditWishlistPage() {
             </AnimatePresence>
           </ul>
         ) : (
-          <div className="text-md mt-6 space-y-2">
+          <div className="text-sm mt-6 space-y-2">
             <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
             <p className="text-gray-600">
               Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
