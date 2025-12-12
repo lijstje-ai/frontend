@@ -37,7 +37,7 @@ export default function EditWishlistInfoPage() {
 
   const { data, isLoading } = useWishlistQuery(id);
   const { mutate, isPending } = useUpdateWishlistInfo();
-  const { countdown, startCountdown } = useCountdown(isPending, 5);
+  const { countdown, startCountdown } = useCountdown(isPending, 10);
 
   const handleReturnToWishlist = () => {
     router.push(`/w/${id}/edit`);

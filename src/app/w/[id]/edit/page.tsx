@@ -359,7 +359,7 @@ export default function EditWishlistPage() {
         <h1 className="text-2xl font-bold text-zinc-800">{wishlist.name}</h1>
 
         <div className="mt-1 mb-4">
-          <p className="text-sm text-gray-500 italic">
+          <p className="text-xs text-gray-500 italic">
             {gendersNames[wishlist.gender as GenderType]}, {wishlist.age} jaar,
             max €{wishlist.max_price}, {wishlist.interests}{" "}
             <Link
@@ -390,11 +390,11 @@ export default function EditWishlistPage() {
             </AnimatePresence>
           </ul>
         ) : (
-          <div className="text-sm mt-6 space-y-2">
-            <p className="text-gray-600">Je verlanglijstje is nog leeg! 🙂</p>
+          <div className="mt-4 space-y-2 text-sm">
             <p className="text-gray-600">
-              Gebruik de <span className="text-[#EF4444]">rode +iconen</span> om
-              cadeaus toe te voegen 👇
+              Je verlanglijstje is nog leeg! 🙂 Gebruik de
+              <span className="text-main-red">rode +iconen</span> om cadeaus toe
+              te voegen 👇
             </p>
           </div>
         )}
