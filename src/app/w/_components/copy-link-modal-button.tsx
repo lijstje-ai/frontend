@@ -13,12 +13,7 @@ export const CopyLinkModalButton: React.FC<CopyLinkModalButtonProps> = ({
   link,
 }) => {
   return (
-    <div
-      className="fixed left-0 z-50 w-full border-t bg-gray-50 p-2.5"
-      style={{
-        bottom: "env(safe-area-inset-bottom)",
-      }}
-    >
+    <div className="fixed left-0 z-50 h-[71px] w-full top-[calc(100dvh-71px)] border-t bg-gray-50 p-2.5">
       <div className="mx-auto max-w-[240px]">
         <CopyLinkModal
           wishlistName={wishlist.name}
