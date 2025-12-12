@@ -129,9 +129,6 @@ export const useUpdateWishlistInfo = () => {
 export const useCreateAffiliateLink = () => {
   return useMutation({
     mutationFn: (data: { link: string }) => createAffiliateLink(data.link),
-    onSuccess: (link: string) => {
-      if (link) window.open(link, "_blank");
-    },
     onError: () => {
       toast.error("Er is iets misgegaan");
     },

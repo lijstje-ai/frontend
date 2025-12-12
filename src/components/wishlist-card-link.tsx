@@ -20,7 +20,21 @@ export const WishlistCardLink: React.FC<WishlistCardLinkProps> = ({
   const { mutate: createAffiliateLinkMutation } = useCreateAffiliateLink();
 
   const openCreatedAffiliateLink = () => {
-    createAffiliateLinkMutation({ link });
+    const newTab = window.open("", "_blank");
+
+    createAffiliateLinkMutation(
+      { link },
+      {
+        onSuccess: (finalLink) => {
+          if (finalLink && newTab) {
+            newTab.location.href = finalLink;
+          }
+        },
+        onError: () => {
+          if (newTab) newTab.close();
+        },
+      },
+    );
   };
 
   return (
