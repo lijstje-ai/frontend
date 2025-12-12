@@ -390,9 +390,9 @@ export default function EditWishlistPage() {
             </AnimatePresence>
           </ul>
         ) : (
-          <div className="mt-4 space-y-2 text-sm">
-            <p className="text-gray-600">
-              Je verlanglijstje is nog leeg! 🙂 Gebruik de
+          <div className="mt-4">
+            <p className="text-gray-600 text-lg">
+              Je verlanglijstje is nog leeg! 🙂 Gebruik de{" "}
               <span className="text-main-red">rode +iconen</span> om cadeaus toe
               te voegen 👇
             </p>

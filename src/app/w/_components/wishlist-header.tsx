@@ -64,7 +64,7 @@ export const WishlistHeader = () => {
         )}
 
         {isEditPage && (
-          <div className="flex items-center gap-2">
+          <div className="flex items-center gap-2 mt-1">
             <motion.button
               type="button"
               aria-label="Scroll to boven"
